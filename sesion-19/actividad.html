@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sesión 19 · Prototipar · Mesa de taller</title>
+<title>Sesión 19 · Prototipar · Parte A</title>
 <style>
+
 /* ============================================================
    SESIÓN 19 · PROTOTIPAR (BAJA FIDELIDAD) — MESA DE TALLER 3D
    El alumno arma su PLAN de prototipo de baja fidelidad de su
@@ -125,58 +126,6 @@ input.t:focus,textarea.t:focus,select.t:focus{outline:none;border-color:var(--c)
 .timer button{border:0;border-radius:11px;padding:11px 15px;font:800 14px/1 inherit;cursor:pointer;min-height:44px;color:#fff;background:var(--c)}
 .timer button.sec{background:#efe7d8;color:var(--ink-70)}
 .timer .tmsg{font-size:14px;font-weight:700;color:var(--ink-70)}
-
-/* ============================================================
-   MESA DE TALLER ISOMÉTRICA (protagonista, CSS 3D)
-   ============================================================ */
-.escena{position:relative;perspective:1300px;perspective-origin:50% 24%;
-  margin:6px 0 4px;padding:14px 0 6px;min-height:300px;border-radius:18px;overflow:hidden;
-  background:linear-gradient(180deg,#fbf6ee 0%,#f1e7d6 100%)}
-.escena .lampara{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:30px;z-index:1;
-  filter:drop-shadow(0 8px 10px rgba(0,0,0,.12))}
-.sombra{position:absolute;left:50%;bottom:26px;width:min(680px,80%);height:52px;transform:translateX(-50%);
-  background:radial-gradient(closest-side,rgba(60,40,20,.28),transparent);z-index:0}
-.taller{position:relative;height:clamp(250px,42vw,340px)}
-.tablero{position:absolute;left:50%;top:54%;width:min(720px,86%);height:60%;
-  transform:translate(-50%,-50%) rotateX(53deg) rotateZ(-4deg);
-  transform-style:preserve-3d;border-radius:14px;
-  background:
-    repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 34px),
-    repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,transparent 1px 34px),
-    linear-gradient(135deg,var(--wood) 0%,var(--wood-2) 100%);
-  box-shadow:0 30px 0 #9c7040, 0 34px 34px rgba(60,40,20,.35),
-    inset 0 0 0 3px rgba(255,255,255,.14), inset 0 0 60px rgba(120,70,20,.28)}
-.tablero .tapete{position:absolute;left:8%;top:14%;width:52%;height:66%;border-radius:8px;
-  background:linear-gradient(160deg,color-mix(in srgb,var(--mat) 88%,#fff),var(--mat));
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);opacity:.92}
-.item{position:absolute;transform:translateZ(var(--z,12px));transition:transform .35s ease,opacity .35s ease;
-  text-align:center;filter:drop-shadow(0 8px 6px rgba(40,25,10,.35));will-change:transform;opacity:0}
-.item.show{opacity:1}
-.item .ico{font-size:clamp(24px,4.4vw,34px);line-height:1}
-.item .lbl{font-size:10px;font-weight:800;color:#3a2a18;background:rgba(255,255,255,.82);border-radius:6px;
-  padding:1px 5px;margin-top:2px;display:inline-block;white-space:nowrap}
-/* letrero del tipo elegido: se para mirando a la cámara */
-.letrero{position:absolute;left:66%;top:22%;transform-origin:bottom center;
-  transform:translateZ(2px) rotateX(-53deg) translateY(-6px);opacity:0;transition:opacity .4s}
-.letrero.show{opacity:1}
-.letrero .tag{display:inline-block;background:#fffdf7;border:2px solid var(--tc,#333);color:var(--tc,#333);
-  font-weight:800;font-size:13px;border-radius:10px;padding:7px 12px;box-shadow:0 8px 16px rgba(0,0,0,.28);white-space:nowrap}
-.letrero .palo{width:6px;height:26px;background:#a9825a;margin:0 auto;border-radius:3px}
-.escena-vacia{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-size:13.5px;font-weight:700;color:var(--ink-45);z-index:2}
-
-/* medidores de presupuesto */
-.medidores{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-@media(max-width:560px){.medidores{grid-template-columns:1fr}}
-.medidor{background:#fff;border:1.5px solid var(--line-2);border-radius:14px;padding:12px 14px}
-.medidor .mh{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:13.5px;color:var(--ink-70)}
-.medidor .mh b{font-size:16px;color:var(--ink)}
-.medidor .bar{height:14px;background:#eee3d2;border-radius:99px;overflow:hidden;margin-top:8px}
-.medidor .bar>i{display:block;height:100%;width:0;border-radius:99px;transition:width .4s ease,background .3s}
-.medidor.over .bar>i{background:#E4572E !important}
-.medidor.over .mh b{color:#E4572E}
-.presu-msg{margin-top:10px;font-size:14px;font-weight:700;border-radius:12px;padding:10px 12px}
-.presu-msg.ok{background:color-mix(in srgb,var(--mat) 16%,#fff);color:#116b5f}
-.presu-msg.over{background:#fdeae4;color:#b13a1c}
 
 /* chips de materiales */
 .mats{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
@@ -339,892 +288,650 @@ input.t[readonly]{background:#f3ede2;color:var(--ink-70)}
   .screen,.topbar{display:none!important}
   #hoja{display:block!important}
 }
+
+/* ---------- Ruta a la mini feria ---------- */
+.ruta-map{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:22px;position:relative;z-index:1}
+.ruta-map .st{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13.5px}
+.ruta-map .st small{display:block;font-weight:700;opacity:.9;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.ruta-map .st.on{background:#fff;color:#241A12;box-shadow:0 8px 20px rgba(0,0,0,.22)}
+.ruta-map .arr{font-weight:800;opacity:.85}
+
+/* foto */
+.photo-box{margin-top:6px;border:2px dashed var(--line-2);border-radius:14px;padding:14px;text-align:center;background:#fff}
+.photo-box img{max-width:100%;max-height:300px;border-radius:10px;display:block;margin:0 auto 10px}
+.photo-box .pbtn{display:inline-block;border:0;border-radius:11px;background:var(--c);color:#fff;font:800 14px/1 inherit;padding:13px 18px;cursor:pointer;min-height:46px}
+.photo-box .pbtn.sec{background:#efe7d8;color:var(--ink-70);margin-left:8px}
+.photo-box input[type=file]{display:none}
+.photo-box .pnote{font-size:13px;color:var(--ink-45);margin-top:8px}
+
+/* tareas de la visita de prueba / autochequeo */
+.trow{background:#fff;border:1.5px solid var(--line-2);border-radius:14px;padding:12px 14px;margin:10px 0}
+.trow .tt{font-weight:800;font-size:14px;color:var(--ink-70);margin-bottom:6px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 6px}
+.seg button{border:2px solid var(--line-2);background:#fff;border-radius:11px;padding:10px 13px;font:800 13.5px/1 inherit;color:var(--ink-70);cursor:pointer;min-height:44px}
+.seg button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.seg button.ok[aria-pressed="true"]{background:#1B998B;border-color:#1B998B}
+.seg button.mid[aria-pressed="true"]{background:#F2A007;border-color:#F2A007}
+.seg button.no[aria-pressed="true"]{background:#E4572E;border-color:#E4572E}
+
+/* candado */
+.lock-card{background:var(--card);border:2px dashed var(--c-boceto);border-radius:var(--r);padding:26px;margin:18px 0;text-align:center;box-shadow:var(--shadow-s)}
+.lock-card .li{font-size:46px}
+.lock-card h2{font-size:24px;margin:6px 0}
+.lock-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.lock-row input{max-width:280px;text-transform:uppercase;text-align:center;font-weight:800;letter-spacing:.06em}
+.lock-msg{margin-top:10px;font-weight:700;color:#b13a1c;min-height:20px}
+.aviso{border-radius:12px;padding:11px 14px;font-weight:700;font-size:14px;margin:12px 0;background:color-mix(in srgb,var(--mat) 16%,#fff);color:#116b5f}
+.aviso.warn{background:#fdeae4;color:#b13a1c}
+.savewarn{background:#fdeae4;color:#b13a1c;font-weight:800;padding:10px 14px;border-radius:12px;margin:10px 0}
+
+/* tarjeta de stand */
+.tarjeta{--tc:#E4572E;position:relative;aspect-ratio:297/210;width:100%;background:#fffdf9;border:3px solid var(--tc);border-radius:18px;overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr auto;box-shadow:var(--shadow-s);color:#241A12}
+.tarjeta .th{background:linear-gradient(110deg,var(--tc),#8E44EC);color:#fff;padding:2.2% 3.2%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tarjeta .th .k{font-weight:800;font-size:clamp(9px,1.25vw,13px);letter-spacing:.12em;text-transform:uppercase;opacity:.95}
+.tarjeta .th .eq{font-weight:800;font-size:clamp(18px,3.4vw,38px);line-height:1.05;letter-spacing:-.02em}
+.tarjeta .th .tp{background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.5);border-radius:99px;padding:.5% 2%;font-weight:800;font-size:clamp(9px,1.3vw,14px);white-space:nowrap}
+.tarjeta .tb{display:grid;grid-template-columns:1.25fr 1fr;gap:3%;padding:2.4% 3.2%;min-height:0}
+.tarjeta .fc{font-weight:800;font-size:clamp(13px,2.15vw,24px);line-height:1.18;letter-spacing:-.01em;margin-bottom:2.2%}
+.tarjeta .fc small{display:block;font-size:clamp(8px,1vw,11px);letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:3px}
+.tarjeta ul.pt{list-style:none;font-size:clamp(9px,1.3vw,14px);line-height:1.3}
+.tarjeta ul.pt li{margin:.8% 0}
+.tarjeta ul.pt b{color:var(--tc)}
+.tarjeta .demo{margin-top:2.2%;font-size:clamp(9px,1.3vw,14px)}
+.tarjeta .demo h4{font-size:clamp(8px,1vw,11px);letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-bottom:3px}
+.tarjeta .demo ol{margin-left:1.2em}
+.tarjeta .ph{border:2px solid var(--line-2);border-radius:12px;background:#f3ede2 center/cover no-repeat;min-height:0;display:grid;place-items:center;color:var(--ink-45);font-weight:800;font-size:clamp(9px,1.2vw,13px);text-align:center;padding:6px}
+.tarjeta .tf{border-top:2px dashed var(--line-2);padding:1.6% 3.2%;font-size:clamp(8px,1.15vw,13px);display:flex;justify-content:space-between;gap:14px;background:#fbf4e6}
+.tarjeta .tf b{color:var(--tc)}
+
+#tarjetaPrint{display:none}
+@media print{
+  body.pc #hoja{display:none!important}
+  body.pc .wrap>*:not(#tarjetaPrint){display:none!important}
+  body.pc .wrap{padding:0;margin:0;max-width:none}
+  body.pc #tarjetaPrint{display:block!important}
+  body.pc .tarjeta{box-shadow:none;width:100%;height:192mm;aspect-ratio:auto;border-radius:0}
+  body.pc .tarjeta,body.pc .tarjeta *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.pc .tarjeta .fc{font-size:26pt}
+  body.pc .tarjeta ul.pt,body.pc .tarjeta .demo{font-size:15pt}
+  body.pc .tarjeta .th .eq{font-size:40pt}
+  body.pc .tarjeta .th .k,body.pc .tarjeta .tf{font-size:11pt}
+  .sheet .bocimg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.sheet .fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.sheet .fotos figure{margin:0}
+.sheet .fotos figcaption{font-size:11px;font-weight:800;color:#555;margin-top:2px}
+.sheet table.tb2{width:100%;border-collapse:collapse;font-size:13px}
+.sheet table.tb2 td{border-bottom:1px solid #ccc;padding:5px 4px;vertical-align:top}
+
 </style>
 </head>
 <body>
-
-<!-- ================= BARRA SUPERIOR ================= -->
 <div class="topbar screen">
   <div class="row">
-    <div class="brand">Emprendimiento 1<small>Sesión 19 · Prototipar</small></div>
-    <div class="prog" aria-label="Medidor de taller"><i id="progbar"></i></div>
+    <div class="brand">Emprendimiento 1<small>Sesión 19 · Parte A</small></div>
+    <div class="prog" aria-label="Avance"><i id="progbar"></i></div>
     <span class="prog-n" id="progn">0%</span>
     <button class="tb-btn ghost" id="sndbtn" type="button" aria-pressed="false" title="Sonido">🔇 Sonido</button>
     <button class="tb-btn" id="clrbtn" type="button">🗑 Borrar datos</button>
   </div>
   <nav class="steps" id="steps" aria-label="Fases de la actividad"></nav>
 </div>
-
 <div class="wrap">
-
-  <!-- ================= PORTADA ================= -->
-  <div class="hero screen">
-    <span class="eyebrow">Unidad 6 · Design Thinking · Prototipar</span>
-    <h1>Tu mesa de taller</h1>
-    <p class="lead">Prototipar es hacer tu idea tocable para <b>fallar rápido y barato</b>. Hoy no construyen el producto final: arman juntos, sobre esta mesa, el <b>plan de un prototipo de baja fidelidad</b> de su idea del UChallenge. Al terminar se llevan el plan listo para construir.</p>
-    <div class="path">
-      <span>🧩 Tu idea</span><span>🃏 Tipo</span><span>🔬 Qué pruebas</span><span>🧰 Materiales</span><span>✏️ Bosquejo</span><span>⏱️ Falla rápido</span><span>🔁 Feedback</span>
-    </div>
-  </div>
-
-  <!-- ================= EQUIPO + ACTIVACIÓN + ANTES ================= -->
-  <section class="card screen" id="sec-equipo" style="--c:var(--c-idea)">
-    <div class="stepbar"><span class="num">✦</span><span class="kicker">Antes de encender la mesa</span></div>
-    <h2>¿Quién trabaja en este taller?</h2>
-    <p class="hint">Un integrante captura por todo el equipo. Estos datos se piden <b>una sola vez</b> y encabezan su PDF. El avance se guarda automáticamente en este navegador (memoria local); no se sube a ninguna nube. Aun así, descarguen su PDF antes de salir.</p>
-    <div class="grid3" style="margin-top:6px">
-      <div><label class="f">Nombre del equipo</label><input class="t" data-k="equipo" placeholder="Ej. Los Prototipos"></div>
-      <div><label class="f">Carrera / grupo</label><input class="t" data-k="carrera" placeholder="Ej. Derecho · 1A"></div>
-      <div><label class="f">Fecha (automática)</label><input class="t" data-k="fecha" readonly></div>
-    </div>
-    <label class="f" style="margin-top:14px">Integrantes (nombre y matrícula)</label>
-    <div class="irow"><input class="t" data-k="integrante1" placeholder="Integrante 1 · nombre completo"><input class="t" data-k="matricula1" placeholder="Matrícula"></div>
-    <div class="irow"><input class="t" data-k="integrante2" placeholder="Integrante 2 · nombre completo"><input class="t" data-k="matricula2" placeholder="Matrícula"></div>
-    <div class="irow"><input class="t" data-k="integrante3" placeholder="Integrante 3 · nombre completo"><input class="t" data-k="matricula3" placeholder="Matrícula"></div>
-    <div class="irow"><input class="t" data-k="integrante4" placeholder="Integrante 4 · nombre completo"><input class="t" data-k="matricula4" placeholder="Matrícula"></div>
-    <div class="irow"><input class="t" data-k="integrante5" placeholder="Integrante 5 · nombre completo"><input class="t" data-k="matricula5" placeholder="Matrícula"></div>
-
-    <label class="f" style="margin-top:18px">Calentamiento · el porta-celular (90 s)</label>
-    <p class="hint" style="font-size:14.5px">Con lo que tengan en la mesa (cuaderno, plumones, post-its, hojas), construyan un <b>porta-celular</b> que sostenga un teléfono de pie. Cuando suene, <b>el equipo de al lado lo prueba</b> con su celular. Eso es prototipar: construir algo probable ya y aprender cuando alguien más lo usa.</p>
-    <div class="timer" data-timer="avion" data-secs="90" style="--c:var(--c-idea)">
-      <span class="clock" data-role="clock">01:30</span>
-      <button type="button" data-role="start">▶ Arrancar 90 s</button>
-      <button type="button" class="sec" data-role="reset">↺ Reiniciar</button>
-      <span class="tmsg" data-role="msg">Cuando estén listos, arranquen y construyan.</span>
-    </div>
-
-    <label class="f" style="margin-top:18px">Antes de empezar, ¿qué tan claro tiene el equipo cómo probar su idea sin gastar de más? (1 = ni idea · 5 = clarísimo)</label>
-    <div class="thermo" data-thermo="antes" role="group" aria-label="Claridad antes" style="--c:var(--c-idea)">
-      <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
-      <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
-      <button type="button" data-v="5">5</button>
-    </div>
-  </section>
-
-  <!-- ================= EN CORTO (teoría mínima) ================= -->
-  <section class="card screen" style="--c:var(--c-mockup)">
-    <div class="stepbar"><span class="num">📌</span><span class="kicker">En corto</span></div>
-    <h2>Lo justo para arrancar</h2>
-    <div class="encorto">
-      <div class="e"><div class="h">🎯 ¿Para qué?</div><p>Un prototipo no busca vender un producto terminado. Busca <b>aprender del usuario</b> gastando poco: si algo falla, que falle en papel, no en la calle.</p></div>
-      <div class="e"><div class="h">🪵 Baja fidelidad</div><p>Rápido y barato: papel, cartón, post-its. Sirve para validar el <b>concepto general</b> en las primeras etapas. Hoy trabajamos aquí.</p></div>
-      <div class="e"><div class="h">⚠️ Cuídate de</div><p>Enamorarte del prototipo, hacerlo caro y tener que explicarlo. Si el usuario no lo entiende solo, el diseño te está avisando algo.</p></div>
-    </div>
-    <details class="casebox screen">
-      <summary>Caso Fitbit: de una caja de madera a 2,100 MDD. Destápalo <span class="chev">▸</span></summary>
-      <div class="inner">
-        <p>En 2007, James Park y Eric Friedman vieron el control del Nintendo Wii detectar movimiento y pensaron: ¿y si metemos esa tecnología en algo minúsculo para medir el ejercicio diario?</p>
-        <p>Sin dinero para plástico ni fábrica, soldaron circuitos a mano y los metieron en una <b>cajita de madera balsa pegada con cinta</b>. Con ese "Frankenstein" se pararon frente a inversionistas: no vendieron lo bonito, vendieron <b>cómo funcionaba</b>. Se llevaron $400,000 dólares.</p>
-        <p>La lección para tu UChallenge: no necesitas presupuesto ni el producto perfecto para empezar. El ingenio y la validación rápida con lo que tengas a la mano valen más que el diseño final.</p>
-      </div>
-    </details>
-  </section>
-
-  <!-- ================= LA MESA (escena 3D) ================= -->
-  <section class="card screen" style="--c:var(--c-maqueta)">
-    <div class="stepbar"><span class="num">🛠️</span><span class="kicker">Tu mesa de taller</span></div>
-    <h2>Aquí se arma tu prototipo</h2>
-    <p class="hint">Conforme elijas tu <b>tipo</b> y toques tus <b>materiales</b> abajo, van apareciendo sobre la mesa. Ojo con el presupuesto de "rápido y barato": si te pasas, ya no es baja fidelidad.</p>
-    <div class="escena">
-      <span class="lampara">💡</span>
-      <div class="taller">
-        <div class="tablero" id="tablero">
-          <div class="tapete"></div>
-          <div class="letrero" id="letrero"><div class="tag" id="letreroTag">Tu tipo</div><div class="palo"></div></div>
-        </div>
-      </div>
-      <div class="sombra"></div>
-      <p class="escena-vacia" id="escenaVacia">La mesa está vacía. Elige tu tipo y reúne materiales abajo.</p>
-    </div>
-    <div class="medidores">
-      <div class="medidor" id="medCosto">
-        <div class="mh"><span>🪙 Costo (monedas de taller)</span><b><span id="costoVal">0</span> / <span id="costoMax">0</span></b></div>
-        <div class="bar"><i id="costoBar" style="background:linear-gradient(90deg,#F2A007,#1B998B)"></i></div>
-      </div>
-      <div class="medidor" id="medTiempo">
-        <div class="mh"><span>⏱️ Tiempo de armado (min)</span><b><span id="tiempoVal">0</span> / <span id="tiempoMax">0</span></b></div>
-        <div class="bar"><i id="tiempoBar" style="background:linear-gradient(90deg,#2A7DE1,#8E44EC)"></i></div>
-      </div>
-    </div>
-    <div class="presu-msg ok" id="presuMsg">Toca materiales para reunir lo que vas a usar.</div>
-  </section>
-
-  <!-- ================= PASO 1 · IDEA ================= -->
-  <section class="card screen" id="sec-p1" style="--c:var(--c-idea)">
-    <div class="stepbar"><span class="num">1</span><span class="kicker">Paso 1 · Tu idea</span></div>
-    <h2>🧩 ¿Qué vas a prototipar?</h2>
-    <span class="goal">Meta: una sola idea, dicha en una frase</span>
-    <p class="hint">Escriban en una frase la solución de su UChallenge que van a probar. No tiene que ser grande; tiene que ser concreta.</p>
-    <label class="f">La solución que vamos a prototipar es…</label>
-    <input class="t" data-k="idea_sol" placeholder="Ej. Una app que avisa qué salones del campus están libres para estudiar">
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">En una tarjeta, cada equipo escribe en una sola frase la solución del UChallenge que va a prototipar. Si no cabe en una línea, todavía está muy grande: recórtenla.</div></details>
-  </section>
-
-  <!-- ================= PASO 2 · TIPO (tarjetas 3D) ================= -->
-  <section class="card screen" id="sec-p2" style="--c:var(--c-boceto)">
-    <div class="stepbar"><span class="num">2</span><span class="kicker">Paso 2 · Elige tu tipo</span></div>
-    <h2>🃏 Voltea las tarjetas y elige</h2>
-    <span class="goal">Meta: el tipo que encaje con tu idea, no el más vistoso</span>
-    <p class="hint">Toca una tarjeta para voltearla y ver de qué va cada tipo de prototipo de baja fidelidad. Elijan <b>uno</b>. La decisión es del equipo: nadie les dice cuál es "el correcto".</p>
-    <div class="tipos" id="tipos"></div>
-    <p class="tipo-eco" id="tipoEco">Todavía no eliges tipo.</p>
-    <label class="f" style="margin-top:14px">¿Por qué ese tipo encaja con su idea?</label>
-    <textarea class="t" data-k="tipo_porque" placeholder="Tu criterio: qué tiene tu idea que hace a ese tipo el más útil para probarla."></textarea>
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">Imprime las 4 tarjetas de tipos. Cada equipo lee las cuatro y marca a mano la que va a usar, y abajo escribe una línea de por qué ese tipo va con su idea.</div></details>
-  </section>
-
-  <!-- ================= PASO 3 · QUÉ PRUEBA ================= -->
-  <section class="card screen" id="sec-p3" style="--c:var(--c-mockup)">
-    <div class="stepbar"><span class="num">3</span><span class="kicker">Paso 3 · El foco</span></div>
-    <h2>🔬 ¿Qué parte vas a probar?</h2>
-    <span class="goal">Meta: probar una parte con un objetivo, no toda la idea</span>
-    <p class="hint">Un prototipo de baja fidelidad no prueba todo. Elijan <b>qué parte</b> van a poner a prueba y <b>qué quieren aprender</b> de la persona que lo use.</p>
-    <div class="grid2">
-      <div><label class="f">La parte que vamos a probar es…</label><textarea class="t" data-k="foco" placeholder="Ej. Si la gente entiende, sin que yo explique, cómo ver los salones libres"></textarea></div>
-      <div><label class="f">De nuestro usuario queremos aprender…</label><textarea class="t" data-k="aprender" placeholder="Ej. Si le sirve el aviso o si prefiere buscar de otra forma"></textarea></div>
-    </div>
-    <label class="f" style="margin-top:12px">Nuestro prototipo debe permitir que el usuario…</label>
-    <input class="t" data-k="permitir" placeholder="Ej. encuentre un salón libre en menos de 10 segundos">
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">En la tarjeta anoten dos líneas: "vamos a probar ___" y "queremos aprender ___". Si escriben "probar toda la app", recórtenlo a una sola parte.</div></details>
-  </section>
-
-  <!-- ================= PASO 4 · MATERIALES ================= -->
-  <section class="card screen" id="sec-p4" style="--c:var(--c-maqueta)">
-    <div class="stepbar"><span class="num">4</span><span class="kicker">Paso 4 · Reúne materiales</span></div>
-    <h2>🧰 Toca lo que vas a usar</h2>
-    <span class="goal">Meta: lo mínimo para construirlo hoy, sin pasarte del presupuesto</span>
-    <p class="hint">Cada material que tocas aparece en tu mesa y suma a los medidores de arriba. Los materiales <b>caros o lentos</b> te sacan de la baja fidelidad. Elige con cabeza de "rápido y barato".</p>
-    <div class="mats" id="mats"></div>
-    <div class="mat-add">
-      <input class="t" id="matExtra" placeholder="¿Falta algo? Escríbelo (ej. una caja de zapatos)">
-      <button type="button" id="matAddBtn">+ Agregar</button>
-    </div>
-    <div class="mis-extra" id="misExtra"></div>
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">Sobre la mesa real, cada equipo junta solo lo que va a usar hoy. Regla del salón: si un material es caro o tarda mucho, no es de baja fidelidad; búsquenle un sustituto de papel o cartón.</div></details>
-  </section>
-
-  <!-- ================= PASO 5 · BOSQUEJO + RUTA ================= -->
-  <section class="card screen" id="sec-p5" style="--c:var(--c-story)">
-    <div class="stepbar"><span class="num">5</span><span class="kicker">Paso 5 · Bosqueja</span></div>
-    <h2>✏️ Dibújalo o descríbelo</h2>
-    <span class="goal">Meta: que otro lo entienda sin que tú lo expliques</span>
-    <p class="hint">Haz un bosquejo rápido en el lienzo (opcional) y describe con palabras cómo se verá tu prototipo. Luego escribe la <b>hoja de ruta</b>: los pasos para armarlo hoy.</p>
-
-    <div class="lienzo-wrap">
-      <canvas id="lienzo" width="900" height="440" aria-label="Lienzo para bosquejar tu prototipo"></canvas>
-      <div class="lienzo-bar">
-        <span class="lienzo-hint">Dibuja con el dedo o el mouse.</span>
-        <button type="button" class="sw" data-color="#241A12" aria-pressed="true" style="background:#241A12" title="Negro"></button>
-        <button type="button" class="sw" data-color="#E4572E" aria-pressed="false" style="background:#E4572E" title="Naranja"></button>
-        <button type="button" class="sw" data-color="#2A7DE1" aria-pressed="false" style="background:#2A7DE1" title="Azul"></button>
-        <button type="button" class="sw" data-color="#1B998B" aria-pressed="false" style="background:#1B998B" title="Verde"></button>
-        <button type="button" id="lienzoUndo">↺ Borrar todo</button>
-      </div>
-    </div>
-
-    <label class="f" style="margin-top:14px">Describe tu prototipo en palabras</label>
-    <textarea class="t" data-k="boceto_desc" placeholder="Ej. Tres pantallas dibujadas a mano en post-its: inicio, mapa de salones y aviso de 'libre'. El usuario las toca en orden."></textarea>
-
-    <label class="f" style="margin-top:8px">Hoja de ruta: pasos para construirlo hoy</label>
-    <div id="rutaList"></div>
-    <button class="addrow screen" id="addRuta" type="button">+ Agregar paso</button>
-
-    <!-- reto cronometrado -->
-    <label class="f" style="margin-top:18px">Reto "falla rápido"</label>
-    <p class="hint" style="font-size:14.5px">Ponte el reloj y arma algo <b>mostrable</b> de tu prototipo antes de que suene. No busques que quede bonito; busca que se entienda.</p>
-    <div class="timer" data-timer="reto" data-secs="180" style="--c:var(--c-story)">
-      <span class="clock" data-role="clock">03:00</span>
-      <button type="button" data-role="start">▶ Arrancar reto</button>
-      <button type="button" class="sec" data-role="reset">↺ Reiniciar</button>
-      <span class="tmsg" data-role="msg">Al terminar deberías tener algo que mostrar.</span>
-    </div>
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">El bosquejo y la hoja de ruta se hacen en hoja. Un compañero cronometra 3 minutos en voz alta mientras el equipo arma la primera versión mostrable con lo que tenga.</div></details>
-  </section>
-
-  <!-- ================= PASO 6 · FEEDBACK ================= -->
-  <section class="card screen" id="sec-p6" style="--c:var(--c-mockup)">
-    <div class="stepbar"><span class="num">6</span><span class="kicker">Paso 6 · Feedback</span></div>
-    <h2>🔁 Intercambien y recojan feedback</h2>
-    <span class="goal">Meta: que otro equipo use su prototipo sin que ustedes lo expliquen</span>
-    <p class="hint">Muestren su prototipo al equipo vecino <b>sin explicar de más</b> y observen cómo lo interpretan. Anoten aquí lo que les dijeron: es su <b>Matriz de Feedback</b>. La versión en papel lleva la <b>firma del equipo evaluador</b>.</p>
-    <label class="f">Equipo evaluador</label>
-    <input class="t" data-k="fb_equipo" placeholder="Nombre del equipo que probó su prototipo">
-    <div class="grid2">
-      <div><label class="f">✅ Qué funcionó</label><textarea class="t" data-k="fb_funciono" placeholder="Lo que el otro equipo entendió o usó sin ayuda."></textarea></div>
-      <div><label class="f">🛠️ Qué mejorar</label><textarea class="t" data-k="fb_mejorar" placeholder="Lo que confundió, faltó o estorbó."></textarea></div>
-      <div><label class="f">❓ Dudas</label><textarea class="t" data-k="fb_dudas" placeholder="Preguntas que les hicieron."></textarea></div>
-      <div><label class="f">💡 Nuevas ideas</label><textarea class="t" data-k="fb_ideas" placeholder="Ideas que surgieron al ver cómo lo usaron."></textarea></div>
-    </div>
-    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">Completen la matriz de 4 cuadrantes en hoja y pídanle su firma al equipo evaluador. Regla de oro: quien presenta no explica de más.</div></details>
-  </section>
-
-  <!-- ================= CIERRE · TICKET + BADGES ================= -->
-  <section class="card screen" id="sec-cierre" style="--c:var(--c-ticket)">
-    <div class="stepbar"><span class="num">🏁</span><span class="kicker">Cierre</span></div>
-    <h2>Tu plan quedó listo</h2>
-    <p class="hint">Su <b>plan de prototipo</b> se armó solo con lo que capturaron. Respondan el ticket de salida, asignen la participación de cada quien y descarguen el PDF para subirlo a Brightspace.</p>
-
-    <div class="ticket">
-      <div class="stepbar"><span class="num">✓</span><span class="kicker">Ticket de salida</span></div>
-      <label class="f" style="margin-top:8px">1 · ¿Cuál es el principal objetivo de hacer un prototipo? (respuesta del equipo)</label>
-      <textarea class="t" data-k="t1" placeholder="Con tus palabras."></textarea>
-      <label class="f">2 · Menciona un tipo de prototipo ideal para un proyecto de servicios.</label>
-      <input class="t" data-k="t2" placeholder="Ej. …">
-      <label class="f">3 · ¿Qué significa la frase "falla rápido y barato"?</label>
-      <textarea class="t" data-k="t3"></textarea>
-      <label class="f">Ya para cerrar, ¿qué tan claro tiene ahora el equipo cómo probar su idea sin gastar de más? (1–5)</label>
-      <div class="thermo" data-thermo="despues" role="group" aria-label="Claridad después" style="--c:var(--c-ticket)">
-        <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
-        <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
-        <button type="button" data-v="5">5</button>
-      </div>
-    </div>
-
-    <div class="badges" id="badges">
-      <span class="badge" data-badge="rapido" style="--bc:var(--c-story)">🐣 Fallo rápido</span>
-      <span class="badge" data-badge="barato" style="--bc:var(--c-maqueta)">🪙 Bajo costo</span>
-      <span class="badge" data-badge="mostrable" style="--bc:var(--c-mockup)">👀 Mostrable</span>
-    </div>
-  </section>
-
-  <!-- ================= PARTICIPACIÓN (al final, antes del PDF) ================= -->
-  <section class="card screen" id="sec-partic" style="--c:var(--c-story)">
-    <div class="stepbar"><span class="num">%</span><span class="kicker">Participación individual</span></div>
-    <h2>🙋 ¿Cuánto aportó cada quien?</h2>
-    <p class="hint">Decidan juntos el % de participación de cada integrante en esta actividad. Cada uno puede llegar hasta <b>100%</b>; <b>no tienen que sumar 100</b> entre todos. Se imprime en su PDF.</p>
-    <div id="particList"></div>
-  </section>
-
-  <!-- ================= ENTREGA ================= -->
-  <section class="card screen" id="sec-pdf" style="--c:var(--c-boceto)">
-    <div class="stepbar"><span class="num">📄</span><span class="kicker">Entrega</span></div>
-    <h2>Descarguen el PDF del equipo</h2>
-    <p class="falta" id="faltaMsg"></p>
-    <div class="presu-msg ok" id="doneBox" hidden>🎉 <b>¡Actividad completa!</b> Descarguen el PDF y súbanlo a Brightspace (un solo archivo por equipo). <b>La clave para abrir la Sesión 20 la muestra su profesora en la próxima sesión.</b></div>
-    <div class="pdfwrap"><button class="tb-btn pdf" id="pdfbtn" type="button" disabled>🔒 El PDF se habilita al 100%</button></div>
-  </section>
-
-  <p class="footer-note screen">Su plan es la base para construir el prototipo en clase. Antes de salir descarguen el PDF y súbanlo a Brightspace. El avance se guarda automáticamente en este navegador (memoria local); no se sube a ninguna nube.</p>
-
-  <!-- ================= HOJA DE RESULTADO (SOLO PDF) ================= -->
-  <div id="hoja"><div class="sheet">
-    <div class="shead"><div class="k">Emprendimiento 1 · Sesión 19 · Prototipar</div><h2>Mi plan de prototipo de baja fidelidad</h2></div>
-    <div class="idrow">
-      <div><span>Equipo:</span> <em id="s_equipo"></em></div>
-      <div><span>Carrera / grupo:</span> <em id="s_carrera"></em></div>
-      <div><span>Fecha:</span> <em id="s_fecha"></em></div>
-      <div><span>Claridad (antes → después):</span> <em id="s_claridad"></em></div>
-      <div style="grid-column:1/-1"><span>Integrantes:</span> <em id="s_integrantes"></em></div>
-    </div>
-
-    <div class="block">
-      <h3>La idea que prototipo</h3>
-      <div class="srow"><div class="a" id="s_idea_sol"></div></div>
-    </div>
-
-    <div class="block">
-      <span class="pill" id="s_tipo_pill">Tipo</span>
-      <div class="srow"><div class="q">Tipo elegido</div><div class="a" id="s_tipo_nombre"></div></div>
-      <div class="srow"><div class="q">Por qué encaja</div><div class="a" id="s_tipo_porque"></div></div>
-    </div>
-
-    <div class="block">
-      <h3>Qué voy a probar</h3>
-      <div class="srow"><div class="q">La parte que pruebo</div><div class="a" id="s_foco"></div></div>
-      <div class="srow"><div class="q">Qué queremos aprender del usuario</div><div class="a" id="s_aprender"></div></div>
-      <div class="srow"><div class="q">Nuestro prototipo debe permitir que el usuario…</div><div class="a" id="s_permitir"></div></div>
-    </div>
-
-    <div class="block">
-      <h3>Materiales <span id="s_presu" style="font-weight:normal;color:#555"></span></h3>
-      <ul class="mlist" id="s_mats"></ul>
-    </div>
-
-    <div class="block">
-      <h3>Mi bosquejo</h3>
-      <div class="srow"><div class="q">Descripción</div><div class="a" id="s_boceto_desc"></div></div>
-      <div id="s_boceto_img_wrap" class="bcheck"></div>
-    </div>
-
-    <div class="block">
-      <h3>Hoja de ruta para construirlo</h3>
-      <ol class="mlist" id="s_ruta"></ol>
-    </div>
-
-    <div class="block">
-      <h3>Matriz de feedback · equipo evaluador: <span id="s_fb_equipo" style="text-transform:none;font-weight:normal"></span></h3>
-      <div class="srow"><div class="q">✅ Qué funcionó</div><div class="a" id="s_fb_funciono"></div></div>
-      <div class="srow"><div class="q">🛠️ Qué mejorar</div><div class="a" id="s_fb_mejorar"></div></div>
-      <div class="srow"><div class="q">❓ Dudas</div><div class="a" id="s_fb_dudas"></div></div>
-      <div class="srow"><div class="q">💡 Nuevas ideas</div><div class="a" id="s_fb_ideas"></div></div>
-    </div>
-
-    <div class="block">
-      <h3>Ticket de salida</h3>
-      <div class="srow"><div class="q">Objetivo de un prototipo</div><div class="a" id="s_t1"></div></div>
-      <div class="srow"><div class="q">Tipo ideal para un servicio</div><div class="a" id="s_t2"></div></div>
-      <div class="srow"><div class="q">"Falla rápido y barato" significa</div><div class="a" id="s_t3"></div></div>
-      <div class="srow"><div class="q">Insignias logradas</div><div class="a" id="s_badges"></div></div>
-    </div>
-
-    <div class="block">
-      <h3>Participación individual</h3>
-      <table id="s_partic" style="width:100%;border-collapse:collapse;font-size:13.5px"></table>
-    </div>
-  </div></div>
-
+<div class="hero screen"><span class="eyebrow">Unidad 6 · Prototipar · Ruta a la mini feria</span><h1>Diseñen su prototipo</h1><p class="lead">Prototipar es hacer su idea tocable para <b>fallar rápido y barato</b>. Hoy diseñan, en equipo, el <b>plan de su prototipo</b>: idea, tipo, hipótesis, ruta de construcción y primer boceto. En la Sesión 20 lo construyen y lo presentan en la <b>mini feria</b> de la Sesión 22.</p><div class="ruta-map"><div class="st on"><span>🧩</span><div><small>Sesión 19</small>Parte A · Diseñan</div></div><span class="arr">➜</span><div class="st"><span>🛠️</span><div><small>Sesión 20</small>Parte B · Construyen</div></div><span class="arr">➜</span><div class="st"><span>🎪</span><div><small>Sesión 22</small>Mini feria</div></div></div></div>
+  <div id="main"><div id="app"></div></div>
+  <p class="footer-note screen">Su plan es la base para construir en la Sesión 20. Antes de salir descarguen el PDF y súbanlo a Brightspace. El avance se guarda en este navegador (memoria local); no se sube a ninguna nube.</p>
+  <div id="hoja"></div>
+  <div id="tarjetaPrint"></div>
 </div>
-
 <script>
-/* ============================================================================
-   CONTENIDO EDITABLE — Irene puede cambiar esto sin tocar la lógica de abajo.
-   ============================================================================ */
-const CONTENIDO = {
-
-  /* Tipos de prototipo de baja fidelidad. 'color' debe coincidir con las
-     variables --c-<id> del CSS para que la tarjeta se pinte igual. 'rec' son
-     materiales sugeridos (ids de CONTENIDO.materiales): son una GUÍA, no la
-     respuesta; el alumno decide qué usar. */
-  tipos:[
-    {id:'boceto', nombre:'Boceto / Sketch', emoji:'✏️', color:'#E4572E',
-      sub:'Dibujos rápidos a mano',
-      desc:'Dibujas a mano interfaces, empaques o flujos. Ideal cuando la idea todavía es abstracta y quieres verla ya.',
-      rec:['papel','plumones','postits'], ejemplo:'Ej. bocetar en post-its las pantallas de una app.'},
-    {id:'mockup', nombre:'Mockup en papel', emoji:'📱', color:'#2A7DE1',
-      sub:'Pantallas de mentira',
-      desc:'Simulas una app o página con pantallas dibujadas que el usuario "toca" en orden. Sin código, puro papel.',
-      rec:['papel','plumones','postits','celular'], ejemplo:'Ej. mover hojas para simular que se abre otra pantalla.'},
-    {id:'maqueta', nombre:'Maqueta física', emoji:'📦', color:'#1B998B',
-      sub:'Un modelo 3D casero',
-      desc:'Armas un modelo tocable con material reciclado: cartón, plastilina, palitos. Ideal para objetos y espacios.',
-      rec:['carton','cinta','tijeras','plastilina','palitos'], ejemplo:'Ej. una caja de cartón que finge ser una máquina.'},
-    {id:'story', nombre:'Storyboard / servicio', emoji:'🎬', color:'#8E44EC',
-      sub:'La historia en viñetas',
-      desc:'Dibujas en viñetas el viaje del usuario, o actúan el servicio como juego de roles. Ideal para experiencias y servicios.',
-      rec:['papel','plumones','postits'], ejemplo:'Ej. una historieta de 6 pasos de cómo alguien usa tu servicio.'}
-  ],
-
-  /* Materiales del taller. costo = monedas · tiempo = minutos de armado.
-     lofi:false marca los materiales que sacan de la baja fidelidad (caros/lentos). */
-  materiales:[
-    {id:'papel',    n:'Hojas de papel', emoji:'📄', costo:1, tiempo:1, lofi:true},
-    {id:'plumones', n:'Plumones',       emoji:'🖍️', costo:1, tiempo:1, lofi:true},
-    {id:'postits',  n:'Post-its',       emoji:'🟨', costo:1, tiempo:1, lofi:true},
-    {id:'carton',   n:'Cartón',         emoji:'📦', costo:2, tiempo:3, lofi:true},
-    {id:'cinta',    n:'Cinta',          emoji:'🩹', costo:1, tiempo:1, lofi:true},
-    {id:'tijeras',  n:'Tijeras',        emoji:'✂️', costo:1, tiempo:2, lofi:true},
-    {id:'plastilina',n:'Plastilina',    emoji:'🟢', costo:2, tiempo:3, lofi:true},
-    {id:'palitos',  n:'Palitos de madera',emoji:'🪵', costo:2, tiempo:3, lofi:true},
-    {id:'celular',  n:'Fotos con el celular',emoji:'📷', costo:1, tiempo:2, lofi:true},
-    /* "trampas": caros y lentos. Un solo material así rompe el presupuesto. */
-    {id:'kit',      n:'Kit electrónico',emoji:'🔌', costo:9, tiempo:22, lofi:false},
-    {id:'impresion',n:'Impresión 3D',   emoji:'🖨️', costo:10, tiempo:30, lofi:false}
-  ],
-
-  /* Presupuesto de "rápido y barato" (una clase). Si se pasa, avisa. */
-  presupuesto:{ costoMax:10, tiempoMax:20 },
-
-  /* Textos de cierre para las insignias en la hoja PDF. */
-  badgesTxt:{ rapido:'🐣 Fallo rápido', barato:'🪙 Bajo costo', mostrable:'👀 Mostrable' }
+const CFG = {
+  ls:'edt_s19_parteA', doneKey:'edt_u6_s19_completo', kicker:'Sesión 19 · Prototipar · Parte A',
+  hojaTitulo:'Parte A · Diseño de nuestro prototipo', pdfName:'S19 Parte A', thermoLabel:'Claridad (antes → después)',
+  entregaTitulo:'Descarguen el PDF del equipo',
+  doneMsg:'Descarguen el PDF y súbanlo a Brightspace (un solo archivo por equipo). <b>La clave para abrir la Parte B (Sesión 20) la muestra su profesora en la próxima sesión.</b>',
+  sections:[
+   {id:'sec-equipo',num:'✦',kicker:'Antes de encender la mesa',title:'¿Quién trabaja en este taller?',color:'var(--c-idea)',step:['👥','Equipo'],sheetTitle:'Equipo',
+    hint:'Un integrante captura por todo el equipo. Estos datos se piden <b>una sola vez</b> y encabezan su PDF. El avance se guarda automáticamente en este navegador; no se sube a ninguna nube. Aun así, descarguen su PDF antes de salir.',
+    blocks:[
+     {t:'team',req:true},
+     {t:'timer',label:'Calentamiento · el porta-celular (90 s)',secs:90,color:'var(--c-idea)',flag:'warm',
+      hint:'Con lo que tengan en la mesa (cuaderno, plumones, post-its), construyan un <b>porta-celular</b> que sostenga un teléfono de pie. Cuando suene, <b>el equipo de al lado lo prueba</b>. Eso es prototipar: construir algo probable ya y aprender cuando alguien más lo usa.'},
+     {t:'thermo',k:'antes',req:true,color:'var(--c-idea)',label:'Antes de empezar, ¿qué tan claro tiene el equipo cómo probar su idea sin gastar de más? (1 = ni idea · 5 = clarísimo)'}
+    ]},
+   {id:'sec-p1',num:'1',kicker:'Paso 1 · Su idea',title:'🧩 ¿Qué van a prototipar?',color:'var(--c-idea)',step:['1','Idea'],sheetTitle:'La idea que prototipamos',
+    goal:'Meta: una sola idea, un usuario y un problema',
+    hint:'Escriban en una frase la solución de su UChallenge que van a probar. No tiene que ser grande; tiene que ser concreta.',
+    ana:'En una tarjeta, cada equipo escribe en una sola frase la solución del UChallenge, para quién es y qué problema resuelve. Si no cabe en una línea, todavía está muy grande: recórtenla.',
+    blocks:[
+     {t:'area',k:'idea_sol',req:true,label:'La solución que vamos a prototipar es…',ph:'Ej. Una app que avisa qué salones del campus están libres para estudiar'},
+     {t:'pair',items:[
+       {t:'area',k:'usuario',req:true,label:'Nuestro usuario es…',ph:'Ej. Estudiantes de primer semestre que buscan dónde estudiar'},
+       {t:'area',k:'problema',req:true,label:'El problema que resuelve es…',ph:'Ej. Pierden 20 minutos buscando un salón libre'}]}
+    ]},
+   {id:'sec-p2',num:'2',kicker:'Paso 2 · Elijan su tipo',title:'🃏 Voltean las tarjetas y eligen',color:'var(--c-boceto)',step:['2','Tipo'],sheetTitle:'Tipo de prototipo',
+    goal:'Meta: el tipo que encaje con su idea, no el más vistoso',
+    hint:'Toquen una tarjeta para voltearla y ver de qué va cada tipo. Elijan <b>uno</b>. La decisión es del equipo: nadie les dice cuál es “el correcto”. Si eligen Digital, la IA puede ayudarles a arrancar.',
+    ana:'Imprime las 4 tarjetas de tipos. Cada equipo las lee y marca la que va a usar, con una línea de por qué ese tipo va con su idea.',
+    blocks:[{t:'tipo',k:'tipo',whyK:'tipo_porque',req:true,whyPh:'Qué tiene su idea que hace a ese tipo el más útil para probarla.'}]},
+   {id:'sec-p3',num:'3',kicker:'Paso 3 · La hipótesis',title:'🔬 ¿Qué quieren averiguar?',color:'var(--c-mockup)',step:['3','Hipótesis'],sheetTitle:'Hipótesis y función clave',
+    goal:'Meta: probar una sola función, no toda la idea',
+    hint:'Un prototipo de baja fidelidad no prueba todo. Definan su <b>hipótesis</b> y la <b>función clave</b>: la parte sin la cual su idea no se entiende.',
+    ana:'En la tarjeta anoten tres líneas: “creemos que ___ podrá ___ porque ___”, “nuestro prototipo debe permitir que el usuario ___” y “queremos aprender ___”.',
+    blocks:[
+     {t:'area',k:'hipotesis',req:true,label:'Creemos que [usuario] podrá [hacer algo] porque [razón]',ph:'Ej. Creemos que un estudiante podrá encontrar un salón libre en 10 segundos porque verá un mapa con colores.'},
+     {t:'text',k:'funcion',req:true,label:'Nuestro prototipo debe permitir que el usuario…',ph:'Ej. encuentre un salón libre en menos de 10 segundos'},
+     {t:'area',k:'aprender',req:true,label:'De nuestro usuario queremos aprender…',ph:'Ej. Si entiende el mapa sin que le expliquemos'}
+    ]},
+   {id:'sec-p4',num:'4',kicker:'Paso 4 · Ruta de construcción',title:'🧰 ¿Con qué y quién lo construye?',color:'var(--c-maqueta)',step:['4','Ruta'],sheetTitle:'Ruta de construcción para la Sesión 20',
+    goal:'Meta: llegar a la Sesión 20 listos para construir, sin perder tiempo',
+    hint:'Elijan con qué van a construir (pueden combinar, y <b>usar IA está permitido</b>) y qué material trae cada quien. Asignen roles: en la Sesión 20 rotan.',
+    ana:'Anoten en una hoja las herramientas elegidas, el material de cada integrante y los 4 roles: dibuja, presenta, observa y escribe.',
+    blocks:[
+     {t:'chips',k:'herr',req:true,label:'Herramientas para construir (elijan las que usarán)',opts:[
+       {id:'papel',e:'✏️',n:'Papel y plumones'},{id:'postits',e:'🟨',n:'Post-its'},{id:'carton',e:'📦',n:'Cartón / reciclado'},
+       {id:'canva',e:'🎨',n:'Canva'},{id:'figma',e:'🧩',n:'Figma / Figma Make'},{id:'uizard',e:'🧱',n:'Uizard'},{id:'ia',e:'🤖',n:'ChatGPT / IA'}]},
+     {t:'list',k:'traer',req:true,min:1,rows:2,label:'Lo que cada integrante trae a la Sesión 20',ph:'Material {n} — y quién lo trae'},
+     {t:'pair',items:[{t:'text',k:'r_dibuja',req:true,label:'🎨 Dibuja / construye',ph:'Nombre'},{t:'text',k:'r_presenta',req:true,label:'🗣️ Presenta',ph:'Nombre'}]},
+     {t:'pair',items:[{t:'text',k:'r_observa',req:true,label:'👀 Observa y anota',ph:'Nombre'},{t:'text',k:'r_escribe',req:true,label:'✍️ Escribe y captura',ph:'Nombre'}]}
+    ]},
+   {id:'sec-p5',num:'5',kicker:'Paso 5 · Boceto V0',title:'✏️ Dibújenlo o descríbanlo',color:'var(--c-story)',step:['5','Boceto'],sheetTitle:'Boceto V0',
+    goal:'Meta: que otro lo entienda sin que ustedes lo expliquen',
+    hint:'Hagan un boceto rápido en el lienzo (opcional) y describan con palabras cómo se verá su prototipo. Luego corran el reto de <b>falla rápido</b>.',
+    ana:'El boceto se hace en hoja. Un compañero cronometra 3 minutos en voz alta mientras el equipo arma la primera versión mostrable con lo que tenga.',
+    blocks:[
+     {t:'canvas',k:'boceto',alt:'boceto_desc',label:'Lienzo de boceto (opcional si describen)'},
+     {t:'area',k:'boceto_desc',req:true,label:'Describan su prototipo en palabras',ph:'Ej. Tres pantallas dibujadas a mano: inicio, mapa de salones y aviso de “libre”. El usuario las toca en orden.'},
+     {t:'timer',label:'Reto “falla rápido” (3 min)',secs:180,color:'var(--c-story)',flag:'reto',req:true,
+      hint:'Ponte el reloj y armen algo <b>mostrable</b> antes de que suene. No busquen que quede bonito; busquen que se entienda.'}
+    ]},
+   {id:'sec-p6',num:'6',kicker:'Paso 6 · Feedback del vecino',title:'🔁 Intercambien y recojan feedback',color:'var(--c-mockup)',step:['6','Feedback'],sheetTitle:'Matriz de feedback',
+    goal:'Meta: que otro equipo use su prototipo sin que ustedes lo expliquen',
+    hint:'Muestren su boceto al equipo vecino <b>sin explicar de más</b> y observen cómo lo interpretan. Anoten lo que dijeron: es su <b>Matriz de Feedback</b>. La versión en papel lleva la firma del equipo evaluador.',
+    ana:'Completen la matriz de 4 cuadrantes en hoja y pídanle su firma al equipo evaluador. Regla de oro: quien presenta no explica de más.',
+    blocks:[
+     {t:'text',k:'fb_equipo',req:true,label:'Equipo evaluador',ph:'Nombre del equipo que vio su boceto'},
+     {t:'pair',items:[{t:'area',k:'fb_funciono',req:true,label:'✅ Qué funcionó',ph:'Lo que entendieron sin ayuda.'},{t:'area',k:'fb_mejorar',req:true,label:'🛠️ Qué mejorar',ph:'Lo que confundió, faltó o estorbó.'}]},
+     {t:'pair',items:[{t:'area',k:'fb_dudas',label:'❓ Dudas',ph:'Preguntas que les hicieron.'},{t:'area',k:'fb_ideas',label:'💡 Nuevas ideas',ph:'Ideas que surgieron al ver cómo lo usaron.'}]}
+    ]},
+   {id:'sec-cierre',num:'🏁',kicker:'Cierre',title:'Su Parte A quedó lista',color:'var(--c-ticket)',step:['🏁','Ticket'],sheetTitle:'Ticket de salida',
+    hint:'Respondan el ticket de salida como equipo. Con esto cierran la Parte A: en la Sesión 20 convierten este plan en un prototipo que presentarán en la mini feria (Sesión 22).',
+    blocks:[
+     {t:'area',k:'t1',req:true,label:'1 · ¿Cuál es el principal objetivo de hacer un prototipo?'},
+     {t:'text',k:'t2',req:true,label:'2 · Mencionen un tipo de prototipo ideal para un proyecto de servicios.'},
+     {t:'area',k:'t3',req:true,label:'3 · ¿Qué significa la frase “falla rápido y barato”?'},
+     {t:'thermo',k:'despues',req:true,color:'var(--c-ticket)',label:'Ya para cerrar, ¿qué tan claro tiene ahora el equipo cómo probar su idea sin gastar de más? (1–5)'}
+    ]}
+  ]
 };
-/* ========================================================================== */
 
+/* ============================================================================
+   MOTOR DE LA RUTA A LA MINI FERIA (compartido por S19 Parte A y S20 Parte B)
+   Offline · un solo archivo · localStorage (sin servidor ni cuentas).
+   La actividad se declara en CFG (arriba); aquí abajo solo está la lógica.
+   ============================================================================ */
 const $  = (s,c)=> (c||document).querySelector(s);
 const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
-const esc = s => (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc = s => (s==null?'':s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const el = (tag,cls,html)=>{ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; };
 
-const state = {
-  campos:{},                 /* todos los data-k */
-  tipo:'',                   /* id del tipo elegido */
-  mats:{},                   /* id -> true de materiales predefinidos */
-  matsExtra:[],              /* strings agregados por el alumno */
-  partic:{},                 /* % de participación por integrante (1..5) */
-  ruta:[],                   /* pasos de la hoja de ruta */
-  thermo:{},                 /* antes / despues */
-  retoUsado:false,           /* corrió el reto "falla rápido" */
-  boceto:false,              /* dibujó algo en el lienzo */
-  bocetoData:null            /* dataURL del lienzo, para restaurar el dibujo */
-};
+const TIPOS = [
+  {id:'papel',    nombre:'Papel / Boceto',          emoji:'✏️', color:'#E4572E', sub:'Dibujos rápidos a mano',
+   desc:'Dibujas a mano interfaces, empaques o flujos. Ideal cuando la idea todavía es abstracta y quieres verla ya.',
+   rec:'Hojas, plumones, post-its', ejemplo:'Ej. bocetar en post-its las pantallas de una app.'},
+  {id:'digital',  nombre:'Digital (wireframe / mockup)', emoji:'📱', color:'#2A7DE1', sub:'Pantallas sin código',
+   desc:'Pantallas interactivas de mentira para una app o página. Puedes hacerlas a mano o apoyarte en IA.',
+   rec:'Canva, Figma, Uizard, ChatGPT / IA', ejemplo:'Ej. 5 pantallas que el usuario “toca” en orden.'},
+  {id:'fisico',   nombre:'Físico (maqueta)',        emoji:'📦', color:'#1B998B', sub:'Un modelo 3D casero',
+   desc:'Armas un modelo tocable con material reciclado. Ideal para objetos y espacios.',
+   rec:'Cartón, plastilina, palitos, cinta', ejemplo:'Ej. una caja de cartón que finge ser una máquina.'},
+  {id:'servicio', nombre:'Servicio / Experiencia',  emoji:'🎭', color:'#8E44EC', sub:'La historia en viñetas',
+   desc:'Dibujas el viaje del usuario en viñetas o actúan el servicio como juego de roles. Ideal para servicios.',
+   rec:'Papel, plumones, post-its', ejemplo:'Ej. un storyboard de 6 pasos de cómo alguien usa tu servicio.'}
+];
+const tipoById = id => TIPOS.find(t=>t.id===id);
 
-/* ============================================================
-   MEMORIA LOCAL (localStorage) — autoguardado y restauración.
-   Todo queda en este navegador; nada se envía a ningún servidor.
-   ============================================================ */
-const LS_KEY='edt_s19_prototipar';
-function guardarLocal(){
-  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){}
-}
-function cargarLocal(){
-  try{
-    const raw=localStorage.getItem(LS_KEY);
-    if(raw){ Object.assign(state, JSON.parse(raw)); }
-  }catch(e){}
-}
-cargarLocal();
+/* ---------------- estado + memoria local ---------------- */
+const S = {v:{}, partic:{}};
+const LS = CFG.ls;
+function load(){ try{ const r=localStorage.getItem(LS); if(r){ const o=JSON.parse(r); S.v=o.v||{}; S.partic=o.partic||{}; } }catch(e){} }
+function save(){ try{ localStorage.setItem(LS,JSON.stringify(S)); const w=$('#saveWarn'); if(w) w.hidden=true; }catch(e){ const w=$('#saveWarn'); if(w) w.hidden=false; } }
+load();
+const g   = k => S.v[k];
+const txt = k => ((S.v[k]==null?'':S.v[k])+'').trim();
+function setv(k,val){ S.v[k]=val; onChange(); }
+function onChange(){ updateProgress(); save(); }
+function integrantes(){ return [1,2,3,4,5].map(i=>({i:i,n:txt('integrante'+i),m:txt('matricula'+i)})).filter(x=>x.n); }
+function integrantesTxt(){ return integrantes().map(x=>x.n+(x.m?' ('+x.m+')':'')).join(', '); }
+if(CFG.init) CFG.init(S);
 
-/* --- sonido opcional (WebAudio, sin archivos) --- */
+/* ---------------- sonido ---------------- */
 let sndOn=false, actx=null;
 function ding(freq){ if(!sndOn) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-  const o=actx.createOscillator(),g=actx.createGain(); o.frequency.value=freq||880; o.connect(g); g.connect(actx.destination);
-  g.gain.setValueAtTime(.0001,actx.currentTime); g.gain.exponentialRampToValueAtTime(.10,actx.currentTime+.01);
-  g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18); o.start(); o.stop(actx.currentTime+.19);}catch(e){} }
+  const o=actx.createOscillator(),gn=actx.createGain(); o.frequency.value=freq||880; o.connect(gn); gn.connect(actx.destination);
+  gn.gain.setValueAtTime(.0001,actx.currentTime); gn.gain.exponentialRampToValueAtTime(.10,actx.currentTime+.01);
+  gn.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18); o.start(); o.stop(actx.currentTime+.19);}catch(e){} }
 function fanfare(){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-  [523,659,784,1047].forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type='triangle'; o.frequency.value=f;
-    o.connect(g); g.connect(actx.destination); const t0=actx.currentTime+i*.14;
-    g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(.16,t0+.02); g.gain.exponentialRampToValueAtTime(.0001,t0+.38);
+  [523,659,784,1047].forEach((f,i)=>{ const o=actx.createOscillator(),gn=actx.createGain(); o.type='triangle'; o.frequency.value=f;
+    o.connect(gn); gn.connect(actx.destination); const t0=actx.currentTime+i*.14;
+    gn.gain.setValueAtTime(.0001,t0); gn.gain.exponentialRampToValueAtTime(.16,t0+.02); gn.gain.exponentialRampToValueAtTime(.0001,t0+.38);
     o.start(t0); o.stop(t0+.4); }); }catch(e){} }
 $('#sndbtn').addEventListener('click',function(){ sndOn=!sndOn; this.setAttribute('aria-pressed',sndOn);
   this.textContent=sndOn?'🔊 Sonido':'🔇 Sonido'; if(sndOn) ding(); });
 
-/* --- campos con data-k --- */
-$$('[data-k]').forEach(el=>{
-  const k=el.dataset.k;
-  if(state.campos[k]===undefined) state.campos[k]='';
-  el.value=state.campos[k];
-  el.addEventListener('input',()=>{ state.campos[k]=el.value; if(k.indexOf('integrante')===0) renderPartic(); onChange(); });
-});
-/* fecha automática (solo lectura): se estampa sola la primera vez */
-if(!state.campos.fecha){
-  state.campos.fecha=new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,' / ');
-  const ff=$('[data-k=fecha]'); if(ff) ff.value=state.campos.fecha; guardarLocal();
-}
-function campo(k){ return (state.campos[k]||'').trim(); }
-function integrantes(){ return [1,2,3,4,5].map(i=>({i:i,n:campo('integrante'+i),m:campo('matricula'+i)})).filter(x=>x.n); }
-function integrantesTxt(){ return integrantes().map(x=>x.n+(x.m?' ('+x.m+')':'')).join(', '); }
-function onChange(){ updateProgress(); guardarLocal(); }
-
-/* ============================================================
-   CRONÓMETROS (calentamiento + reto). Reutiliza el mismo motor.
-   ============================================================ */
-$$('[data-timer]').forEach(box=>{
-  const total=parseInt(box.dataset.secs,10)||60;
-  const clock=$('[data-role=clock]',box), msg=$('[data-role=msg]',box);
-  const startBtn=$('[data-role=start]',box), resetBtn=$('[data-role=reset]',box);
-  let left=total, id=null, running=false;
-  const fmt=s=>{ const m=Math.floor(s/60), r=s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; };
-  function paint(){ clock.textContent=fmt(left); }
-  function stop(){ if(id){clearInterval(id);id=null;} running=false; clock.classList.remove('go'); }
-  function finish(){ stop(); left=0; paint(); startBtn.textContent='▶ Otra vez'; msg.textContent='¡Tiempo! ¿Ya tienes algo que mostrar?';
-    if(box.dataset.timer==='reto'){ state.retoUsado=true; updateProgress(); guardarLocal(); } ding(560); }
-  startBtn.addEventListener('click',()=>{
-    if(running){ stop(); startBtn.textContent='▶ Reanudar'; msg.textContent='En pausa.'; return; }
-    if(left<=0) left=total;
-    running=true; clock.classList.add('go'); startBtn.textContent='⏸ Pausar'; msg.textContent='¡Corriendo! Construye ya.';
-    if(box.dataset.timer==='reto'){ state.retoUsado=true; updateProgress(); guardarLocal(); }
-    id=setInterval(()=>{ left--; paint(); if(left<=0) finish(); },1000);
-  });
-  resetBtn.addEventListener('click',()=>{ stop(); left=total; paint(); startBtn.textContent='▶ Arrancar'; msg.textContent='Listo para arrancar de nuevo.'; });
-  paint();
-});
-
-/* ============================================================
-   TERMÓMETROS
-   ============================================================ */
-$$('[data-thermo]').forEach(g=>{ const key=g.dataset.thermo;
-  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
-    b.setAttribute('aria-pressed','true'); state.thermo[key]=+b.dataset.v; ding(); updateProgress(); guardarLocal();
-  }));
-});
-
-/* ============================================================
-   PASO 2 · TARJETAS 3D DE TIPO
-   ============================================================ */
-const tiposEl=$('#tipos');
-CONTENIDO.tipos.forEach(t=>{
-  const card=document.createElement('div');
-  card.className='flip'; card.dataset.id=t.id; card.style.setProperty('--tc',t.color);
-  card.setAttribute('role','button'); card.setAttribute('tabindex','0');
-  card.setAttribute('aria-label','Tipo '+t.nombre+'. Activa para ver detalle.');
-  const rec=t.rec.map(id=>{ const m=CONTENIDO.materiales.find(x=>x.id===id); return m?m.n:id; }).join(', ');
-  card.innerHTML=
-    '<div class="inner">'+
-      '<div class="face front">'+
-        '<div class="big">'+t.emoji+'</div>'+
-        '<div class="tn">'+esc(t.nombre)+'</div>'+
-        '<div class="tsub">'+esc(t.sub)+'</div>'+
-        '<div class="flipcue">Toca para voltear ↻</div>'+
-      '</div>'+
-      '<div class="face back">'+
-        '<div class="bt">'+t.emoji+' '+esc(t.nombre)+'</div>'+
-        '<p>'+esc(t.desc)+'</p>'+
-        '<p class="rec"><b>Suele usar:</b> '+esc(rec)+'</p>'+
-        '<p class="rec">'+esc(t.ejemplo)+'</p>'+
-        '<button type="button" class="pick" data-pick="'+t.id+'">Elegir este tipo</button>'+
-      '</div>'+
-    '</div>';
-  tiposEl.appendChild(card);
-
-  function toggleFlip(){ card.classList.toggle('flip-on'); }
-  card.addEventListener('click',e=>{ if(e.target.closest('[data-pick]')) return; toggleFlip(); });
-  card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleFlip(); } });
-  $('[data-pick]',card).addEventListener('click',e=>{ e.stopPropagation(); elegirTipo(t.id); });
-});
-
-function pintarTipo(){
-  $$('.flip',tiposEl).forEach(c=>{
-    const on = c.dataset.id===state.tipo;
-    c.classList.toggle('sel',on);
-    const p=$('.pick',c); if(p){ p.classList.toggle('on',on); p.textContent=on?'Elegido':'Elegir este tipo'; }
-  });
-  const t=CONTENIDO.tipos.find(x=>x.id===state.tipo);
-  $('#tipoEco').innerHTML = t
-    ? 'Elegiste <b>'+esc(t.nombre)+'</b>. '+esc(t.ejemplo)
-    : 'Todavía no eliges tipo.';
-}
-function elegirTipo(id){
-  state.tipo = (state.tipo===id) ? '' : id;
-  pintarTipo();
-  ding(720);
-  renderMesa();
-  updateProgress();
-  guardarLocal();
+/* ---------------- utilidades ---------------- */
+function isReq(b){ return typeof b.req==='function' ? !!b.req() : !!b.req; }
+function fileToDataURL(file,cb){
+  const r=new FileReader();
+  r.onload=e=>{ const img=new Image(); img.onload=()=>{
+      const M=900; let w=img.width,h=img.height; const sc=Math.min(1,M/Math.max(w,h)); w=Math.round(w*sc); h=Math.round(h*sc);
+      const c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h);
+      cb(c.toDataURL('image/jpeg',.72)); };
+    img.src=e.target.result; };
+  r.readAsDataURL(file);
 }
 
-/* ============================================================
-   PASO 4 · MATERIALES (chips + presupuesto + mesa)
-   ============================================================ */
-const matsEl=$('#mats');
-CONTENIDO.materiales.forEach(m=>{
-  const b=document.createElement('button');
-  b.type='button'; b.className='mat-chip'+(m.lofi?'':' caro'); b.dataset.id=m.id;
-  b.setAttribute('aria-pressed','false');
-  b.innerHTML='<span class="e">'+m.emoji+'</span><span>'+esc(m.n)+'</span>'+
-    '<span class="cost">🪙'+m.costo+' · ⏱️'+m.tiempo+(m.lofi?'':' · caro')+'</span>';
-  b.addEventListener('click',()=>{
-    const on=!state.mats[m.id];
-    state.mats[m.id]=on; b.setAttribute('aria-pressed',on?'true':'false');
-    ding(on?820:500); renderMesa(); updateProgress(); guardarLocal();
-  });
-  matsEl.appendChild(b);
-});
-
-/* materiales extra que agrega el alumno */
-const misExtraEl=$('#misExtra');
-$('#matAddBtn').addEventListener('click',addExtra);
-$('#matExtra').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addExtra(); } });
-function addExtra(){
-  const inp=$('#matExtra'); const v=(inp.value||'').trim(); if(!v) return;
-  state.matsExtra.push(v); inp.value=''; renderExtra(); renderMesa(); updateProgress(); ding(820); guardarLocal();
+/* ---------------- renderizado de bloques ---------------- */
+const REG=[];                 /* {sec,b} de todos los bloques */
+function field(b,parent){
+  const wrap=el('div');
+  wrap.innerHTML='<label class="f">'+b.label+'</label>';
+  const inp = b.t==='area' ? el('textarea','t') : el('input','t');
+  if(b.t==='text') inp.type='text';
+  inp.placeholder=b.ph||''; inp.value=g(b.k)||''; if(b.readonly) inp.readOnly=true;
+  inp.addEventListener('input',()=>{ setv(b.k,inp.value); if(b.k.indexOf('integrante')===0) renderPartic(); });
+  wrap.appendChild(inp); parent.appendChild(wrap); return inp;
 }
-function renderExtra(){
-  misExtraEl.innerHTML='';
-  state.matsExtra.forEach((txt,i)=>{
-    const s=document.createElement('span'); s.className='x';
-    s.innerHTML='📎 '+esc(txt)+' <button type="button" title="Quitar" aria-label="Quitar">✕</button>';
-    $('button',s).addEventListener('click',()=>{ state.matsExtra.splice(i,1); renderExtra(); renderMesa(); updateProgress(); guardarLocal(); });
-    misExtraEl.appendChild(s);
-  });
-}
-
-function matsElegidos(){ return CONTENIDO.materiales.filter(m=>state.mats[m.id]); }
-function totales(){
-  let costo=0,tiempo=0,hayCaro=false;
-  matsElegidos().forEach(m=>{ costo+=m.costo; tiempo+=m.tiempo; if(!m.lofi) hayCaro=true; });
-  return {costo,tiempo,hayCaro};
-}
-
-/* ---- render de la mesa isométrica ---- */
-const tablero=$('#tablero'), letrero=$('#letrero'), escenaVacia=$('#escenaVacia');
-/* posiciones fijas sobre la mesa (left%, top%, alturaZ px) */
-const SLOTS=[
-  [16,30,26],[30,58,16],[44,26,30],[40,66,14],[54,52,22],
-  [22,72,12],[62,30,24],[52,72,18],[70,60,16],[34,40,28],
-  [66,44,20],[26,50,20],[48,44,24]
-];
-function renderMesa(){
-  /* limpia items previos */
-  $$('.item',tablero).forEach(n=>n.remove());
-  const elegidos=[...matsElegidos().map(m=>({emoji:m.emoji,n:m.n})),
-                  ...state.matsExtra.map(x=>({emoji:'📎',n:x}))];
-  elegidos.forEach((it,i)=>{
-    const s=SLOTS[i%SLOTS.length];
-    const d=document.createElement('div');
-    d.className='item'; d.style.left=s[0]+'%'; d.style.top=s[1]+'%'; d.style.setProperty('--z',s[2]+'px');
-    d.innerHTML='<div class="ico">'+it.emoji+'</div><div class="lbl">'+esc(it.n)+'</div>';
-    tablero.appendChild(d);
-    requestAnimationFrame(()=>d.classList.add('show'));
-  });
-  /* letrero del tipo */
-  const t=CONTENIDO.tipos.find(x=>x.id===state.tipo);
-  if(t){ letrero.style.setProperty('--tc',t.color); $('#letreroTag').innerHTML=t.emoji+' '+esc(t.nombre); letrero.classList.add('show'); }
-  else { letrero.classList.remove('show'); }
-  escenaVacia.style.display = (elegidos.length||t) ? 'none' : 'block';
-  renderMedidores();
-}
-
-function renderMedidores(){
-  const tot=totales();
-  const costo=tot.costo, tiempo=tot.tiempo, hayCaro=tot.hayCaro;
-  const cMax=CONTENIDO.presupuesto.costoMax, tMax=CONTENIDO.presupuesto.tiempoMax;
-  $('#costoVal').textContent=costo; $('#costoMax').textContent=cMax;
-  $('#tiempoVal').textContent=tiempo; $('#tiempoMax').textContent=tMax;
-  $('#costoBar').style.width=Math.min(100,cMax?costo/cMax*100:0)+'%';
-  $('#tiempoBar').style.width=Math.min(100,tMax?tiempo/tMax*100:0)+'%';
-  const overC=costo>cMax, overT=tiempo>tMax;
-  $('#medCosto').classList.toggle('over',overC);
-  $('#medTiempo').classList.toggle('over',overT);
-  const msg=$('#presuMsg');
-  if(overC||overT||hayCaro){
-    msg.className='presu-msg over';
-    const porque = hayCaro ? 'metiste algo caro o lento' : (overC?'te pasaste de monedas':'te pasaste de tiempo');
-    msg.textContent='Ojo: '+porque+'. Eso ya no es baja fidelidad. Cambia algo caro por papel o cartón para volver a "rápido y barato".';
-  } else if(matsElegidos().length){
-    msg.className='presu-msg ok';
-    msg.textContent='Vas dentro del presupuesto de "rápido y barato". Así se ve la baja fidelidad.';
-  } else {
-    msg.className='presu-msg ok';
-    msg.textContent='Toca materiales para reunir lo que vas a usar.';
+function renderBlock(b,parent,sec){
+  REG.push({sec:sec,b:b});
+  switch(b.t){
+    case 'info': { const h=(typeof b.html==='function')?b.html():b.html; if(h) parent.appendChild(el('div',b.cls||'',h)); break; }
+    case 'text': case 'area': field(b,parent); break;
+    case 'pair': { const gr=el('div','grid2'); b.items.forEach(x=>renderBlock(x,gr,sec)); parent.appendChild(gr); break; }
+    case 'team': renderTeam(b,parent); break;
+    case 'tipo': renderTipo(b,parent); break;
+    case 'chips': renderChips(b,parent); break;
+    case 'list': renderList(b,parent); break;
+    case 'canvas': renderCanvas(b,parent); break;
+    case 'photo': renderPhoto(b,parent); break;
+    case 'timer': renderTimer(b,parent); break;
+    case 'thermo': renderThermo(b,parent); break;
+    case 'tasks': renderTasks(b,parent); break;
+    case 'checks': renderChecks(b,parent); break;
+    case 'tarjeta': { parent.appendChild(el('div','',b.intro||'')); const d=el('div'); d.id='tarjetaPreview'; d.style.marginTop='12px'; parent.appendChild(d); break; }
   }
 }
 
-/* ============================================================
-   PASO 5 · HOJA DE RUTA
-   ============================================================ */
-const rutaList=$('#rutaList');
-function addRuta(val){ state.ruta.push(val||''); renderRuta(); updateProgress(); guardarLocal(); }
-function renderRuta(){
-  rutaList.innerHTML='';
-  state.ruta.forEach((txt,idx)=>{
-    const row=document.createElement('div'); row.className='ruta-row';
-    row.innerHTML='<span class="dot">'+(idx+1)+'</span>'+
-      '<input class="t ri" placeholder="Paso '+(idx+1)+' — ej. dibujar las 3 pantallas">'+
-      '<button class="del screen" type="button" title="Quitar" aria-label="Quitar">✕</button>';
-    const inp=$('.ri',row); inp.value=txt;
-    inp.addEventListener('input',e=>{ state.ruta[idx]=e.target.value; updateProgress(); guardarLocal(); });
-    $('.del',row).addEventListener('click',()=>{ state.ruta.splice(idx,1); renderRuta(); updateProgress(); guardarLocal(); });
-    rutaList.appendChild(row);
+function renderTeam(b,parent){
+  if(!g('fecha')){ S.v.fecha=new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,' / '); save(); }
+  const gr=el('div','grid3');
+  [['equipo','Nombre del equipo','Ej. Los Prototipos',false],['carrera','Carrera / grupo','Ej. Derecho · 1A',false],['fecha','Fecha (automática)','',true]].forEach(a=>{
+    const w=el('div','', '<label class="f">'+a[1]+'</label>'); const i=el('input','t'); i.placeholder=a[2]; i.value=g(a[0])||''; i.readOnly=a[3];
+    if(!a[3]) i.addEventListener('input',()=>setv(a[0],i.value)); w.appendChild(i); gr.appendChild(w); });
+  parent.appendChild(gr);
+  parent.appendChild(el('label','f','Integrantes (nombre y matrícula)')).style.marginTop='14px';
+  for(let n=1;n<=5;n++){
+    const r=el('div','irow'); const a=el('input','t'), m=el('input','t');
+    a.placeholder='Integrante '+n+' · nombre completo'; m.placeholder='Matrícula';
+    a.value=g('integrante'+n)||''; m.value=g('matricula'+n)||'';
+    a.addEventListener('input',()=>{ setv('integrante'+n,a.value); renderPartic(); });
+    m.addEventListener('input',()=>setv('matricula'+n,m.value));
+    r.appendChild(a); r.appendChild(m); parent.appendChild(r);
+  }
+}
+
+function renderTipo(b,parent){
+  const box=el('div','tipos'); parent.appendChild(box);
+  TIPOS.forEach(t=>{
+    const card=el('div','flip'); card.dataset.id=t.id; card.style.setProperty('--tc',t.color);
+    card.setAttribute('role','button'); card.tabIndex=0; card.setAttribute('aria-label','Tipo '+t.nombre+'. Activa para ver detalle.');
+    card.innerHTML='<div class="inner"><div class="face front"><div class="big">'+t.emoji+'</div><div class="tn">'+esc(t.nombre)+'</div><div class="tsub">'+esc(t.sub)+'</div><div class="flipcue">Toca para voltear ↻</div></div>'+
+      '<div class="face back"><div class="bt">'+t.emoji+' '+esc(t.nombre)+'</div><p>'+esc(t.desc)+'</p><p class="rec"><b>Suele usar:</b> '+esc(t.rec)+'</p><p class="rec">'+esc(t.ejemplo)+'</p><button type="button" class="pick">Elegir este tipo</button></div></div>';
+    const flip=()=>card.classList.toggle('flip-on');
+    card.addEventListener('click',e=>{ if(e.target.closest('.pick')) return; flip(); });
+    card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flip(); } });
+    $('.pick',card).addEventListener('click',e=>{ e.stopPropagation(); S.v[b.k]=(g(b.k)===t.id)?'':t.id; ding(720); paint(); onChange(); });
+    box.appendChild(card);
+  });
+  const eco=el('p','tipo-eco'); parent.appendChild(eco);
+  function paint(){
+    $$('.flip',box).forEach(c=>{ const on=c.dataset.id===g(b.k); c.classList.toggle('sel',on); const p=$('.pick',c); p.classList.toggle('on',on); p.textContent=on?'Elegido':'Elegir este tipo'; });
+    const t=tipoById(g(b.k)); eco.innerHTML=t?('Eligieron <b>'+esc(t.nombre)+'</b>. '+esc(t.ejemplo)):'Todavía no eligen tipo.';
+  }
+  paint();
+  if(b.whyK){ parent.appendChild(el('label','f',b.whyLabel||'¿Por qué ese tipo encaja con su idea?')).style.marginTop='14px';
+    const ta=el('textarea','t'); ta.placeholder=b.whyPh||''; ta.value=g(b.whyK)||''; ta.addEventListener('input',()=>setv(b.whyK,ta.value)); parent.appendChild(ta); }
+}
+
+function renderChips(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  const box=el('div','mats'); parent.appendChild(box);
+  const cur=()=>Array.isArray(g(b.k))?g(b.k):[];
+  b.opts.forEach(o=>{
+    const c=el('button','mat-chip'); c.type='button'; c.dataset.id=o.id;
+    c.innerHTML='<span class="e">'+o.e+'</span><span>'+esc(o.n)+'</span>';
+    c.setAttribute('aria-pressed',cur().indexOf(o.id)>=0?'true':'false');
+    c.addEventListener('click',()=>{ const a=cur().slice(); const i=a.indexOf(o.id); if(i>=0) a.splice(i,1); else a.push(o.id);
+      c.setAttribute('aria-pressed',i<0?'true':'false'); ding(i<0?820:500); setv(b.k,a); });
+    box.appendChild(c);
   });
 }
-$('#addRuta').addEventListener('click',()=>addRuta(''));
-function rutaLlena(){ return state.ruta.map(s=>(s||'').trim()).filter(Boolean); }
 
-/* ============================================================
-   PASO 5 · LIENZO (bosquejo)
-   ============================================================ */
-const canvas=$('#lienzo'), cctx=canvas.getContext('2d');
-let drawing=false, penColor='#241A12', lastX=0, lastY=0;
-function paintBg(){ cctx.save(); cctx.fillStyle='#ffffff'; cctx.fillRect(0,0,canvas.width,canvas.height); cctx.restore(); }
-paintBg();
-function pos(e){
-  const r=canvas.getBoundingClientRect();
-  const x=(e.clientX-r.left)*(canvas.width/r.width);
-  const y=(e.clientY-r.top)*(canvas.height/r.height);
-  return {x,y};
+function renderList(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  const box=el('div'); parent.appendChild(box);
+  const arr=()=>{ if(!Array.isArray(g(b.k))) S.v[b.k]=[]; return S.v[b.k]; };
+  function draw(){
+    box.innerHTML='';
+    while(arr().length<(b.rows||b.min||1)) arr().push('');
+    arr().forEach((val,i)=>{
+      const r=el('div','ruta-row'); r.style.setProperty('--c','var(--c-story)');
+      r.innerHTML='<span class="dot">'+(i+1)+'</span><input class="t" placeholder="'+esc((b.ph||'Paso {n}').replace('{n}',i+1))+'"><button class="del screen" type="button" title="Quitar" aria-label="Quitar">✕</button>';
+      const inp=$('input',r); inp.value=val;
+      inp.addEventListener('input',()=>{ arr()[i]=inp.value; onChange(); });
+      $('.del',r).addEventListener('click',()=>{ arr().splice(i,1); draw(); onChange(); });
+      if(b.fixed) $('.del',r).style.display='none';
+      box.appendChild(r);
+    });
+  }
+  draw();
+  if(!b.fixed){ const add=el('button','addrow screen','+ Agregar'); add.type='button'; add.style.setProperty('--c','var(--c-story)');
+    add.addEventListener('click',()=>{ arr().push(''); draw(); onChange(); }); parent.appendChild(add); }
 }
-function down(e){ e.preventDefault(); drawing=true; const p=pos(e); lastX=p.x; lastY=p.y; state.boceto=true; updateProgress(); guardarLocal(); }
-function move(e){ if(!drawing) return; e.preventDefault(); const p=pos(e);
-  cctx.strokeStyle=penColor; cctx.lineWidth=3.2; cctx.lineCap='round'; cctx.lineJoin='round';
-  cctx.beginPath(); cctx.moveTo(lastX,lastY); cctx.lineTo(p.x,p.y); cctx.stroke(); lastX=p.x; lastY=p.y; }
-function up(){ if(!drawing) return; drawing=false; try{ state.bocetoData=canvas.toDataURL('image/png'); }catch(e){} guardarLocal(); }
-canvas.addEventListener('pointerdown',down);
-canvas.addEventListener('pointermove',move);
-window.addEventListener('pointerup',up);
-$$('.lienzo-bar .sw').forEach(sw=>sw.addEventListener('click',()=>{
-  $$('.lienzo-bar .sw').forEach(x=>x.setAttribute('aria-pressed','false'));
-  sw.setAttribute('aria-pressed','true'); penColor=sw.dataset.color;
-}));
-$('#lienzoUndo').addEventListener('click',()=>{ paintBg(); state.boceto=false; state.bocetoData=null; updateProgress(); guardarLocal(); });
 
-/* ============================================================
-   PARTICIPACIÓN INDIVIDUAL (cada integrante hasta 100%, independiente)
-   ============================================================ */
+/* lienzo de bosquejo */
+function renderCanvas(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  const w=el('div','lienzo-wrap'); parent.appendChild(w);
+  const cv=el('canvas'); cv.width=900; cv.height=440; w.appendChild(cv);
+  const bar=el('div','lienzo-bar','<span class="lienzo-hint">Dibujen con el dedo o el mouse.</span>'); w.appendChild(bar);
+  const colors=[['#241A12','Negro'],['#E4572E','Naranja'],['#2A7DE1','Azul'],['#1B998B','Verde']];
+  let pen='#241A12', drawing=false, lx=0, ly=0; const cx=cv.getContext('2d');
+  function bg(){ cx.save(); cx.fillStyle='#fff'; cx.fillRect(0,0,cv.width,cv.height); cx.restore(); }
+  bg();
+  colors.forEach((c,i)=>{ const s=el('button','sw'); s.type='button'; s.style.background=c[0]; s.title=c[1]; s.setAttribute('aria-pressed',i===0?'true':'false');
+    s.addEventListener('click',()=>{ $$('.sw',bar).forEach(x=>x.setAttribute('aria-pressed','false')); s.setAttribute('aria-pressed','true'); pen=c[0]; }); bar.appendChild(s); });
+  const clr=el('button','', '↺ Borrar todo'); clr.type='button'; bar.appendChild(clr);
+  clr.addEventListener('click',()=>{ bg(); S.v[b.k]=''; onChange(); });
+  const pos=e=>{ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)*(cv.width/r.width), y:(e.clientY-r.top)*(cv.height/r.height)}; };
+  cv.addEventListener('pointerdown',e=>{ e.preventDefault(); drawing=true; const p=pos(e); lx=p.x; ly=p.y; });
+  cv.addEventListener('pointermove',e=>{ if(!drawing) return; e.preventDefault(); const p=pos(e);
+    cx.strokeStyle=pen; cx.lineWidth=3.2; cx.lineCap='round'; cx.lineJoin='round'; cx.beginPath(); cx.moveTo(lx,ly); cx.lineTo(p.x,p.y); cx.stroke(); lx=p.x; ly=p.y; });
+  window.addEventListener('pointerup',()=>{ if(!drawing) return; drawing=false; try{ S.v[b.k]=cv.toDataURL('image/jpeg',.7); }catch(e){} onChange(); });
+  if(g(b.k)){ const im=new Image(); im.onload=()=>cx.drawImage(im,0,0,cv.width,cv.height); im.src=g(b.k); }
+}
+
+/* foto (cámara o galería, se comprime) */
+function renderPhoto(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  const box=el('div','photo-box'); box.style.setProperty('--c',b.color||'var(--c-mockup)'); parent.appendChild(box);
+  const inp=el('input'); inp.type='file'; inp.accept='image/*';
+  function draw(){
+    box.innerHTML='';
+    if(g(b.k)){ const im=el('img'); im.src=g(b.k); im.alt=b.label; box.appendChild(im); }
+    const btn=el('button','pbtn',g(b.k)?'📷 Cambiar foto':'📷 Tomar o subir foto'); btn.type='button'; btn.addEventListener('click',()=>inp.click()); box.appendChild(btn);
+    if(g(b.k)){ const q=el('button','pbtn sec','Quitar'); q.type='button'; q.addEventListener('click',()=>{ S.v[b.k]=''; draw(); onChange(); }); box.appendChild(q); }
+    box.appendChild(el('div','pnote',b.note||'Foto o captura de pantalla. Se guarda comprimida en este navegador.')); box.appendChild(inp);
+  }
+  inp.addEventListener('change',()=>{ const f=inp.files&&inp.files[0]; if(!f) return; fileToDataURL(f,d=>{ S.v[b.k]=d; draw(); ding(760); onChange(); }); inp.value=''; });
+  draw();
+}
+
+/* cronómetro */
+function renderTimer(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  if(b.hint) parent.appendChild(el('p','hint',b.hint)).style.fontSize='14.5px';
+  const total=b.secs; let left=total, id=null, run=false;
+  const box=el('div','timer'); box.style.setProperty('--c',b.color||'var(--c-story)');
+  const fmt=s=>{ const m=Math.floor(s/60), r=s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; };
+  box.innerHTML='<span class="clock">'+fmt(total)+'</span><button type="button" class="go">▶ Arrancar</button><button type="button" class="sec">↺ Reiniciar</button><span class="tmsg">'+esc(b.msg||'Cuando estén listos, arranquen.')+'</span>';
+  const clock=$('.clock',box), go=$('.go',box), rs=$('.sec',box), msg=$('.tmsg',box);
+  const paint=()=>clock.textContent=fmt(left);
+  const stop=()=>{ if(id){clearInterval(id);id=null;} run=false; clock.classList.remove('go'); };
+  function mark(){ if(b.flag && !g(b.flag)){ S.v[b.flag]=true; onChange(); } }
+  go.addEventListener('click',()=>{
+    if(run){ stop(); go.textContent='▶ Reanudar'; msg.textContent='En pausa.'; return; }
+    if(left<=0) left=total; run=true; clock.classList.add('go'); go.textContent='⏸ Pausar'; msg.textContent='¡Corriendo!'; mark();
+    id=setInterval(()=>{ left--; paint(); if(left<=0){ stop(); left=0; paint(); go.textContent='▶ Otra vez'; msg.textContent='¡Tiempo!'; mark(); ding(560); } },1000);
+  });
+  rs.addEventListener('click',()=>{ stop(); left=total; paint(); go.textContent='▶ Arrancar'; msg.textContent='Listo para arrancar de nuevo.'; });
+  parent.appendChild(box);
+}
+
+function renderThermo(b,parent){
+  parent.appendChild(el('label','f',b.label)).style.marginTop='18px';
+  const box=el('div','thermo'); box.style.setProperty('--c',b.color||'var(--c-idea)'); parent.appendChild(box);
+  for(let n=1;n<=5;n++){ const x=el('button','',''+n); x.type='button'; x.setAttribute('aria-pressed',g(b.k)===n?'true':'false');
+    x.addEventListener('click',()=>{ $$('button',box).forEach(y=>y.setAttribute('aria-pressed','false')); x.setAttribute('aria-pressed','true'); ding(); setv(b.k,n); }); box.appendChild(x); }
+}
+
+/* tareas de la visita de prueba */
+const RES=[['ok','✅ Lo logró solo'],['mid','🟡 Con dudas'],['no','❌ No lo logró']];
+function renderTasks(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  if(!Array.isArray(g(b.k))) S.v[b.k]=[];
+  for(let i=0;i<b.n;i++){
+    if(!S.v[b.k][i]) S.v[b.k][i]={t:'',res:'',note:''};
+    const row=el('div','trow'); row.style.setProperty('--c','var(--c-mockup)');
+    row.innerHTML='<div class="tt">Tarea '+(i+1)+'</div>';
+    const ti=el('input','t'); ti.placeholder=(b.ph||'Ej. Encuentra un salón libre')+''; ti.value=S.v[b.k][i].t; ti.addEventListener('input',()=>{ S.v[b.k][i].t=ti.value; onChange(); }); row.appendChild(ti);
+    const seg=el('div','seg'); RES.forEach(r=>{ const x=el('button',r[0],r[1]); x.type='button'; x.setAttribute('aria-pressed',S.v[b.k][i].res===r[0]?'true':'false');
+      x.addEventListener('click',()=>{ $$('button',seg).forEach(y=>y.setAttribute('aria-pressed','false')); x.setAttribute('aria-pressed','true'); S.v[b.k][i].res=r[0]; ding(); onChange(); }); seg.appendChild(x); });
+    row.appendChild(seg);
+    const ni=el('input','t'); ni.placeholder='¿Dónde dudó o se atoró? (opcional)'; ni.value=S.v[b.k][i].note; ni.addEventListener('input',()=>{ S.v[b.k][i].note=ni.value; onChange(); }); row.appendChild(ni);
+    parent.appendChild(row);
+  }
+}
+
+/* autochequeo sí / más o menos / no */
+const CH=[['ok','✅ Sí'],['mid','🟡 Más o menos'],['no','❌ No']];
+function renderChecks(b,parent){
+  parent.appendChild(el('label','f',b.label));
+  if(!S.v[b.k]||typeof S.v[b.k]!=='object') S.v[b.k]={};
+  b.items.forEach((q,i)=>{
+    const row=el('div','trow'); row.style.setProperty('--c','var(--c-story)'); row.innerHTML='<div class="tt">'+esc(q)+'</div>';
+    const seg=el('div','seg'); CH.forEach(r=>{ const x=el('button',r[0],r[1]); x.type='button'; x.setAttribute('aria-pressed',S.v[b.k][i]===r[0]?'true':'false');
+      x.addEventListener('click',()=>{ $$('button',seg).forEach(y=>y.setAttribute('aria-pressed','false')); x.setAttribute('aria-pressed','true'); S.v[b.k][i]=r[0]; ding(); onChange(); }); seg.appendChild(x); });
+    row.appendChild(seg); parent.appendChild(row);
+  });
+}
+
+/* ---------------- ¿está completo cada bloque? ---------------- */
+function blockDone(b){
+  switch(b.t){
+    case 'text': case 'area': return !!txt(b.k);
+    case 'team': return !!txt('equipo') && integrantes().length>0;
+    case 'tipo': return !!g(b.k) && (b.whyK?!!txt(b.whyK):true);
+    case 'chips': return Array.isArray(g(b.k)) && g(b.k).length>0;
+    case 'list': return Array.isArray(g(b.k)) && g(b.k).filter(x=>(x||'').trim()).length>=(b.min||1);
+    case 'canvas': return !!g(b.k) || (b.alt?!!txt(b.alt):false);
+    case 'photo': return !!g(b.k);
+    case 'timer': return !!g(b.flag);
+    case 'thermo': return !!g(b.k);
+    case 'tasks': return Array.isArray(g(b.k)) && g(b.k).length>=b.n && g(b.k).slice(0,b.n).every(x=>x&&x.t.trim()&&x.res);
+    case 'checks': return !!g(b.k) && b.items.every((q,i)=>g(b.k)[i]);
+    case 'pair': return b.items.every(x=>!isReq(x)||blockDone(x));
+  }
+  return true;
+}
+function flatReq(){ /* todos los bloques obligatorios (incluye los de pair) */
+  const out=[]; REG.forEach(r=>{ if(r.b.t==='pair') return; if(isReq(r.b)) out.push(r); }); return out;
+}
+
+/* ---------------- participación ---------------- */
 function renderPartic(){
   const box=$('#particList'); if(!box) return;
-  const ints=integrantes();
-  box.innerHTML='';
-  if(!ints.length){ box.innerHTML='<p class="hint">Registren a los integrantes arriba (sección "Antes de encender la mesa") para asignar su participación.</p>'; return; }
+  const ints=integrantes(); box.innerHTML='';
+  if(!ints.length){ box.innerHTML='<p class="hint">Registren a los integrantes arriba (sección de equipo) para asignar su participación.</p>'; return; }
   ints.forEach(x=>{
-    const v=state.partic[x.i];
-    const row=document.createElement('div'); row.className='prow'+(v===undefined||v===null?' sin':'');
-    row.innerHTML='<b>'+esc(x.n)+'</b><input type="range" min="0" max="100" step="5" value="'+(v||0)+'" aria-label="Participación de '+esc(x.n)+'">'+
-      '<span class="pn"><input type="number" min="0" max="100" step="5" value="'+(v===undefined||v===null?'':v)+'" aria-label="Porcentaje de '+esc(x.n)+'">%</span>';
+    const v=S.partic[x.i]; const row=el('div','prow'+(v===undefined||v===null?' sin':''));
+    row.innerHTML='<b>'+esc(x.n)+'</b><input type="range" min="0" max="100" step="5" value="'+(v||0)+'" aria-label="Participación de '+esc(x.n)+'"><span class="pn"><input type="number" min="0" max="100" step="5" value="'+(v===undefined||v===null?'':v)+'" aria-label="Porcentaje de '+esc(x.n)+'">%</span>';
     const rg=$('input[type=range]',row), nm=$('input[type=number]',row);
-    function set(val){ val=Math.max(0,Math.min(100,Math.round(+val||0))); state.partic[x.i]=val; rg.value=val; nm.value=val; row.classList.remove('sin'); updateProgress(); guardarLocal(); }
-    rg.addEventListener('input',()=>set(rg.value));
-    nm.addEventListener('input',()=>{ if(nm.value==='') return; set(nm.value); });
+    const set=val=>{ val=Math.max(0,Math.min(100,Math.round(+val||0))); S.partic[x.i]=val; rg.value=val; nm.value=val; row.classList.remove('sin'); onChange(); };
+    rg.addEventListener('input',()=>set(rg.value)); nm.addEventListener('input',()=>{ if(nm.value!=='') set(nm.value); });
     box.appendChild(row);
   });
 }
-function particCompleta(){ const ints=integrantes(); return ints.length>0 && ints.every(x=>state.partic[x.i]!==undefined && state.partic[x.i]!==null); }
+function particCompleta(){ const ints=integrantes(); return ints.length>0 && ints.every(x=>S.partic[x.i]!==undefined && S.partic[x.i]!==null); }
 
-/* ============================================================
-   PROGRESO (medidor de taller) + INSIGNIAS
-   ============================================================ */
-function tieneBoceto(){ return state.boceto || !!campo('boceto_desc'); }
-function badges(){
-  const tot=totales();
-  const cMax=CONTENIDO.presupuesto.costoMax, tMax=CONTENIDO.presupuesto.tiempoMax;
-  return {
-    /* fallo rápido: corrió el reto y su prototipo se arma en tiempo razonable */
-    rapido: state.retoUsado && tot.tiempo<=tMax && tot.tiempo>0,
-    /* bajo costo: dentro de monedas y sin materiales caros */
-    barato: matsElegidos().length>0 && tot.costo<=cMax && !tot.hayCaro,
-    /* mostrable: describió/dibujó su bosquejo y tiene al menos un paso de ruta */
-    mostrable: tieneBoceto() && rutaLlena().length>=1
-  };
+/* ---------------- armado de la página ---------------- */
+const app=$('#app');
+function buildSections(){
+  CFG.sections.forEach(sec=>{
+    const s=el('section','card screen'); s.id=sec.id; s.style.setProperty('--c',sec.color);
+    s.innerHTML='<div class="stepbar"><span class="num">'+sec.num+'</span><span class="kicker">'+esc(sec.kicker)+'</span></div><h2>'+sec.title+'</h2>'+
+      (sec.goal?'<span class="goal">'+sec.goal+'</span>':'')+(sec.hint?'<p class="hint">'+sec.hint+'</p>':'');
+    sec.blocks.forEach(b=>renderBlock(b,s,sec));
+    if(sec.ana) s.insertAdjacentHTML('beforeend','<details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">'+sec.ana+'</div></details>');
+    app.appendChild(s);
+  });
+  /* participación + entrega */
+  const p=el('section','card screen'); p.id='sec-partic'; p.style.setProperty('--c','var(--c-story)');
+  p.innerHTML='<div class="stepbar"><span class="num">%</span><span class="kicker">Participación individual</span></div><h2>🙋 ¿Cuánto aportó cada quien?</h2><p class="hint">Decidan juntos el % de participación de cada integrante en esta actividad. Cada uno puede llegar hasta <b>100%</b>; <b>no tienen que sumar 100</b> entre todos. Se imprime en su PDF.</p><div id="particList"></div>';
+  app.appendChild(p);
+  const e=el('section','card screen'); e.id='sec-pdf'; e.style.setProperty('--c','var(--c-boceto)');
+  e.innerHTML='<div class="stepbar"><span class="num">📄</span><span class="kicker">Entrega</span></div><h2>'+CFG.entregaTitulo+'</h2><p class="falta" id="faltaMsg"></p>'+
+    '<div class="aviso" id="doneBox" hidden>🎉 <b>¡Actividad completa!</b> '+CFG.doneMsg+'</div><div class="savewarn" id="saveWarn" hidden>⚠️ La memoria de este navegador se llenó. Descarguen su PDF ya para no perder el avance.</div>'+
+    '<div class="pdfwrap"><button class="tb-btn pdf" id="pdfbtn" type="button" disabled>🔒 El PDF se habilita al 100%</button>'+
+    (CFG.tarjeta?'<button class="tb-btn pdf" id="cardbtn" type="button" disabled>🔒 Tarjeta de stand</button>':'')+'</div>';
+  app.appendChild(e);
+  renderPartic();
 }
-function setBadge(k,on){ const b=$('.badge[data-badge='+k+']'); if(b){ const was=b.classList.contains('on'); b.classList.toggle('on',!!on); if(on&&!was) ding(660); } }
 
-const FASES=[
-  {id:'sec-equipo',  l:'👥', n:'Equipo',        ok:()=>!!campo('equipo') && integrantes().length>0 && !!state.thermo.antes},
-  {id:'sec-p1',      l:'1',  n:'Idea',          ok:()=>!!campo('idea_sol')},
-  {id:'sec-p2',      l:'2',  n:'Tipo',          ok:()=>!!state.tipo && !!campo('tipo_porque')},
-  {id:'sec-p3',      l:'3',  n:'Foco',          ok:()=>!!campo('foco') && !!campo('aprender') && !!campo('permitir')},
-  {id:'sec-p4',      l:'4',  n:'Materiales',    ok:()=>matsElegidos().length>0 || state.matsExtra.length>0},
-  {id:'sec-p5',      l:'5',  n:'Bosquejo',      ok:()=>tieneBoceto() && rutaLlena().length>=1 && state.retoUsado},
-  {id:'sec-p6',      l:'6',  n:'Feedback',      ok:()=>!!campo('fb_equipo') && !!campo('fb_funciono') && !!campo('fb_mejorar')},
-  {id:'sec-cierre',  l:'🏁', n:'Ticket',        ok:()=>!!campo('t1') && !!campo('t2') && !!campo('t3') && !!state.thermo.despues},
-  {id:'sec-partic',  l:'%',  n:'Participación', ok:()=>particCompleta()}
-];
-/* navegación por clic en los círculos de fase */
-const stepsNav=$('#steps');
-FASES.forEach(f=>{
-  const b=document.createElement('button'); b.type='button'; b.className='stp'; b.dataset.id=f.id;
-  b.title=f.n; b.setAttribute('aria-label','Ir a '+f.n);
-  b.innerHTML='<span>'+f.l+'</span><span class="l">'+f.n+'</span>';
-  b.addEventListener('click',()=>{ const el=document.getElementById(f.id); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); });
-  stepsNav.appendChild(b);
-});
-let _scrollT=null;
+/* candado (S20): contenido oculto hasta capturar la clave de la profesora */
+function setupLock(){
+  if(!CFG.lock) return;
+  const L=CFG.lock; const main=$('#main'); const card=$('#lockcard');
+  function tryShow(){ let ok=false; try{ ok=localStorage.getItem(L.ls)==='1'; }catch(e){} card.hidden=ok; main.hidden=!ok; if(ok) { renderTarjetaPreview(); updateProgress(); marcarActual(); } }
+  $('#lockbtn').addEventListener('click',()=>{ const v=($('#lockinput').value||'').trim().toUpperCase();
+    if(v && v===L.clave.toUpperCase()){ try{ localStorage.setItem(L.ls,'1'); }catch(e){} $('#lockmsg').textContent=''; fanfare(); tryShow(); }
+    else $('#lockmsg').textContent='Clave incorrecta. Pregúntale a tu profesora.'; });
+  $('#lockinput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#lockbtn').click(); });
+  tryShow();
+}
+
+/* ---------------- fases (círculos de navegación) ---------------- */
+const FASES=[];
+function buildFases(){
+  CFG.sections.forEach(sec=>{ FASES.push({id:sec.id,l:sec.step[0],n:sec.step[1],ok:()=>REG.filter(r=>r.sec===sec && r.b.t!=='pair' && isReq(r.b)).every(r=>blockDone(r.b))}); });
+  FASES.push({id:'sec-partic',l:'%',n:'Participación',ok:particCompleta});
+  const nav=$('#steps');
+  FASES.forEach(f=>{ const b=el('button','stp','<span>'+f.l+'</span><span class="l">'+f.n+'</span>'); b.type='button'; b.dataset.id=f.id; b.title=f.n; b.setAttribute('aria-label','Ir a '+f.n);
+    b.addEventListener('click',()=>{ const t=document.getElementById(f.id); if(t && t.offsetParent!==null) t.scrollIntoView({behavior:'smooth',block:'start'}); else { const lk=$('#lockcard'); if(lk&&!lk.hidden) lk.scrollIntoView({behavior:'smooth'}); } });
+    nav.appendChild(b); });
+}
+let _sT=null;
 function marcarActual(){
-  let cur=FASES[0].id;
-  FASES.forEach(f=>{ const el=document.getElementById(f.id); if(el && el.getBoundingClientRect().top<window.innerHeight*0.4) cur=f.id; });
-  $$('.stp',stepsNav).forEach(b=>b.classList.toggle('cur',b.dataset.id===cur));
+  let cur=FASES[0]&&FASES[0].id;
+  FASES.forEach(f=>{ const t=document.getElementById(f.id); if(t && t.offsetParent!==null && t.getBoundingClientRect().top<window.innerHeight*0.4) cur=f.id; });
+  $$('.stp').forEach(b=>b.classList.toggle('cur',b.dataset.id===cur));
 }
-window.addEventListener('scroll',()=>{ if(_scrollT) return; _scrollT=setTimeout(()=>{ _scrollT=null; marcarActual(); },80); },{passive:true});
+window.addEventListener('scroll',()=>{ if(_sT) return; _sT=setTimeout(()=>{ _sT=null; marcarActual(); },80); },{passive:true});
 
-/* completado: PDF bloqueado hasta 100%, sonido y bandera local (para la S20) */
+/* ---------------- progreso + completado ---------------- */
 let _wasDone=null;
-const CLAVE_DONE='edt_u6_s19_completo';
 function setCompleto(done,falta){
   const btn=$('#pdfbtn'); if(!btn) return;
-  btn.disabled=!done;
-  btn.textContent=done?'📄 Descargar PDF del equipo':'🔒 El PDF se habilita al 100%';
-  $('#doneBox').hidden=!done;
-  $('#faltaMsg').textContent=done?'':('Les falta: '+falta.join(' · ')+'.');
-  try{ if(done) localStorage.setItem(CLAVE_DONE,JSON.stringify({equipo:campo('equipo'),fecha:campo('fecha')})); else localStorage.removeItem(CLAVE_DONE); }catch(e){}
+  btn.disabled=!done; btn.textContent=done?'📄 Descargar PDF del equipo':'🔒 El PDF se habilita al 100%';
+  const cb=$('#cardbtn'); if(cb){ cb.disabled=!done; cb.textContent=done?'🪧 Descargar tarjeta de stand':'🔒 Tarjeta de stand (al 100%)'; }
+  $('#doneBox').hidden=!done; $('#faltaMsg').textContent=done?'':('Les falta: '+falta.join(' · ')+'.');
+  try{ if(done) localStorage.setItem(CFG.doneKey,JSON.stringify({equipo:txt('equipo'),fecha:txt('fecha')})); else localStorage.removeItem(CFG.doneKey); }catch(e){}
   if(done && _wasDone===false) fanfare();
   _wasDone=done;
 }
-
 function updateProgress(){
-  const bg=badges();
-  setBadge('rapido',bg.rapido); setBadge('barato',bg.barato); setBadge('mostrable',bg.mostrable);
-
-  const checks=[
-    campo('equipo'), integrantes().length>0, state.thermo.antes,
-    campo('idea_sol'),
-    !!state.tipo, campo('tipo_porque'),
-    campo('foco'), campo('aprender'), campo('permitir'),
-    matsElegidos().length>0 || state.matsExtra.length>0,
-    tieneBoceto(), rutaLlena().length>=1, state.retoUsado,
-    campo('fb_equipo'), campo('fb_funciono'), campo('fb_mejorar'),
-    campo('t1'), campo('t2'), campo('t3'), state.thermo.despues,
-    particCompleta()
-  ];
-  const doneN=checks.filter(Boolean).length;
-  const pct=Math.round(doneN/checks.length*100);
-  $('#progbar').style.width=pct+'%';
-  $('#progn').textContent=pct+'%';
-
-  const falta=[];
-  FASES.forEach(f=>{ const ok=!!f.ok(); const b=$('.stp[data-id='+f.id+']',stepsNav); if(b) b.classList.toggle('done',ok); if(!ok) falta.push(f.n); });
+  const reqs=flatReq(); let n=0; reqs.forEach(r=>{ if(blockDone(r.b)) n++; });
+  const total=reqs.length+1; const doneN=n+(particCompleta()?1:0);
+  const pct=Math.round(doneN/total*100);
+  $('#progbar').style.width=pct+'%'; $('#progn').textContent=pct+'%';
+  const falta=[]; FASES.forEach(f=>{ const ok=!!f.ok(); const b=$('.stp[data-id='+f.id+']'); if(b) b.classList.toggle('done',ok); if(!ok) falta.push(f.n); });
   setCompleto(pct===100,falta);
-  fillSheet();
+  fillSheet(); renderTarjetaPreview();
 }
 
-/* ============================================================
-   HOJA DE RESULTADO (PDF)
-   ============================================================ */
-function fillSheet(){
-  const set=(id,v)=>{ const e=$('#'+id); if(e) e.textContent=(v&&(''+v).trim())?v:'—'; };
-  set('s_equipo',campo('equipo')); set('s_carrera',campo('carrera')); set('s_fecha',campo('fecha'));
-  set('s_integrantes',integrantesTxt());
-  set('s_claridad',(state.thermo.antes||'—')+' → '+(state.thermo.despues||'—'));
-
-  set('s_idea_sol',campo('idea_sol'));
-
-  const t=CONTENIDO.tipos.find(x=>x.id===state.tipo);
-  const pill=$('#s_tipo_pill');
-  if(t){ pill.textContent=t.emoji+' '+t.nombre; pill.style.background=t.color; }
-  else { pill.textContent='Tipo'; pill.style.background='#b1401f'; }
-  set('s_tipo_nombre', t?t.nombre:''); set('s_tipo_porque',campo('tipo_porque'));
-
-  set('s_foco',campo('foco')); set('s_aprender',campo('aprender')); set('s_permitir',campo('permitir'));
-
-  /* materiales */
-  const list=[...matsElegidos().map(m=>m.n+' (🪙'+m.costo+' · ⏱️'+m.tiempo+' min'+(m.lofi?'':' · caro')+')'),
-              ...state.matsExtra];
-  const ul=$('#s_mats');
-  ul.innerHTML = list.length ? list.map(x=>'<li>'+esc(x)+'</li>').join('') : '<li>—</li>';
-  const tot=totales();
-  $('#s_presu').textContent = list.length ? ('· total: '+tot.costo+' monedas · '+tot.tiempo+' min de '+CONTENIDO.presupuesto.tiempoMax) : '';
-
-  set('s_boceto_desc',campo('boceto_desc'));
-  /* imagen del bosquejo si dibujó algo */
-  const wrap=$('#s_boceto_img_wrap');
-  wrap.innerHTML='';
-  if(state.boceto){
-    try{ const img=new Image(); img.className='bocimg'; img.src=canvas.toDataURL('image/png'); wrap.appendChild(img); }
-    catch(e){ wrap.textContent=''; }
+/* ---------------- hoja de resultado (PDF) ---------------- */
+function imgTag(src,cap){ return src?('<figure><img class="bocimg" src="'+src+'" alt="">'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>'):''; }
+function blockSheet(b){
+  const val=k=>{ const v=txt(k); return v?esc(v):'—'; };
+  switch(b.t){
+    case 'text': case 'area': return '<div class="srow"><div class="q">'+b.label.replace(/<[^>]+>/g,'')+'</div><div class="a">'+val(b.k)+'</div></div>';
+    case 'pair': return b.items.map(blockSheet).join('');
+    case 'tipo': { const t=tipoById(g(b.k)); return '<div class="srow"><div class="q">Tipo elegido</div><div class="a">'+(t?t.emoji+' '+esc(t.nombre):'—')+'</div></div>'+(b.whyK?'<div class="srow"><div class="q">Por qué encaja</div><div class="a">'+val(b.whyK)+'</div></div>':''); }
+    case 'chips': { const a=Array.isArray(g(b.k))?g(b.k):[]; const names=a.map(id=>{ const o=b.opts.find(x=>x.id===id); return o?o.e+' '+o.n:id; }); return '<div class="srow"><div class="q">'+b.label+'</div><div class="a">'+(names.length?esc(names.join(' · ')):'—')+'</div></div>'; }
+    case 'list': { const a=(Array.isArray(g(b.k))?g(b.k):[]).filter(x=>(x||'').trim()); return '<div class="srow"><div class="q">'+b.label+'</div>'+(a.length?'<ol class="mlist">'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>':'<div class="a">—</div>')+'</div>'; }
+    case 'canvas': return '<div class="srow"><div class="q">'+b.label+'</div>'+(g(b.k)?imgTag(g(b.k)):'<div class="a">—</div>')+'</div>';
+    case 'photo': return '<div class="srow"><div class="q">'+b.label+'</div>'+(g(b.k)?imgTag(g(b.k)):'<div class="a">—</div>')+'</div>';
+    case 'tasks': { const a=Array.isArray(g(b.k))?g(b.k):[]; const nm={ok:'Lo logró solo',mid:'Con dudas',no:'No lo logró'};
+      return '<div class="srow"><div class="q">'+b.label+'</div><table class="tb2">'+a.map((x,i)=>'<tr><td>'+(i+1)+'. '+esc(x.t||'—')+'</td><td><b>'+(nm[x.res]||'—')+'</b></td><td>'+esc(x.note||'')+'</td></tr>').join('')+'</table></div>'; }
+    case 'checks': { const o=g(b.k)||{}; const nm={ok:'Sí',mid:'Más o menos',no:'No'};
+      return '<div class="srow"><div class="q">'+b.label+'</div><table class="tb2">'+b.items.map((q,i)=>'<tr><td>'+esc(q)+'</td><td><b>'+(nm[o[i]]||'—')+'</b></td></tr>').join('')+'</table></div>'; }
   }
-
-  const ruta=rutaLlena();
-  $('#s_ruta').innerHTML = ruta.length ? ruta.map(x=>'<li>'+esc(x)+'</li>').join('') : '<li>—</li>';
-
-  set('s_fb_equipo',campo('fb_equipo')); set('s_fb_funciono',campo('fb_funciono')); set('s_fb_mejorar',campo('fb_mejorar'));
-  set('s_fb_dudas',campo('fb_dudas')); set('s_fb_ideas',campo('fb_ideas'));
-  set('s_t1',campo('t1')); set('s_t2',campo('t2')); set('s_t3',campo('t3'));
-  const tp=$('#s_partic');
-  if(tp){ const ints=integrantes();
-    tp.innerHTML = ints.length ? ints.map(x=>{ const v=state.partic[x.i]; return '<tr><td style="border-bottom:1px solid #ccc;padding:5px 0">'+esc(x.n)+(x.m?' · '+esc(x.m):'')+'</td><td style="border-bottom:1px solid #ccc;padding:5px 0;text-align:right;font-weight:bold">'+((v===undefined||v===null)?'—':v+'%')+'</td></tr>'; }).join('') : '<tr><td>—</td></tr>'; }
-
-  const bg=badges(); const won=[];
-  if(bg.rapido) won.push(CONTENIDO.badgesTxt.rapido);
-  if(bg.barato) won.push(CONTENIDO.badgesTxt.barato);
-  if(bg.mostrable) won.push(CONTENIDO.badgesTxt.mostrable);
-  set('s_badges', won.length?won.join('   ·   '):'');
+  return '';
+}
+function fillSheet(){
+  const h=$('#hoja'); if(!h) return;
+  const th=[]; REG.forEach(r=>{ if(r.b.t==='thermo') th.push(g(r.b.k)||'—'); });
+  let html='<div class="sheet"><div class="shead"><div class="k">Emprendimiento 1 · '+esc(CFG.kicker)+'</div><h2>'+esc(CFG.hojaTitulo)+'</h2></div>'+
+    '<div class="idrow"><div><span>Equipo:</span> <em>'+esc(txt('equipo')||'—')+'</em></div><div><span>Carrera / grupo:</span> <em>'+esc(txt('carrera')||'—')+'</em></div>'+
+    '<div><span>Fecha:</span> <em>'+esc(txt('fecha')||'—')+'</em></div><div><span>'+esc(CFG.thermoLabel||'Claridad')+':</span> <em>'+esc(th.join(' → '))+'</em></div>'+
+    '<div style="grid-column:1/-1"><span>Integrantes:</span> <em>'+esc(integrantesTxt()||'—')+'</em></div></div>';
+  CFG.sections.forEach(sec=>{
+    const inner=sec.blocks.filter(b=>b.t!=='team'&&b.t!=='info'&&b.t!=='timer'&&b.t!=='thermo'&&b.t!=='tarjeta').map(blockSheet).join('');
+    if(!inner) return;
+    html+='<div class="block"><h3>'+sec.sheetTitle+'</h3>'+inner+'</div>';
+  });
+  const ints=integrantes();
+  html+='<div class="block"><h3>Participación individual</h3><table class="tb2">'+(ints.length?ints.map(x=>{ const v=S.partic[x.i]; return '<tr><td>'+esc(x.n)+(x.m?' · '+esc(x.m):'')+'</td><td style="text-align:right"><b>'+((v===undefined||v===null)?'—':v+'%')+'</b></td></tr>'; }).join(''):'<tr><td>—</td></tr>')+'</table></div></div>';
+  h.innerHTML=html;
 }
 
-/* --- PDF --- */
-$('#pdfbtn').addEventListener('click',()=>{ if($('#pdfbtn').disabled) return; fillSheet(); window.print(); });
-let _tituloOrig=document.title;
-window.addEventListener('beforeprint',()=>{ fillSheet(); _tituloOrig=document.title; document.title='S19 Prototipar - '+(campo('equipo')||'Equipo'); });
-window.addEventListener('afterprint',()=>{ document.title=_tituloOrig; });
+/* ---------------- tarjeta de stand (S20) ---------------- */
+function tarjetaHTML(){
+  const t=tipoById(g('tipo')); const col=t?t.color:'#E4572E';
+  const foto=g('v2_foto')||g('v1_foto')||'';
+  const demo=(Array.isArray(g('demo'))?g('demo'):[]).filter(x=>(x||'').trim());
+  return '<div class="tarjeta" style="--tc:'+col+'">'+
+    '<div class="th"><div><div class="k">Mini feria · Sesión 22 · Emprendimiento 1</div><div class="eq">'+esc(txt('equipo')||'Nombre del equipo')+'</div></div><div class="tp">'+(t?t.emoji+' '+esc(t.nombre):'Tipo de prototipo')+'</div></div>'+
+    '<div class="tb"><div><div class="fc"><small>Función clave</small>'+esc(txt('funcion')||'Nuestro prototipo permite que el usuario…')+'</div>'+
+      '<ul class="pt"><li>👤 <b>Usuario:</b> '+esc(txt('pitch_usuario')||'—')+'</li><li>🎯 <b>Problema:</b> '+esc(txt('pitch_problema')||'—')+'</li><li>⚙️ <b>Solución:</b> '+esc(txt('pitch_solucion')||'—')+'</li><li>💡 <b>Aprendimos:</b> '+esc(txt('pitch_aprendi')||'—')+'</li></ul>'+
+      '<div class="demo"><h4>Pruébalo así</h4><ol>'+(demo.length?demo.map(x=>'<li>'+esc(x)+'</li>').join(''):'<li>—</li>')+'</ol></div></div>'+
+      '<div class="ph" style="'+(foto?'background-image:url('+foto+')':'')+'">'+(foto?'':'Aquí va la foto de su prototipo')+'</div></div>'+
+    '<div class="tf"><span><b>Evaluadores:</b> '+esc(txt('pregunta_eval')||'¿Qué te confundió al usarlo?')+'</span><span>'+esc(integrantes().map(x=>x.n).join(' · '))+'</span></div></div>';
+}
+function renderTarjetaPreview(){
+  if(!CFG.tarjeta) return;
+  const p=$('#tarjetaPreview'); if(p) p.innerHTML=tarjetaHTML();
+  const q=$('#tarjetaPrint'); if(q) q.innerHTML=tarjetaHTML();
+}
+
+/* ---------------- impresión ---------------- */
+let _tOrig=document.title;
+function imprimir(mode){
+  const b=$('#'+(mode==='card'?'cardbtn':'pdfbtn')); if(b&&b.disabled) return;
+  document.body.classList.toggle('pc',mode==='card'); fillSheet(); renderTarjetaPreview();
+  _tOrig=document.title; document.title=(mode==='card'?'Tarjeta stand - ':CFG.pdfName+' - ')+(txt('equipo')||'Equipo');
+  let ps=$('#pagecss'); if(ps) ps.remove();
+  if(mode==='card'){ ps=document.createElement('style'); ps.id='pagecss'; ps.textContent='@page{size:A4 landscape;margin:8mm}'; document.head.appendChild(ps); }
+  window.print();
+}
+window.addEventListener('afterprint',()=>{ document.body.classList.remove('pc'); document.title=_tOrig; const ps=$('#pagecss'); if(ps) ps.remove(); });
+window.addEventListener('beforeprint',()=>{ fillSheet(); renderTarjetaPreview(); });
+
+/* ---------------- arranque ---------------- */
+buildSections();
+buildFases();
+$('#pdfbtn').addEventListener('click',()=>imprimir('report'));
+if($('#cardbtn')) $('#cardbtn').addEventListener('click',()=>imprimir('card'));
 $('#clrbtn').addEventListener('click',()=>{
   const b=$('#clrbtn');
-  if(!b.dataset.armed){
-    b.dataset.armed='1'; b.textContent='⚠️ ¿Seguro? Toca otra vez';
-    clearTimeout(window.__clrTimer);
-    window.__clrTimer=setTimeout(()=>{ b.dataset.armed=''; b.textContent='🗑 Borrar datos'; },4000);
-  }else{
-    try{ localStorage.removeItem(LS_KEY); localStorage.removeItem(CLAVE_DONE); }catch(e){}
-    location.reload();
-  }
+  if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='⚠️ ¿Seguro? Toca otra vez'; clearTimeout(window.__ct); window.__ct=setTimeout(()=>{ b.dataset.armed=''; b.textContent='🗑 Borrar datos'; },4000); }
+  else { try{ localStorage.removeItem(LS); localStorage.removeItem(CFG.doneKey); }catch(e){} location.reload(); }
 });
-
-/* --- arranque: pinta la UI con lo restaurado de localStorage (si hay) --- */
-function restaurarUI(){
-  pintarTipo();
-  $$('.mat-chip',matsEl).forEach(b=>{ b.setAttribute('aria-pressed', state.mats[b.dataset.id] ? 'true':'false'); });
-  renderExtra();
-  if(state.ruta && state.ruta.length){ renderRuta(); } else { addRuta(''); addRuta(''); }
-  renderPartic();
-  $$('[data-thermo]').forEach(g=>{
-    const key=g.dataset.thermo, v=state.thermo[key];
-    g.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', (v!=null && +b.dataset.v===v) ? 'true':'false'));
-  });
-  if(state.bocetoData){
-    const img=new Image();
-    img.onload=()=>{ cctx.clearRect(0,0,canvas.width,canvas.height); cctx.drawImage(img,0,0,canvas.width,canvas.height); };
-    img.src=state.bocetoData;
-  }
-  renderMesa();
-  updateProgress();
-}
-restaurarUI();
+updateProgress();
+setupLock();
 marcarActual();
+
 </script>
 </body>
 </html>
