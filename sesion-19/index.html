@@ -174,6 +174,11 @@ kbd{background:#2a3040;border-radius:6px;padding:1px 7px;font-size:12px}
 .gb2{font-size:24px;color:var(--mut)}
 .gtitle{font-size:56px;font-weight:800;line-height:1.1;margin:4px 0 14px}
 .gtitle em{font-style:normal;color:var(--cy)}
+.cover .rules{max-width:1380px;flex-wrap:wrap}
+.qrbox{position:absolute;right:0;bottom:40px;width:250px;background:#fff;border-radius:22px;padding:14px;text-align:center;color:#111;box-shadow:0 20px 50px rgba(0,0,0,.5);z-index:3}
+.qrbox svg{width:100%;height:auto;display:block}
+.qrbox b{display:block;color:#111;font-size:26px;margin-top:6px}
+.qrbox span{display:block;color:#444;font-size:19px;line-height:1.2}
 .tl4 .card p{font-size:26px}.tl4 .card h3{font-size:32px}.tl4 .card{padding:24px 26px}
 .strip{position:absolute;left:96px;right:96px;bottom:62px;display:flex;gap:10px;flex-wrap:wrap}
 .sc{flex:1;min-width:150px;background:rgba(255,255,255,.07);border-radius:14px;padding:6px 12px 10px;border-left:6px solid var(--c);position:relative;overflow:hidden}
@@ -268,6 +273,7 @@ function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor
 const SL=[];
 function add(o){SL.push(o);}
 const lastShown={};
+const QR=`<svg viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg" class="segno"><path fill="#fff" d="M0 0h41v41h-41z"/><path class="qrline" stroke="#111" d="M2 2.5h7m1 0h1m2 0h4m1 0h3m1 0h2m1 0h1m6 0h7m-37 1h1m5 0h1m1 0h2m1 0h1m2 0h1m1 0h2m1 0h2m1 0h2m1 0h1m4 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m3 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h1m4 0h1m1 0h1m5 0h2m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h1m4 0h3m1 0h1m1 0h1m2 0h5m1 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m2 0h3m2 0h2m3 0h1m2 0h1m1 0h3m1 0h1m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h3m1 0h2m2 0h4m2 0h1m1 0h1m2 0h1m-28 1h1m1 0h2m1 0h3m3 0h4m1 0h1m4 0h1m1 0h1m4 0h1m1 0h1m2 0h1m1 0h2m-35 1h2m1 0h1m3 0h1m2 0h6m5 0h1m2 0h1m1 0h1m5 0h2m-36 1h2m1 0h4m6 0h3m2 0h1m1 0h5m3 0h2m1 0h3m-32 1h1m1 0h1m5 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h4m1 0h3m1 0h2m-35 1h1m1 0h1m3 0h3m5 0h1m2 0h2m3 0h1m1 0h3m1 0h3m1 0h5m-37 1h1m1 0h2m1 0h1m3 0h1m2 0h1m1 0h3m2 0h3m2 0h1m2 0h2m1 0h4m1 0h2m-35 1h1m3 0h2m3 0h2m1 0h1m2 0h3m1 0h1m3 0h1m3 0h2m1 0h1m1 0h2m-34 1h3m3 0h1m1 0h2m1 0h1m1 0h5m1 0h2m3 0h4m1 0h2m2 0h2m-37 1h3m2 0h2m1 0h2m1 0h1m4 0h3m1 0h2m1 0h4m4 0h1m1 0h4m-37 1h1m3 0h1m4 0h1m1 0h1m1 0h2m1 0h2m1 0h1m2 0h6m1 0h3m3 0h2m-35 1h3m1 0h1m1 0h1m3 0h1m2 0h3m4 0h1m1 0h2m1 0h2m1 0h3m2 0h2m-37 1h1m4 0h1m1 0h1m9 0h2m3 0h3m1 0h1m2 0h3m1 0h1m1 0h1m-36 1h3m2 0h3m3 0h2m3 0h1m1 0h1m2 0h1m4 0h4m1 0h2m3 0h1m-37 1h1m1 0h1m6 0h1m1 0h2m3 0h1m1 0h3m2 0h1m1 0h1m2 0h1m4 0h1m-34 1h2m1 0h1m2 0h2m1 0h1m1 0h1m5 0h1m3 0h4m1 0h1m1 0h2m1 0h1m-31 1h1m7 0h1m2 0h1m1 0h3m1 0h3m1 0h1m1 0h7m1 0h3m-35 1h2m1 0h1m2 0h3m1 0h3m1 0h2m2 0h1m3 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h3m-36 1h1m2 0h1m2 0h2m1 0h1m5 0h4m1 0h1m2 0h1m1 0h8m1 0h2m-36 1h3m2 0h1m2 0h8m1 0h3m1 0h1m1 0h2m4 0h2m1 0h3m-36 1h1m8 0h2m1 0h2m2 0h1m3 0h5m1 0h1m2 0h3m-30 1h3m1 0h2m2 0h1m1 0h5m1 0h2m1 0h3m1 0h2m1 0h5m1 0h3m-29 1h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1m3 0h1m1 0h1m1 0h1m-37 1h7m1 0h5m1 0h2m1 0h1m3 0h1m3 0h2m1 0h1m1 0h1m1 0h1m1 0h3m-37 1h1m5 0h1m1 0h3m1 0h1m7 0h1m2 0h2m2 0h2m3 0h1m2 0h2m-37 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m3 0h1m2 0h1m2 0h1m1 0h1m1 0h6m1 0h2m-37 1h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h1m1 0h7m1 0h1m2 0h3m1 0h1m1 0h1m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h2m2 0h3m1 0h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m-35 1h1m5 0h1m2 0h3m1 0h1m2 0h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h4m-35 1h7m1 0h1m1 0h3m1 0h4m4 0h1m2 0h1m3 0h2m1 0h1m1 0h3"/></svg>`;
 
 /* ---------- Sonidos ---------- */
 let AC=null;
@@ -386,7 +392,7 @@ function cardT(ic,name,html){return '<div class="card"><span class="ic">'+ic+'</
 
 add({id:'cover',blk:'Portada',t:'0–2',title:'Portada',
 notes:'<b>0–2 min.</b> Pide que se junten por equipo UChallenge. Con <b>👥 Equipos</b> (tecla E) nombra, agrega o quita equipos. Reglas del día: puntos por acertar, ronda de apuestas y ⭐ robo al final. Hoy la presentación dura 40 min; el resto es taller del entregable.',
-html:function(){return '<div class="cover"><div class="blob">✏️</div><div class="blob2">📦</div>'
+html:function(){return '<div class="cover"><div class="blob">✏️</div><div class="qrbox">'+QR+'<b>📲 Escanea</b><span>Material de estudio + Arena en tu celular</span></div>'
 +'<div class="eyebrow">Emprendimiento 1 · Unidad 6 · Sesión 19</div><h1>Proto<span>tipar</span></h1>'
 +'<p class="sub">¿Qué es prototipar y por qué importa?</p>'
 +'<p class="tag">Pensar con las manos para fallar rápido y barato</p>'
@@ -566,7 +572,7 @@ html:function(){return '<h2>🎒 ¿Qué me <em>llevo hoy</em>?</h2><div class="g
 +cardT('🪜','Hay niveles de fidelidad','<p><b>Baja, media y alta</b>, cada una con un propósito distinto.</p>')
 +cardT('⏩','El feedback temprano suma','<p>Entre más rápido lo recibes, <b>más sólido</b> llega tu proyecto del UChallenge.</p>')+'</div>'
 +'<div class="callout or">✏️ Escribe tu frase: <b>“Hoy me llevo…”</b> <button class="btn" style="font-size:22px;padding:8px 20px;margin-left:14px" data-act="rand">🎲 Equipo al azar</button></div>'
-+'<div class="sm" style="margin-top:14px">Siguiente sesión: Diseño de prototipo (se habilita al terminar la actividad de hoy).</div>';}});
++'<div class="row" style="margin-top:20px;gap:26px;align-items:center"><div class="qrbox" style="position:static;width:220px;padding:12px">'+QR+'</div><div><p style="font-size:34px"><b>📲 Repasa en tu celular</b></p><p class="sm" style="font-size:28px">Escanea el QR: material de estudio y la <b>Arena del Prototipo</b> para jugar solo.</p><p class="sm">Siguiente sesión: Diseño de prototipo (se habilita al terminar la actividad de hoy).</p></div></div>';}});
 
 /* ================= Render ================= */
 function ensurePairs(){
