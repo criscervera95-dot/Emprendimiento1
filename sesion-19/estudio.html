@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sesión 19 · Prototipar — Material de estudio</title>
+<style>
+:root{--bg:#12141a;--card:#222733;--card2:#2b3140;--ink:#f6f7fb;--mut:#a9b0c3;--or:#ff6b1a;--am:#ffc233;--mint:#2ee6a6;--pk:#ff4f8b;--cy:#3dd6f5;
+--font:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;font-size:18px}
+a{color:var(--cy)}
+header.hero{padding:56px 20px 40px;text-align:center;background:radial-gradient(900px 400px at 80% -20%,#3a2414 0%,transparent 60%),radial-gradient(700px 400px at 0% 110%,#2a1f3a 0%,transparent 60%)}
+.eyebrow{color:var(--am);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:14px}
+h1{font-size:clamp(40px,8vw,76px);line-height:1.05;font-weight:800;letter-spacing:-.02em;margin:10px 0}
+h1 span,h2 em{color:var(--or);font-style:normal}
+.lead{color:var(--mut);font-size:20px;max-width:700px;margin:0 auto}
+nav{position:sticky;top:0;z-index:10;background:rgba(18,20,26,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.1);display:flex;gap:6px;overflow-x:auto;padding:10px 14px;white-space:nowrap}
+nav a{color:#e9ecf6;text-decoration:none;font-size:14px;font-weight:600;padding:6px 12px;border-radius:99px;background:var(--card)}
+nav a:hover{background:var(--or)}
+main{max-width:980px;margin:0 auto;padding:10px 20px 80px}
+section{margin-top:56px}
+h2{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;margin-bottom:8px}
+h3{font-size:22px;margin-bottom:6px}
+.k{color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:13px}
+p{margin:10px 0}
+.grid{display:grid;gap:16px;margin:16px 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:20px 22px}
+.card .ic{font-size:40px;display:block;margin-bottom:6px}
+.card p{font-size:16px;margin:6px 0;color:#dfe3ef}
+.callout{border-left:6px solid var(--am);background:rgba(255,194,51,.1);border-radius:12px;padding:14px 18px;margin:18px 0}
+.callout.or{border-color:var(--or);background:rgba(255,107,26,.12)}
+.callout.mint{border-color:var(--mint);background:rgba(46,230,166,.1)}
+.num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--or);font-weight:800;margin-bottom:6px}
+.stairs{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));align-items:end}
+.stair{background:var(--card);border-radius:20px;padding:20px;border-top:8px solid var(--mint)}
+.stair:nth-child(2){border-color:var(--am);padding-bottom:40px}.stair:nth-child(3){border-color:var(--pk);padding-bottom:70px}
+.tag{display:inline-block;background:var(--or);font-weight:700;font-size:13px;border-radius:99px;padding:2px 12px;margin-bottom:6px}
+.tl{display:grid;gap:12px;margin:16px 0}
+.st{display:grid;grid-template-columns:90px 1fr;gap:16px;align-items:center;background:var(--card);border-radius:16px;padding:14px 18px}
+.st .yr{font-weight:800;color:var(--or);font-size:20px}
+.st p{margin:0;font-size:16px}
+details{background:var(--card);border-radius:16px;padding:14px 18px;margin:12px 0;border:1px solid rgba(255,255,255,.07)}
+summary{cursor:pointer;font-weight:700;font-size:18px}
+details ul{list-style:none;margin:12px 0}
+details li{padding:8px 12px;margin:6px 0;border-radius:10px;background:var(--card2);font-size:16px}
+details li.ok{background:rgba(46,230,166,.18);outline:2px solid var(--mint)}
+details .why{margin-top:10px;border-left:5px solid var(--mint);padding:8px 14px;background:rgba(46,230,166,.1);border-radius:8px;font-size:16px}
+.mut{color:var(--mut);font-size:15px}
+ol.steps{padding-left:22px}ol.steps li{margin:8px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:16px}
+td,th{border:1px solid rgba(255,255,255,.12);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:var(--card2)}
+footer{text-align:center;color:var(--mut);padding:30px 20px 60px;font-size:14px}
+@media print{body{background:#fff;color:#111}.card,details,.stair,.st{background:#f4f4f4;color:#111;border:1px solid #ccc}nav{display:none}p,.card p{color:#222}details[open] summary~*{display:block}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="eyebrow">Emprendimiento 1 · Unidad 6 · Sesión 19</div>
+  <h1>Proto<span>tipar</span></h1>
+  <p class="lead">¿Qué es prototipar y por qué importa? · Material de estudio para repasar la clase.</p>
+</header>
+<nav>
+  <a href="#recap">Recap</a><a href="#objetivo">Objetivo</a><a href="#que-es">¿Qué es?</a><a href="#tipos">Tipos</a><a href="#fidelidad">Fidelidad</a><a href="#fitbit">Fitbit</a><a href="#errores">Errores</a><a href="#taller">Entregable</a><a href="#repaso">Autoevaluación</a><a href="#llevo">Me llevo</a>
+</nav>
+<main>
+
+<section id="recap">
+  <div class="k">Recap</div><h2>¿Qué vimos la <em>sesión pasada</em>?</h2>
+  <div class="grid g3">
+    <div class="card"><span class="num">1</span><h3>Diverger</h3><p>Generar muchas ideas sin juzgar: <b>cantidad sobre calidad</b>.</p></div>
+    <div class="card"><span class="num">2</span><h3>Converger</h3><p>Elegir con criterios: <b>deseabilidad, factibilidad y viabilidad</b>.</p></div>
+    <div class="card"><span class="num">3</span><h3>Presentar el concepto</h3><p>Mostrarlo y recibir feedback: <b>Me gusta · Me gustaría · Y si…</b></p></div>
+  </div>
+  <div class="callout or">Ya tienes una idea ganadora para el UChallenge. El siguiente paso es que deje de ser solo una idea y se vuelva algo que alguien pueda <b>tocar</b>.</div>
+</section>
+
+<section id="objetivo">
+  <div class="k">Objetivo</div><h2><em>Objetivo</em> de la clase</h2>
+  <div class="card"><p style="font-size:19px">Comprender <b>qué es prototipar</b>, <b>por qué es fundamental</b> en Design Thinking y elegir <b>qué tipo de prototipo</b> construirá tu equipo.</p></div>
+  <div class="callout mint">Producto de la sesión: un <b>boceto o storyboard</b> de tu prototipo y la <b>Matriz de Feedback</b> firmada por el equipo que lo evaluó.</div>
+</section>
+
+<section id="que-es">
+  <div class="k">Contenido 1</div><h2>¿Qué es <em>prototipar</em>?</h2>
+  <p>Es <b>dar forma a la solución</b>: convertir una idea en algo <b>tangible</b>, para que el usuario no solo imagine, sino que pueda <b>tocarla</b>.</p>
+  <div class="grid g3">
+    <div class="card"><span class="ic">⚡</span><h3>Ensayo rápido</h3><p>Una versión temprana de tu solución, hecha en poco tiempo.</p></div>
+    <div class="card"><span class="ic">💸</span><h3>Barato</h3><p>Si falla, pierdes poco: papel, cartón, post-its.</p></div>
+    <div class="card"><span class="ic">🧪</span><h3>Para aprender</h3><p>Permite <b>fallar veloz</b> y aprender del usuario.</p></div>
+  </div>
+  <div class="callout or"><b>“Fallar rápido y barato”.</b> No buscas un producto final: buscas una herramienta para aprender del usuario. Pensar con las manos también enriquece las ideas que ya tenías.</div>
+  <div class="callout">La pregunta del día no es “¿se ve bien?”, sino <b>“¿qué necesito construir para averiguar si mi idea sirve?”</b></div>
+</section>
+
+<section id="tipos">
+  <div class="k">Contenido 2</div><h2><em>Tipos</em> de prototipo rápidos y baratos</h2>
+  <div class="grid g4">
+    <div class="card"><span class="ic">✏️</span><h3>Papel / Boceto</h3><p><b>Dibujos rápidos</b> de interfaces, empaques o flujos.</p><p class="mut">Ideal para ideas abstractas.</p></div>
+    <div class="card"><span class="ic">📱</span><h3>Digital</h3><p><b>Wireframes y mockups</b>: pantallas interactivas sin código.</p><p class="mut">Figma, Canva o PowerPoint · apps y páginas web.</p></div>
+    <div class="card"><span class="ic">📦</span><h3>Físico</h3><p><b>Maquetas 3D</b> con cartón, plastilina, legos u objetos reciclados.</p></div>
+    <div class="card"><span class="ic">🎭</span><h3>Servicio / Experiencia</h3><p><b>Storyboard</b> o <b>juego de roles</b>: actuar el servicio o dibujar el viaje del cliente (Customer Journey).</p></div>
+  </div>
+  <div class="callout or">Piensa: ¿<b>qué tipo encaja con el proyecto de tu equipo</b>? Una app suele ir en digital; una asesoría jurídica, en servicio/experiencia; una botella, en físico.</div>
+</section>
+
+<section id="fidelidad">
+  <div class="k">Contenido 3</div><h2>Niveles de <em>fidelidad</em></h2>
+  <div class="stairs">
+    <div class="stair"><span class="tag">La que usamos hoy</span><h3>🪵 Baja</h3><p><b>Rápidos y económicos</b> (papel, cartón). Validan el <b>concepto general</b> en las primeras etapas.</p></div>
+    <div class="stair"><h3>🖥️ Media</h3><p>La idea ya es clara y se valida la <b>funcionalidad o el flujo</b>. Ej.: prototipos digitales interactivos con funcionalidad limitada.</p></div>
+    <div class="stair"><h3>🚀 Alta</h3><p>Se ve y actúa <b>casi como el producto real</b> (app interactiva, impresión 3D). Valida la <b>usabilidad final</b>.</p></div>
+  </div>
+  <div class="callout">Lo tosco <b>es barato</b>, <b>es rápido</b> e <b>invita a la crítica honesta</b>: nadie teme sugerir cambios a un dibujo.</div>
+</section>
+
+<section id="fitbit">
+  <div class="k">Caso de éxito</div><h2>Fitbit: de una caja de <em>madera</em> a 2,100 MDD</h2>
+  <div class="tl">
+    <div class="st"><span class="yr">2007</span><p><b>La inspiración:</b> si el control del Nintendo Wii detecta el movimiento del cuerpo, ¿por qué no meter esa tecnología en un chip para el día a día?</p></div>
+    <div class="st"><span class="yr">🪵</span><p><b>El “Frankenstein” de madera:</b> sin dinero para plástico ni fábricas, circuitos soldados a mano en una caja de madera balsa unida con cinta.</p></div>
+    <div class="st"><span class="yr">$400K</span><p><b>El pitch:</b> consiguieron su primer gran financiamiento (400,000 USD) presentando ese pedazo de madera.</p></div>
+    <div class="st"><span class="yr">🧽</span><p><b>Ingenio:</b> un fallo de la antena casi los quiebra; lo solucionaron con una esponja de baño a presión.</p></div>
+    <div class="st"><span class="yr">25,000</span><p><b>El cierre:</b> la preventa recibió 25,000 órdenes y años después Google compró la empresa por miles de millones de dólares.</p></div>
+  </div>
+  <div class="callout mint"><b>Lección:</b> no necesitas presupuesto millonario ni el producto perfecto para empezar. El ingenio y la validación rápida con lo que tengas a la mano valen más que el diseño final.</div>
+  <p class="mut">Fuente: IEEE Spectrum — <a href="https://spectrum.ieee.org/fitbit" target="_blank" rel="noopener">spectrum.ieee.org/fitbit</a></p>
+</section>
+
+<section id="errores">
+  <div class="k">Ojo</div><h2>Errores <em>comunes</em> al prototipar</h2>
+  <div class="grid g3">
+    <div class="card"><span class="ic">💘</span><h3>Enamorarte del prototipo</h3><p>Pasar semanas puliendo algo que el usuario ni ha visto.</p></div>
+    <div class="card"><span class="ic">💰</span><h3>Hacerlo muy caro</h3><p>Gastar mucho en la primera versión.</p></div>
+    <div class="card"><span class="ic">🗣️</span><h3>Explicarlo al usuario</h3><p>Si tienes que explicarlo, el diseño falla.</p></div>
+    <div class="card"><span class="ic">🎯</span><h3>Falta de objetivos</h3><p>Construir sin saber qué quieres aprender.</p></div>
+    <div class="card"><span class="ic">🙉</span><h3>Omitir el feedback</h3><p>No escuchar al usuario a tiempo.</p></div>
+  </div>
+  <div class="callout or"><b>Regla de oro:</b> el usuario debe poder interactuar solo. Si no te entiende sin tu explicación, el prototipo te está avisando algo.</div>
+</section>
+
+<section id="taller">
+  <div class="k">Tu entregable</div><h2>Cómo construir tu prototipo de <em>baja fidelidad</em></h2>
+  <ol class="steps">
+    <li><b>Define el alcance:</b> ¿qué aspecto de la solución quieres probar? Completa: “Nuestro prototipo debe permitir que el usuario ___”.</li>
+    <li><b>Elige el tipo</b> según el objetivo y los recursos que tienes.</li>
+    <li><b>Dibuja</b> un Storyboard (historieta de 6 pasos) o un Boceto de cómo funciona tu solución.</li>
+    <li><b>Intercambia</b> con otro equipo: tú muestras sin explicar de más, ellos observan y evalúan; luego cambian.</li>
+    <li><b>Llena la Matriz de Feedback</b> y pide la firma del equipo evaluador.</li>
+  </ol>
+  <table>
+    <tr><th>✅ Qué funcionó</th><th>🛠️ Qué mejorar</th></tr>
+    <tr><td>Lo que se entendió y gustó.</td><td>Lo que confundió o falta aclarar.</td></tr>
+    <tr><th>❓ Dudas</th><th>💡 Nuevas ideas</th></tr>
+    <tr><td>Lo que el otro equipo no entendió o quiso preguntar.</td><td>Lo que sugieren agregar, quitar o cambiar.</td></tr>
+  </table>
+  <div class="callout mint"><b>Tarea:</b> digitalizar el boceto o mejorarlo (Canva o fotos claras) y subirlo junto con la Matriz firmada. Se evalúa la <b>claridad del prototipo</b> y la <b>profundidad del feedback</b> recibido. Para la próxima clase, trae material para tu prototipo y lee las págs. 19–47 del material de apoyo.</div>
+</section>
+
+<section id="repaso">
+  <div class="k">Ponte a prueba</div><h2>Autoevaluación</h2>
+  <p>Contesta primero en tu cabeza y luego abre cada pregunta para ver la respuesta.</p>
+
+  <details><summary>1 · ¿Cuál es el principal objetivo de hacer un prototipo?</summary>
+    <ul><li>A. Impresionar a los inversionistas</li><li class="ok">B. Aprender del usuario gastando poco ✔</li><li>C. Tener el producto final listo</li><li>D. Cumplir un requisito de la clase</li></ul>
+    <div class="why">Un prototipo es una herramienta para aprender del usuario, rápido y barato.</div></details>
+
+  <details><summary>2 · Una app para encontrar roomies cerca del campus. ¿Qué tipo de prototipo conviene?</summary>
+    <ul><li>A. Papel / Boceto</li><li class="ok">B. Digital ✔</li><li>C. Físico</li><li>D. Servicio / Experiencia</li></ul>
+    <div class="why">Pantallas interactivas sin código (wireframe en Figma, Canva o PowerPoint).</div></details>
+
+  <details><summary>3 · Un servicio de asesoría jurídica exprés para emprendedores. ¿Qué tipo conviene?</summary>
+    <ul><li>A. Papel / Boceto</li><li>B. Digital</li><li>C. Físico</li><li class="ok">D. Servicio / Experiencia ✔</li></ul>
+    <div class="why">Se actúa con juego de roles o se dibuja un storyboard del recorrido del cliente.</div></details>
+
+  <details><summary>4 · Tu equipo apenas tiene la idea y no sabe si le interesa a alguien. ¿Qué fidelidad conviene?</summary>
+    <ul><li class="ok">A. Baja ✔</li><li>B. Media</li><li>C. Alta</li><li>D. Ninguna: mejor lanzar el producto directo</li></ul>
+    <div class="why">Entre más temprana la etapa, más baja la fidelidad: cuesta poco, se hace rápido y recibes crítica honesta.</div></details>
+
+  <details><summary>5 · Con la cajita de madera, ¿qué les “vendió” Fitbit a los inversionistas?</summary>
+    <ul><li>A. La estética del producto</li><li class="ok">B. La funcionalidad y la validación ✔</li><li>C. El precio final</li><li>D. La marca</li></ul>
+    <div class="why">Mostraron cómo funcionaba la tecnología y que la gente la quería usar.</div></details>
+
+  <details><summary>6 · “Llevan 3 semanas puliendo su maqueta y se niegan a cambiarla aunque el usuario la critique.” ¿Qué error es?</summary>
+    <ul><li class="ok">A. Enamorarse del prototipo ✔</li><li>B. Hacerlo muy caro</li><li>C. Explicar el prototipo al usuario</li><li>D. Falta de objetivos</li></ul>
+    <div class="why">Un prototipo sirve para aprender: si el usuario lo critica, lo mejoras o lo cambias.</div></details>
+
+  <details><summary>7 · ¿Mito o realidad? “Un buen prototipo debe verse idéntico al producto final.”</summary>
+    <ul><li class="ok">Mito ✔</li><li>Realidad</li></ul>
+    <div class="why">En etapas tempranas se busca baja fidelidad: rápido, barato y fácil de criticar.</div></details>
+
+  <details><summary>8 · Ticket de salida: explica con tus palabras qué significa “falla rápido y barato”.</summary>
+    <div class="why">Equivocarte pronto y con poco costo (en papel, no en la calle) para aprender del usuario antes de invertir en la solución final.</div></details>
+</section>
+
+<section id="llevo">
+  <div class="k">Cierre</div><h2>¿Qué me <em>llevo hoy</em>?</h2>
+  <div class="grid g3">
+    <div class="card"><span class="ic">🧠✋</span><h3>Prototipar es pensar con las manos</h3><p>No es construir el producto final: es construir para pensar y aprender.</p></div>
+    <div class="card"><span class="ic">🪜</span><h3>Hay niveles de fidelidad</h3><p>Baja, media y alta, cada una con un propósito distinto.</p></div>
+    <div class="card"><span class="ic">⏩</span><h3>El feedback temprano suma</h3><p>Entre más rápido lo recibes, más sólido llega tu proyecto del UChallenge.</p></div>
+  </div>
+  <div class="callout or">Escribe tu frase: <b>“Hoy me llevo…”</b></div>
+</section>
+</main>
+<footer>Emprendimiento 1 · Unidad 6 · Sesión 19 · Prototipar</footer>
+</body>
+</html>
