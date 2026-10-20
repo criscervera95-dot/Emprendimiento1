@@ -413,7 +413,7 @@ const CFG = {
   sections:[
    {id:'sec-equipo',num:'✦',kicker:'Equipo',title:'¿Quién trabaja hoy?',color:'var(--c-idea)',step:['👥','Equipo'],sheetTitle:'Equipo',
     hint:'Un integrante captura por todo el equipo. Si abren esta actividad en el mismo navegador de la Parte A, los datos ya vienen cargados.',
-    blocks:[{t:'info',cls:'aviso',html:function(){ return S.v._from19 ? '✅ <b>Datos retomados de la Parte A (Sesión 19).</b> Revísenlos y corríjanlos si cambió algo.' : (txt('equipo') ? '' : 'ℹ️ No encontramos la Parte A en este navegador. Capturen aquí lo mínimo para continuar.'); }},
+    blocks:[{t:'info',cls:'aviso',html:function(){ return S.v._from19 ? '✅ <b>Datos retomados de la Parte A (Sesión 19).</b> Revísenlos y corríjanlos si cambió algo.' : (txt('equipo') ? '' : 'ℹ️ No encontramos la Parte A en este navegador. Copien de su <b>PDF de la Parte A (Sesión 19)</b> el equipo, los integrantes, la idea y la función clave.'); }},
             {t:'team',req:true}]},
    {id:'sec-p1',num:'1',kicker:'Paso 1 · Retomar',title:'🧩 ¿Qué construimos hoy?',color:'var(--c-idea)',step:['1','Retomar'],sheetTitle:'Lo que construimos',
     goal:'Meta: una función clave clara antes de construir',
@@ -823,9 +823,9 @@ function buildSections(){
 function setupLock(){
   if(!CFG.lock) return;
   const L=CFG.lock; const main=$('#main'); const card=$('#lockcard');
-  function tryShow(){ let ok=false; try{ ok=localStorage.getItem(L.ls)==='1'; }catch(e){} card.hidden=ok; main.hidden=!ok; if(ok) { renderTarjetaPreview(); updateProgress(); marcarActual(); } }
+  function tryShow(){ let ok=!!window.__unl; try{ ok=ok||localStorage.getItem(L.ls)==='1'; }catch(e){} card.hidden=ok; main.hidden=!ok; if(ok) { renderTarjetaPreview(); updateProgress(); marcarActual(); } }
   $('#lockbtn').addEventListener('click',()=>{ const v=($('#lockinput').value||'').trim().toUpperCase();
-    if(v && v===L.clave.toUpperCase()){ try{ localStorage.setItem(L.ls,'1'); }catch(e){} $('#lockmsg').textContent=''; fanfare(); tryShow(); }
+    if(v && v===L.clave.toUpperCase()){ window.__unl=true; try{ localStorage.setItem(L.ls,'1'); }catch(e){} $('#lockmsg').textContent=''; fanfare(); tryShow(); }
     else $('#lockmsg').textContent='Clave incorrecta. Pregúntale a tu profesora.'; });
   $('#lockinput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#lockbtn').click(); });
   tryShow();
