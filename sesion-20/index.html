@@ -452,16 +452,101 @@ html:function(){return '<h2>🎨 <em>Activación</em>: dibuja a ciegas</h2><div 
 +'<div class="card" style="display:grid;place-items:center;font-size:220px;text-align:center">🗣️✏️<div style="font-size:34px;color:var(--am);font-weight:700;margin-top:-6px">Uno habla · otro dibuja</div></div></div>';}});
 
 /* ================= Arena exprés (repaso gamificado) ================= */
-SL.push(clueSlide({id:'g-clue',blk:'Arena',t:'5–13',round:'RONDA 1 · BUZZER',title:'¿Qué es? 🕵️',
+add({id:'obj',blk:'Objetivo',t:'5–6',title:'Objetivo de la clase',
+notes:'<b>5–6 min.</b> Lee el objetivo y presenta el <b>entregable en 3 partes</b>: soundtrack de inicio (≤45 s, Gemini o Suno), prototipo físico o virtual donde se aprecie el funcionamiento y pitch de máximo 3 min sobre la funcionalidad. Todo se presenta en la mini feria de la S22; los evaluadores son sus compañeros.',
+html:function(){return '<h2>🎯 <em>Objetivo</em> de la clase</h2><div class="card" style="font-size:38px;line-height:1.3;max-width:1700px">Que construyas un <b>prototipo de baja fidelidad</b> de la <b>función clave</b> de tu solución, apoyándote en <b>IA</b>, para probarlo con usuarios reales.</div>'
++'<h3 style="font-size:40px;margin:22px 0 4px">📦 Tu entregable para la mini feria (S22) tiene <em style="font-style:normal;color:var(--or)">3 partes</em></h3>'
++'<div class="grid g3" style="margin-top:8px">'
++cardT('🎧','1 · Soundtrack de inicio','<p>Música de <b>máximo 45 s</b> creada con <b>Gemini o Suno AI</b>. Suena al abrir tu pitch.</p>')
++cardT('🧪','2 · Prototipo','<p><b>Físico o virtual</b>, donde se <b>aprecie cómo funciona</b>.</p>')
++cardT('🎤','3 · Pitch','<p><b>Máximo 3 min</b> presentando la <b>funcionalidad</b> del prototipo.</p>')+'</div>';}});
+
+add({id:'ruta',blk:'Objetivo',t:'6–7',title:'Ruta de la sesión',
+notes:'<b>6–7 min.</b> Muestra la ruta con tiempos. Punto de no retorno: min 35; sin V1 no hay visita de prueba. Si sobran minutos, se alarga el Sprint 2; si faltan, el pitch se termina en casa.',
+html:function(){const R=[['12–15','1','Retomar','Función clave'],['15–35','2','Sprint 1','V1 + soundtrack'],['35–43','3','Visita','Prueba sin explicar'],['43–56','4','Sprint 2','V2 con evidencia'],['56–66','5','Pitch','Guion y ensayo ≤3 min'],['66–74','🎮','Arena','Repaso en juego y robo'],['74–80','🏁','Cierre','Ticket y tarea']];
+return '<h2>🗺️ <em>Ruta</em> de la sesión</h2><div class="tl tl4" style="margin-top:6px">'+R.map(function(r){return '<div class="st" style="grid-template-columns:250px 80px 1fr"><span class="yr">min '+r[0]+'</span><span class="num" style="margin:0">'+r[1]+'</span><p><b>'+r[2]+'</b> · '+r[3]+'</p></div>';}).join('')+'</div>'
++'<div class="callout or">🔑 Hoy trabajan la <b>Parte B</b> en equipo (un integrante captura). Clave: <b>PROTOTIPAR-19</b>.</div>';}});
+
+add({id:'ia',blk:'Contenido',t:'7–9',title:'La IA acelera, tú decides',
+notes:'<b>7–9 min.</b> La IA sirve para arrancar rápido (wireframes, textos, listas de materiales, guion), pero el criterio de qué probar es del equipo. Muestra el ejemplo de instrucción. Se pide a la IA un wireframe de 5 pantallas; el equipo decide cuáles se quedan. Herramientas: ChatGPT, Uizard, Figma Make, Canva.',
+html:function(){return '<h2>🤖 La IA <em>acelera</em>, tú <em>decides</em></h2><div class="grid g2" style="margin-top:6px">'
++'<div class="card" style="border-color:var(--cy)"><h3>⚡ Pídele a la IA</h3><p style="font-size:30px">• Un <b>wireframe</b> de 5 pantallas</p><p style="font-size:30px">• Los <b>textos</b> de cada pantalla</p><p style="font-size:30px">• Una <b>lista de materiales</b> para la maqueta</p><p style="font-size:30px">• Un <b>borrador de guion</b> del pitch</p></div>'
++'<div class="card" style="border-color:var(--mint)"><h3>🧠 Decides tú</h3><p style="font-size:30px">• <b>Qué función</b> se prueba</p><p style="font-size:30px">• <b>Qué se recorta</b> (la IA da de más)</p><p style="font-size:30px">• <b>Qué corriges</b> porque no cuadra</p><p style="font-size:30px">• <b>Qué aprendiste</b> del usuario</p></div></div>'
++'<div class="callout or" style="font-size:30px">💬 Ejemplo: <i>“Diseña un wireframe de 5 pantallas para una app que muestra salones libres. Solo la función de buscar un salón.”</i></div>';}});
+
+add({id:'sound',blk:'Contenido',t:'9–11',title:'Soundtrack de inicio',
+notes:'<b>9–11 min.</b> Primera parte del entregable. Música original generada con Gemini o Suno AI, de máximo 45 s, instrumental recomendado. Un integrante hace de DJ durante el Sprint 1. Pide que no usen canciones reales con derechos. Se reproduce al arrancar el pitch en la S22.',
+html:function(){return '<h2>🎧 <em>Soundtrack</em> de inicio · máx. 45 s</h2><div class="grid g2" style="margin-top:6px"><div class="tl">'
++'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">1</span><p><b>Elijan el ambiente</b>: 3 palabras (ej. optimista, tecnológico, tranquilo).</p></div>'
++'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">2</span><p><b>Pídanlo</b> en <b>Gemini</b> o <b>Suno AI</b>: género + ánimo + instrumentos + duración.</p></div>'
++'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">3</span><p><b>Máximo 45 segundos.</b> Mejor <b>instrumental</b>.</p></div>'
++'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">4</span><p><b>Suena al abrir su pitch</b> en la mini feria.</p></div></div>'
++'<div class="card" style="font-size:30px"><h3>💬 Plantilla de instrucción</h3><p style="font-size:28px"><i>“Música <b>instrumental</b>, ánimo <b>[optimista]</b>, con <b>[sintetizadores suaves y batería ligera]</b>, de <b>40 segundos</b>, para presentar <b>[nombre de su solución]</b>.”</i></p><p class="sm" style="font-size:25px;margin-top:10px">Música original: no pidan canciones de artistas reales.</p></div></div>';}});
+
+add({id:'pitch',blk:'Contenido',t:'11–12',title:'Pitch de máximo 3 minutos',
+notes:'<b>11–12 min.</b> Tercera parte del entregable: pitch de máximo 3 min en el que presentan la funcionalidad. Estructura sugerida (puedes ajustarla): entrada con soundtrack, usuario y problema, demo del prototipo funcionando, aprendizaje de la visita (V1→V2), cierre y pregunta a evaluadores. Lo escriben y ensayan en el paso 5.',
+html:function(){const P=[['0:00','Entrada','Suena el soundtrack y saludan'],['0:20','Usuario y problema','Para quién y qué le pasa'],['0:50','Demo','El prototipo funcionando (el centro del pitch)'],['2:00','Aprendizaje','Qué vieron en la visita y qué cambió del V1 al V2'],['2:40','Cierre','Una frase final y su pregunta a los evaluadores']];
+return '<h2>🎤 <em>Pitch</em> · máximo 3 minutos</h2><div class="tl" style="margin-top:6px">'+P.map(function(p){return '<div class="st" style="grid-template-columns:130px 330px 1fr"><span class="yr">'+p[0]+'</span><p><b>'+p[1]+'</b></p><p style="font-size:28px;color:var(--mut)">'+p[2]+'</p></div>';}).join('')+'</div>'
++'<div class="callout or" style="font-size:30px">🎯 El pitch <b>muestra cómo funciona</b> el prototipo: no cuenta la historia completa del negocio.</div>';}});
+
+add({id:'p1',blk:'Taller del entregable',t:'12–15',title:'Paso 1 · Retomar la función clave',
+notes:'<b>12–15 min.</b> Los equipos abren la Parte B (QR o enlace, clave PROTOTIPAR-19), revisan los datos que vienen de la Parte A y fijan la función clave con la fórmula. Asigna roles: 🧱 constructor/a, 🤖 prompts de IA, 🎧 DJ (soundtrack), 🎤 vocero/a. Un solo integrante captura por equipo.',
+html:function(){return '<h2>🧩 Paso 1 · <em>Retomen</em> su función clave</h2><div class="grid" style="grid-template-columns:1.25fr .75fr;gap:28px;margin-top:6px"><div>'
++'<div class="card" style="font-size:32px"><p>Abran la <b>Parte B</b> (QR) con la clave <b class="hl">PROTOTIPAR-19</b> y completen:</p><p style="font-size:36px;margin-top:8px"><b>“Nuestro prototipo debe permitir que el usuario ___”</b></p><p class="sm" style="margin-top:8px">Solo <b>una</b> función. Lo demás no importa hoy.</p></div>'
++'<div class="grid g2" style="gap:14px;margin-top:16px"><div class="callout" style="margin:0;font-size:28px">🧱 <b>Constructor/a</b> · arma el V1</div><div class="callout" style="margin:0;font-size:28px">🤖 <b>Prompts IA</b> · pide wireframes y textos</div><div class="callout" style="margin:0;font-size:28px">🎧 <b>DJ</b> · crea el soundtrack</div><div class="callout" style="margin:0;font-size:28px">🎤 <b>Vocero/a</b> · empieza el guion</div></div>'
++'<div class="row" style="margin-top:18px"><button class="btn" data-act="timer" data-sec="180">▶ 3:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹</button></div></div>'
++'<div class="qrbox" style="position:static;width:420px;padding:18px;justify-self:center">'+QRACT+'<b>📲 Parte B</b><span>Un integrante por equipo</span></div></div>';}});
+
+add({id:'sp1',blk:'Taller del entregable',t:'15–35',title:'Paso 2 · Sprint 1: construyan el V1',
+notes:'<b>15–35 min (20 min).</b> Arranca el cronómetro de 20:00. Construyen solo la función clave; pueden usar IA para arrancar. En paralelo, el DJ genera el soundtrack. A los 10 min muestra la diapositiva Mid-check y pasa por las mesas. Al terminar: foto del V1 en la hoja.',
+html:function(){return '<h2>🛠️ Paso 2 · Sprint 1: <em>construyan el V1</em></h2><div class="grid g2" style="margin-top:6px">'
++'<div class="card"><h3>🧱 Equipo constructor</h3><p style="font-size:30px"><b>Solo la función clave.</b> Papel, cartón, post-its o digital (Canva, Figma, Uizard). La IA puede ayudarles a arrancar.</p><p class="sm" style="margin-top:8px">No busquen que quede bonito: busquen que <b>se entienda</b>.</p></div>'
++'<div class="card"><h3>🎧 En paralelo: soundtrack</h3><p style="font-size:30px">El/la DJ crea en <b>Gemini o Suno</b> una pista de <b>máximo 45 s</b> para su pitch.</p><p class="sm" style="margin-top:8px">Guarden el archivo o el enlace.</p></div></div>'
++'<div class="callout mint" style="font-size:30px">📷 Al terminar: <b>foto del V1</b> en la Parte B. Si usaron IA, anoten <b>qué le pidieron</b> y <b>qué tuvieron que corregir</b>.</div>'
++'<div class="row" style="margin-top:18px"><button class="btn big" data-act="timer" data-sec="1200">▶ 20:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹ Detener</button><span class="sm">Mid-check a los 10 min</span></div>';}});
+
+add({id:'mid',blk:'Taller del entregable',t:'25',title:'Mid-check del V1',
+notes:'<b>Min 33.</b> Muestra esta diapositiva a mitad del Sprint 1 y pasa por las mesas. Cada equipo responde las 3 preguntas en su hoja (autoevaluación del V1).',
+html:function(){return '<h2>🔔 <em>Mid-check</em> · ¿cómo va su V1?</h2><div class="grid g3" style="margin-top:10px">'
++cardT('👁️','¿Se entiende solo?','<p>Sin que nadie lo explique.</p>')
++cardT('🎯','¿Muestra la función clave?','<p>La parte sin la cual no se entiende.</p>')
++cardT('⏱️','¿Se puede probar en 3 min?','<p>Si no, <b>recorten</b>.</p>')+'</div>'
++'<div class="callout or">🚶 Paso por las mesas. Respondan estas 3 preguntas en la Parte B y sigan construyendo.</div>';}});
+
+add({id:'visita',blk:'Taller del entregable',t:'35–43',title:'Paso 3 · Visita de prueba entre equipos',
+notes:'<b>35–43 min (8 min).</b> Proyecta las parejas (🔀 Reordenar si hace falta). Turno 1 de 4 min: el equipo A prueba el V1 de B con 3 tareas; B observa y anota sin explicar. Turno 2 de 4 min: se invierten. Regla de oro: el que presenta no explica; anota si lo logró solo, con dudas o no lo logró.',
+html:function(){ensurePairs();
+return '<h2>👀 Paso 3 · <em>Visita de prueba</em></h2><div class="grid g3" style="gap:16px">'
++S.pairs.map(function(p){return '<div class="card" style="text-align:center;padding:16px"><div class="row" style="justify-content:center;gap:10px">'+p.map(function(id){const t=team(id);return t?chipStatic(t):'';}).join('<span style="font-size:34px">⇄</span>')+'</div></div>';}).join('')+'</div>'
++'<div class="row" style="margin:12px 0"><button class="btn alt" data-act="pairs" style="font-size:22px;padding:10px 22px">🔀 Reordenar</button><button class="btn" data-act="timer" data-sec="240" style="font-size:22px;padding:10px 22px">▶ 4:00 por turno</button></div>'
++'<div class="grid g3" style="gap:14px"><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">1 · Den 3 tareas</h3><p style="font-size:26px">Ej. “Encuentra un salón libre”.</p></div><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">2 · No expliquen</h3><p style="font-size:26px">Observen y anoten.</p></div><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">3 · Anoten</h3><p style="font-size:26px">Lo logró solo · con dudas · no lo logró.</p></div></div>'
++'<div class="callout mint" style="font-size:30px">🪞 Evidencia, no opiniones: ¿<b>dónde se atoró</b> el equipo visitante?</div>';}});
+
+add({id:'sp2',blk:'Taller del entregable',t:'43–56',title:'Paso 4 · Sprint 2: mejoren el V2',
+notes:'<b>43–56 min (13 min).</b> Cada cambio debe responder a algo que observaron en la visita. Foto del V2. El DJ entrega el soundtrack final (máx. 45 s). Si sobra tiempo, empiezan el guion del pitch.',
+html:function(){return '<h2>🔧 Paso 4 · Sprint 2: <em>mejoren el V2</em></h2><div class="grid g2" style="margin-top:6px">'
++'<div class="card"><h3>📝 Con evidencia</h3><p style="font-size:30px">Anoten <b>mínimo 2 cambios</b> y el <b>hallazgo de la visita</b> que cada uno responde.</p><p class="sm" style="margin-top:8px">Los cambios por gusto no cuentan.</p></div>'
++'<div class="card"><h3>🧪 Que se aprecie cómo funciona</h3><p style="font-size:30px">Su V2 debe permitir <b>mostrar la función clave</b> paso a paso en la demo.</p><p class="sm" style="margin-top:8px">Foto del V2 en la Parte B.</p></div></div>'
++'<div class="callout" style="font-size:30px">🎧 El DJ deja listo el <b>soundtrack final</b> (máximo 45 s).</div>'
++'<div class="row" style="margin-top:18px"><button class="btn big" data-act="timer" data-sec="780">▶ 13:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹ Detener</button></div>';}});
+
+add({id:'pitchprep',blk:'Taller del entregable',t:'56–66',title:'Paso 5 · Guion y ensayo del pitch',
+notes:'<b>56–66 min (10 min).</b> Escriben el guion de 3 pasos de la demo y los puntos del pitch, y ensayan una vez con cronómetro de 3:00 con el soundtrack. Si no alcanzan, terminan en casa; la S22 es la mini feria.',
+html:function(){return '<h2>🎤 Paso 5 · <em>Guion y ensayo</em> del pitch</h2><div class="grid g2" style="margin-top:6px">'
++'<div class="card"><h3>✍️ Escriban</h3><p style="font-size:30px">• <b>Usuario</b> y <b>problema</b> en una frase</p><p style="font-size:30px">• <b>Demo en 3 pasos</b> (qué toca el evaluador)</p><p style="font-size:30px">• Lo que <b>aprendieron</b> con evidencia</p><p style="font-size:30px">• <b>Una pregunta</b> para los evaluadores</p></div>'
++'<div class="card"><h3>⏱️ Ensayen una vez</h3><p style="font-size:30px">Con el <b>soundtrack</b> sonando y el cronómetro en <b>3:00</b>. Si se pasan, recorten.</p><div class="row" style="margin-top:14px"><button class="btn big" data-act="timer" data-sec="180">▶ 3:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹</button></div></div></div>'
++'<div class="callout mint" style="font-size:30px">🏁 Entregable completo: 🎧 soundtrack ≤45 s · 🧪 prototipo funcionando · 🎤 pitch ≤3 min.</div>';}});
+
+SL.push(clueSlide({id:'g-clue',blk:'Arena',t:'66–74',round:'RONDA 1 · BUZZER',title:'¿Qué es? 🕵️',
  clues:['Es la parte sin la cual tu idea no se entiende.','En el primer prototipo, solo construyes esto.','Se escribe: “Nuestro prototipo debe permitir que el usuario ___”.'],answer:'La función clave',
- notes:'<b>5–13 min (8 min).</b> Anuncia: 4 rondas rápidas y robo final (solo se roba respondiendo). <b>Ronda 1 · Buzzer:</b> pulsa “Arrancar”; las pistas salen solas cada 5 s. El primer celular que toque ¡YO! frena la ronda por su equipo; tú decides si es correcto (3/2/1 pts).'}));
-SL.push(betSlide({id:'g-bet1',blk:'Arena',t:'5–13',round:'RONDA 2 · APUESTA',q:'¿Cuál de estos es un prototipo de <em>baja fidelidad</em>?',
+ notes:'<b>66–74 min (8 min).</b> Anuncia: 4 rondas rápidas y robo final (solo se roba respondiendo). <b>Ronda 1 · Buzzer:</b> pulsa “Arrancar”; las pistas salen solas cada 5 s. El primer celular que toque ¡YO! frena la ronda por su equipo; tú decides si es correcto (3/2/1 pts).'}));
+SL.push(betSlide({id:'g-bet1',blk:'Arena',t:'66–74',round:'RONDA 2 · APUESTA',q:'¿Cuál de estos es un prototipo de <em>baja fidelidad</em>?',
  opts:['Boceto en post-its','App final publicada','Producto de fábrica','Sitio web ya programado'],correct:0,
  explain:'<b>Boceto en post-its:</b> rápido, barato y fácil de cambiar.',notes:'Cada integrante elige letra y apuesta (×1, ×2, ×3) en su celular, una sola vez. Las respuestas se ven hasta que reveles. Por integrante: acierto +apuesta, fallo −apuesta (el equipo no baja de 0).'}));
-SL.push(betSlide({id:'g-bet2',blk:'Arena',t:'5–13',round:'RONDA 3 · MITO O REALIDAD',q:'“Si el usuario necesita que le <em>expliques</em> el prototipo, está funcionando bien.”',
+SL.push(betSlide({id:'g-bet2',blk:'Arena',t:'66–74',round:'RONDA 3 · MITO O REALIDAD',q:'“Si el usuario necesita que le <em>expliques</em> el prototipo, está funcionando bien.”',
  opts:['MITO','REALIDAD'],correct:0,
  explain:'<b>Mito.</b> Un prototipo debe entenderse solo; si lo explicas, no estás probando.',notes:'Duelo rápido con apuesta, igual que la ronda 2.'}));
-SL.push(betSlide({id:'g-bet3',blk:'Arena',t:'5–13',round:'RONDA 4 · ¿QUÉ ERROR ES?',q:'Un equipo va explicando cada pantalla mientras su usuario la prueba. ¿Qué error comete?',
+SL.push(betSlide({id:'g-bet3',blk:'Arena',t:'66–74',round:'RONDA 4 · ¿QUÉ ERROR ES?',q:'Un equipo va explicando cada pantalla mientras su usuario la prueba. ¿Qué error comete?',
  opts:['Explicar el prototipo al usuario','Hacerlo muy barato','Probarlo muy temprano','Tener un objetivo claro'],correct:0,
  explain:'<b>Explicar el prototipo al usuario:</b> en vez de observar dónde se atora, le quitas la evidencia.',notes:'Última ronda con apuesta. Después, robo: tú eliges quién roba y a quién.'}));
 
@@ -486,7 +571,7 @@ function roboApply(ok){
   if(amt>0){addLog(from,-amt,'robo',sid);addLog(to,amt,'robo',sid);}
   R.ok=ok;R.amt=amt;R.ph='rev';
 }
-add({id:'robo',blk:'Arena',t:'28–36',title:'Fase de robo',game:true,
+add({id:'robo',blk:'Arena',t:'66–74',title:'Fase de robo',game:true,
 notes:'<b>Robo de puntos.</b> 1) Elige quién roba, a quién y cuántos puntos (1–3). 2) “Lanzar pregunta”: solo los integrantes del equipo que roba responden en su celular (una vez). 3) “Revelar”: si la letra más votada de ese equipo es correcta, roba los puntos; si falla (o hay empate), les paga esos puntos al otro equipo. Puedes marcar el resultado a mano o cambiarlo. Repite tantos robos como alcance el tiempo (cada equipo puede robar o ser robado).',
 html:function(){
   const R=S.robo,th=R.t?team(R.t):null,vi=R.v?team(R.v):null,rq=ROB[R.q%ROB.length],rev=R.ph==='rev';
@@ -512,7 +597,7 @@ html:function(){
   }
   if(R.hist&&R.hist.length)h+='<div class="sm" style="margin-top:8px">Robos anteriores: '+R.hist.slice(-4).map(x=>{const a=team(x.t),b=team(x.v);return a&&b?esc(a.name)+(x.ok?' ➜ ':' ✖ ')+esc(b.name)+' ('+x.amt+')':'';}).filter(Boolean).join(' · ')+'</div>';
   return h+strip();}});
-add({id:'podio',blk:'Arena',t:'36',title:'Podio del día',
+add({id:'podio',blk:'Arena',t:'74',title:'Podio del día',
 notes:'Celebra al podio. Los puntos son para jugar: el aprendizaje es el premio real. Siguiente: taller del entregable.',
 html:function(){
   const r=S.teams.map(t=>({t:t,p:pts(t.id)})).sort((a,b)=>b.p-a.p);
@@ -522,91 +607,6 @@ html:function(){
     const idx=r.indexOf(x);const hh=idx==0?430:(idx==1?300:240);
     return '<div class="col"><div class="nm" style="color:'+col(x.t)+'">'+esc(x.t.name)+'</div><div class="pt">'+x.p+' pts</div><div class="blk" style="height:'+hh+'px;background:linear-gradient(180deg,'+col(x.t)+',#1b1f29)">'+(idx==0?'🥇':idx==1?'🥈':'🥉')+'</div></div>';}).join('')+'</div>'
     +'<div class="row" style="justify-content:center;margin-top:20px">'+r.slice(3).map(x=>chipStatic(x.t)+'<span class="sm" style="margin:0 12px 0 -6px">'+x.p+'</span>').join('')+'</div><div class="row" style="justify-content:center;margin-top:16px"><button class="btn alt" data-act="xlsx">📥 Descargar Excel de participación</button></div>';}});
-
-add({id:'obj',blk:'Objetivo',t:'13–14',title:'Objetivo de la clase',
-notes:'<b>13–14 min.</b> Lee el objetivo y presenta el <b>entregable en 3 partes</b>: soundtrack de inicio (≤45 s, Gemini o Suno), prototipo físico o virtual donde se aprecie el funcionamiento y pitch de máximo 3 min sobre la funcionalidad. Todo se presenta en la mini feria de la S22; los evaluadores son sus compañeros.',
-html:function(){return '<h2>🎯 <em>Objetivo</em> de la clase</h2><div class="card" style="font-size:38px;line-height:1.3;max-width:1700px">Que construyas un <b>prototipo de baja fidelidad</b> de la <b>función clave</b> de tu solución, apoyándote en <b>IA</b>, para probarlo con usuarios reales.</div>'
-+'<h3 style="font-size:40px;margin:22px 0 4px">📦 Tu entregable para la mini feria (S22) tiene <em style="font-style:normal;color:var(--or)">3 partes</em></h3>'
-+'<div class="grid g3" style="margin-top:8px">'
-+cardT('🎧','1 · Soundtrack de inicio','<p>Música de <b>máximo 45 s</b> creada con <b>Gemini o Suno AI</b>. Suena al abrir tu pitch.</p>')
-+cardT('🧪','2 · Prototipo','<p><b>Físico o virtual</b>, donde se <b>aprecie cómo funciona</b>.</p>')
-+cardT('🎤','3 · Pitch','<p><b>Máximo 3 min</b> presentando la <b>funcionalidad</b> del prototipo.</p>')+'</div>';}});
-
-add({id:'ruta',blk:'Objetivo',t:'14–15',title:'Ruta de la sesión',
-notes:'<b>14–15 min.</b> Muestra la ruta con tiempos. Punto de no retorno: min 43; sin V1 no hay visita de prueba. Si sobran minutos, se alarga el Sprint 2; si faltan, el pitch se termina en casa.',
-html:function(){const R=[['20–23','1','Retomar','Función clave'],['23–43','2','Sprint 1','V1 + soundtrack'],['43–51','3','Visita','Prueba sin explicar'],['51–64','4','Sprint 2','V2 con evidencia'],['64–74','5','Pitch','Guion y ensayo ≤3 min'],['74–80','🏁','Cierre','Ticket y tarea']];
-return '<h2>🗺️ <em>Ruta</em> de la sesión</h2><div class="tl tl4" style="margin-top:6px">'+R.map(function(r){return '<div class="st" style="grid-template-columns:250px 80px 1fr"><span class="yr">min '+r[0]+'</span><span class="num" style="margin:0">'+r[1]+'</span><p><b>'+r[2]+'</b> · '+r[3]+'</p></div>';}).join('')+'</div>'
-+'<div class="callout or">🔑 Hoy trabajan la <b>Parte B</b> en equipo (un integrante captura). Clave: <b>PROTOTIPAR-19</b>.</div>';}});
-
-add({id:'ia',blk:'Contenido',t:'15–17',title:'La IA acelera, tú decides',
-notes:'<b>15–17 min.</b> La IA sirve para arrancar rápido (wireframes, textos, listas de materiales, guion), pero el criterio de qué probar es del equipo. Muestra el ejemplo de instrucción. Se pide a la IA un wireframe de 5 pantallas; el equipo decide cuáles se quedan. Herramientas: ChatGPT, Uizard, Figma Make, Canva.',
-html:function(){return '<h2>🤖 La IA <em>acelera</em>, tú <em>decides</em></h2><div class="grid g2" style="margin-top:6px">'
-+'<div class="card" style="border-color:var(--cy)"><h3>⚡ Pídele a la IA</h3><p style="font-size:30px">• Un <b>wireframe</b> de 5 pantallas</p><p style="font-size:30px">• Los <b>textos</b> de cada pantalla</p><p style="font-size:30px">• Una <b>lista de materiales</b> para la maqueta</p><p style="font-size:30px">• Un <b>borrador de guion</b> del pitch</p></div>'
-+'<div class="card" style="border-color:var(--mint)"><h3>🧠 Decides tú</h3><p style="font-size:30px">• <b>Qué función</b> se prueba</p><p style="font-size:30px">• <b>Qué se recorta</b> (la IA da de más)</p><p style="font-size:30px">• <b>Qué corriges</b> porque no cuadra</p><p style="font-size:30px">• <b>Qué aprendiste</b> del usuario</p></div></div>'
-+'<div class="callout or" style="font-size:30px">💬 Ejemplo: <i>“Diseña un wireframe de 5 pantallas para una app que muestra salones libres. Solo la función de buscar un salón.”</i></div>';}});
-
-add({id:'sound',blk:'Contenido',t:'17–19',title:'Soundtrack de inicio',
-notes:'<b>17–19 min.</b> Primera parte del entregable. Música original generada con Gemini o Suno AI, de máximo 45 s, instrumental recomendado. Un integrante hace de DJ durante el Sprint 1. Pide que no usen canciones reales con derechos. Se reproduce al arrancar el pitch en la S22.',
-html:function(){return '<h2>🎧 <em>Soundtrack</em> de inicio · máx. 45 s</h2><div class="grid g2" style="margin-top:6px"><div class="tl">'
-+'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">1</span><p><b>Elijan el ambiente</b>: 3 palabras (ej. optimista, tecnológico, tranquilo).</p></div>'
-+'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">2</span><p><b>Pídanlo</b> en <b>Gemini</b> o <b>Suno AI</b>: género + ánimo + instrumentos + duración.</p></div>'
-+'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">3</span><p><b>Máximo 45 segundos.</b> Mejor <b>instrumental</b>.</p></div>'
-+'<div class="st" style="grid-template-columns:80px 1fr"><span class="num" style="margin:0">4</span><p><b>Suena al abrir su pitch</b> en la mini feria.</p></div></div>'
-+'<div class="card" style="font-size:30px"><h3>💬 Plantilla de instrucción</h3><p style="font-size:28px"><i>“Música <b>instrumental</b>, ánimo <b>[optimista]</b>, con <b>[sintetizadores suaves y batería ligera]</b>, de <b>40 segundos</b>, para presentar <b>[nombre de su solución]</b>.”</i></p><p class="sm" style="font-size:25px;margin-top:10px">Música original: no pidan canciones de artistas reales.</p></div></div>';}});
-
-add({id:'pitch',blk:'Contenido',t:'19–20',title:'Pitch de máximo 3 minutos',
-notes:'<b>19–20 min.</b> Tercera parte del entregable: pitch de máximo 3 min en el que presentan la funcionalidad. Estructura sugerida (puedes ajustarla): entrada con soundtrack, usuario y problema, demo del prototipo funcionando, aprendizaje de la visita (V1→V2), cierre y pregunta a evaluadores. Lo escriben y ensayan en el paso 5.',
-html:function(){const P=[['0:00','Entrada','Suena el soundtrack y saludan'],['0:20','Usuario y problema','Para quién y qué le pasa'],['0:50','Demo','El prototipo funcionando (el centro del pitch)'],['2:00','Aprendizaje','Qué vieron en la visita y qué cambió del V1 al V2'],['2:40','Cierre','Una frase final y su pregunta a los evaluadores']];
-return '<h2>🎤 <em>Pitch</em> · máximo 3 minutos</h2><div class="tl" style="margin-top:6px">'+P.map(function(p){return '<div class="st" style="grid-template-columns:130px 330px 1fr"><span class="yr">'+p[0]+'</span><p><b>'+p[1]+'</b></p><p style="font-size:28px;color:var(--mut)">'+p[2]+'</p></div>';}).join('')+'</div>'
-+'<div class="callout or" style="font-size:30px">🎯 El pitch <b>muestra cómo funciona</b> el prototipo: no cuenta la historia completa del negocio.</div>';}});
-
-add({id:'p1',blk:'Taller del entregable',t:'20–23',title:'Paso 1 · Retomar la función clave',
-notes:'<b>20–23 min.</b> Los equipos abren la Parte B (QR o enlace, clave PROTOTIPAR-19), revisan los datos que vienen de la Parte A y fijan la función clave con la fórmula. Asigna roles: 🧱 constructor/a, 🤖 prompts de IA, 🎧 DJ (soundtrack), 🎤 vocero/a. Un solo integrante captura por equipo.',
-html:function(){return '<h2>🧩 Paso 1 · <em>Retomen</em> su función clave</h2><div class="grid" style="grid-template-columns:1.25fr .75fr;gap:28px;margin-top:6px"><div>'
-+'<div class="card" style="font-size:32px"><p>Abran la <b>Parte B</b> (QR) con la clave <b class="hl">PROTOTIPAR-19</b> y completen:</p><p style="font-size:36px;margin-top:8px"><b>“Nuestro prototipo debe permitir que el usuario ___”</b></p><p class="sm" style="margin-top:8px">Solo <b>una</b> función. Lo demás no importa hoy.</p></div>'
-+'<div class="grid g2" style="gap:14px;margin-top:16px"><div class="callout" style="margin:0;font-size:28px">🧱 <b>Constructor/a</b> · arma el V1</div><div class="callout" style="margin:0;font-size:28px">🤖 <b>Prompts IA</b> · pide wireframes y textos</div><div class="callout" style="margin:0;font-size:28px">🎧 <b>DJ</b> · crea el soundtrack</div><div class="callout" style="margin:0;font-size:28px">🎤 <b>Vocero/a</b> · empieza el guion</div></div>'
-+'<div class="row" style="margin-top:18px"><button class="btn" data-act="timer" data-sec="180">▶ 3:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹</button></div></div>'
-+'<div class="qrbox" style="position:static;width:420px;padding:18px;justify-self:center">'+QRACT+'<b>📲 Parte B</b><span>Un integrante por equipo</span></div></div>';}});
-
-add({id:'sp1',blk:'Taller del entregable',t:'23–43',title:'Paso 2 · Sprint 1: construyan el V1',
-notes:'<b>23–43 min (20 min).</b> Arranca el cronómetro de 20:00. Construyen solo la función clave; pueden usar IA para arrancar. En paralelo, el DJ genera el soundtrack. A los 10 min muestra la diapositiva Mid-check y pasa por las mesas. Al terminar: foto del V1 en la hoja.',
-html:function(){return '<h2>🛠️ Paso 2 · Sprint 1: <em>construyan el V1</em></h2><div class="grid g2" style="margin-top:6px">'
-+'<div class="card"><h3>🧱 Equipo constructor</h3><p style="font-size:30px"><b>Solo la función clave.</b> Papel, cartón, post-its o digital (Canva, Figma, Uizard). La IA puede ayudarles a arrancar.</p><p class="sm" style="margin-top:8px">No busquen que quede bonito: busquen que <b>se entienda</b>.</p></div>'
-+'<div class="card"><h3>🎧 En paralelo: soundtrack</h3><p style="font-size:30px">El/la DJ crea en <b>Gemini o Suno</b> una pista de <b>máximo 45 s</b> para su pitch.</p><p class="sm" style="margin-top:8px">Guarden el archivo o el enlace.</p></div></div>'
-+'<div class="callout mint" style="font-size:30px">📷 Al terminar: <b>foto del V1</b> en la Parte B. Si usaron IA, anoten <b>qué le pidieron</b> y <b>qué tuvieron que corregir</b>.</div>'
-+'<div class="row" style="margin-top:18px"><button class="btn big" data-act="timer" data-sec="1200">▶ 20:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹ Detener</button><span class="sm">Mid-check a los 10 min</span></div>';}});
-
-add({id:'mid',blk:'Taller del entregable',t:'33',title:'Mid-check del V1',
-notes:'<b>Min 33.</b> Muestra esta diapositiva a mitad del Sprint 1 y pasa por las mesas. Cada equipo responde las 3 preguntas en su hoja (autoevaluación del V1).',
-html:function(){return '<h2>🔔 <em>Mid-check</em> · ¿cómo va su V1?</h2><div class="grid g3" style="margin-top:10px">'
-+cardT('👁️','¿Se entiende solo?','<p>Sin que nadie lo explique.</p>')
-+cardT('🎯','¿Muestra la función clave?','<p>La parte sin la cual no se entiende.</p>')
-+cardT('⏱️','¿Se puede probar en 3 min?','<p>Si no, <b>recorten</b>.</p>')+'</div>'
-+'<div class="callout or">🚶 Paso por las mesas. Respondan estas 3 preguntas en la Parte B y sigan construyendo.</div>';}});
-
-add({id:'visita',blk:'Taller del entregable',t:'43–51',title:'Paso 3 · Visita de prueba entre equipos',
-notes:'<b>43–51 min (8 min).</b> Proyecta las parejas (🔀 Reordenar si hace falta). Turno 1 de 4 min: el equipo A prueba el V1 de B con 3 tareas; B observa y anota sin explicar. Turno 2 de 4 min: se invierten. Regla de oro: el que presenta no explica; anota si lo logró solo, con dudas o no lo logró.',
-html:function(){ensurePairs();
-return '<h2>👀 Paso 3 · <em>Visita de prueba</em></h2><div class="grid g3" style="gap:16px">'
-+S.pairs.map(function(p){return '<div class="card" style="text-align:center;padding:16px"><div class="row" style="justify-content:center;gap:10px">'+p.map(function(id){const t=team(id);return t?chipStatic(t):'';}).join('<span style="font-size:34px">⇄</span>')+'</div></div>';}).join('')+'</div>'
-+'<div class="row" style="margin:12px 0"><button class="btn alt" data-act="pairs" style="font-size:22px;padding:10px 22px">🔀 Reordenar</button><button class="btn" data-act="timer" data-sec="240" style="font-size:22px;padding:10px 22px">▶ 4:00 por turno</button></div>'
-+'<div class="grid g3" style="gap:14px"><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">1 · Den 3 tareas</h3><p style="font-size:26px">Ej. “Encuentra un salón libre”.</p></div><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">2 · No expliquen</h3><p style="font-size:26px">Observen y anoten.</p></div><div class="card" style="padding:20px 26px"><h3 style="font-size:32px">3 · Anoten</h3><p style="font-size:26px">Lo logró solo · con dudas · no lo logró.</p></div></div>'
-+'<div class="callout mint" style="font-size:30px">🪞 Evidencia, no opiniones: ¿<b>dónde se atoró</b> el equipo visitante?</div>';}});
-
-add({id:'sp2',blk:'Taller del entregable',t:'51–64',title:'Paso 4 · Sprint 2: mejoren el V2',
-notes:'<b>51–64 min (13 min).</b> Cada cambio debe responder a algo que observaron en la visita. Foto del V2. El DJ entrega el soundtrack final (máx. 45 s). Si sobra tiempo, empiezan el guion del pitch.',
-html:function(){return '<h2>🔧 Paso 4 · Sprint 2: <em>mejoren el V2</em></h2><div class="grid g2" style="margin-top:6px">'
-+'<div class="card"><h3>📝 Con evidencia</h3><p style="font-size:30px">Anoten <b>mínimo 2 cambios</b> y el <b>hallazgo de la visita</b> que cada uno responde.</p><p class="sm" style="margin-top:8px">Los cambios por gusto no cuentan.</p></div>'
-+'<div class="card"><h3>🧪 Que se aprecie cómo funciona</h3><p style="font-size:30px">Su V2 debe permitir <b>mostrar la función clave</b> paso a paso en la demo.</p><p class="sm" style="margin-top:8px">Foto del V2 en la Parte B.</p></div></div>'
-+'<div class="callout" style="font-size:30px">🎧 El DJ deja listo el <b>soundtrack final</b> (máximo 45 s).</div>'
-+'<div class="row" style="margin-top:18px"><button class="btn big" data-act="timer" data-sec="780">▶ 13:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹ Detener</button></div>';}});
-
-add({id:'pitchprep',blk:'Taller del entregable',t:'64–74',title:'Paso 5 · Guion y ensayo del pitch',
-notes:'<b>64–74 min (10 min).</b> Escriben el guion de 3 pasos de la demo y los puntos del pitch, y ensayan una vez con cronómetro de 3:00 con el soundtrack. Si no alcanzan, terminan en casa; la S22 es la mini feria.',
-html:function(){return '<h2>🎤 Paso 5 · <em>Guion y ensayo</em> del pitch</h2><div class="grid g2" style="margin-top:6px">'
-+'<div class="card"><h3>✍️ Escriban</h3><p style="font-size:30px">• <b>Usuario</b> y <b>problema</b> en una frase</p><p style="font-size:30px">• <b>Demo en 3 pasos</b> (qué toca el evaluador)</p><p style="font-size:30px">• Lo que <b>aprendieron</b> con evidencia</p><p style="font-size:30px">• <b>Una pregunta</b> para los evaluadores</p></div>'
-+'<div class="card"><h3>⏱️ Ensayen una vez</h3><p style="font-size:30px">Con el <b>soundtrack</b> sonando y el cronómetro en <b>3:00</b>. Si se pasan, recorten.</p><div class="row" style="margin-top:14px"><button class="btn big" data-act="timer" data-sec="180">▶ 3:00</button><button class="btn alt" data-act="timer" data-sec="0">⏹</button></div></div></div>'
-+'<div class="callout mint" style="font-size:30px">🏁 Entregable completo: 🎧 soundtrack ≤45 s · 🧪 prototipo funcionando · 🎤 pitch ≤3 min.</div>';}});
 
 add({id:'tarea',blk:'Cierre',t:'74–77',title:'Tarea y ticket de salida',
 notes:'<b>74–77 min.</b> Cada equipo descarga el PDF de la Parte B (con % de participación) y lo sube a Brightspace; completan el ticket de salida en la hoja. Tarea para la S21: el instrumento de testeo (encuesta breve o guía de observación) para probar su prototipo con al menos 5 usuarios reales. Recuerda: mini feria en la S22.',
