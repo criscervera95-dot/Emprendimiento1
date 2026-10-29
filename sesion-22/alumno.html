@@ -206,7 +206,7 @@ function drawTurn(){
   if(ph==='ent'||ph==='pit'||ph==='pre')return h+'<p class="sub">'+(ph==='ent'?'Entra su soundtrack.':(ph==='pit'?'Escucha el pitch.':'Los evaluadores hacen preguntas.'))+' Reacciona en vivo:</p>'+rxGrid(tid);
   if(ph==='rate'){
     if(rated(tid))return h+'<div class="res">✔ Calificación enviada. ¡Gracias!</div><p class="sub" style="margin-top:12px">Mira la pantalla del salón.</p>';
-    return h+'<p class="sub">Califica de 1 a 5. Tienes un minuto.</p>'+form(tid);
+    return h+'<p class="sub">Califica de 1 a 5. Tienes menos de un minuto.</p>'+form(tid);
   }
   return h+(rated(tid)?'<div class="res">✔ Calificación enviada. ¡Gracias!</div>':'<div class="wait"><div class="big">🔒</div><h1>Calificación cerrada</h1><p class="sub">Este turno ya terminó.</p></div>');
 }

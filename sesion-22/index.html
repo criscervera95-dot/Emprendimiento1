@@ -335,7 +335,7 @@ const CRIT=[
   {ic:'💡',n:'Claridad del valor',d:'¿Entendí qué problema resuelve y para quién?'}
 ];
 const REACT=[{e:'🔥',n:'Está fuego'},{e:'👏',n:'Aplausos'},{e:'💡',n:'Qué idea'},{e:'🤯',n:'Wow'},{e:'🎧',n:'Buen soundtrack'}];
-const STG=[['ent','🎧 Entrada con soundtrack','0:30',30],['pit','🎤 Pitch','2:00',120],['pre','❓ Preguntas de evaluadores','1:00',60],['rate','⭐ Califica el grupo','1:00',60]];
+const STG=[['ent','🎧 Entrada con soundtrack','0:20',20],['pit','🎤 Pitch','1:30',90],['pre','❓ Preguntas de evaluadores','0:30',30],['rate','⭐ Califica el grupo','0:40',40]];
 const RX_PHASES=['ent','pit','pre'];
 
 /* ================= Estado ================= */
@@ -487,7 +487,7 @@ function buildSL(){
   SL.length=0;
   const N=S.teams.length;
   add({id:'portada',blk:'Emprendimiento 1 · U7 Testear',t:'0',title:'Portada',notes:'<b>Min 0–1.</b> Da la bienvenida. Hoy los prototipos se prueban con público real: sus compañeros. Cada equipo trae 3 cosas: prototipo, soundtrack y pitch.',
-    html:function(){return '<div class="cover"><div class="eyebrow">Sesión 22 · Testeo con usuarios reales</div><h1>Mini feria<br>de <span>prototipos</span></h1><div class="sub">Tu prototipo sale a la cancha</div><div class="tag">Te evalúan 2 equipos en su Forms y todo el grupo desde el celular.</div><div class="rules"><div>🧪 Prototipo</div><div>🎧 Soundtrack</div><div>🎤 Pitch</div><div>👥 '+N+' equipos · 5 min c/u</div></div><div class="blob">🎪</div></div>';}});
+    html:function(){return '<div class="cover"><div class="eyebrow">Sesión 22 · Testeo con usuarios reales</div><h1>Mini feria<br>de <span>prototipos</span></h1><div class="sub">Tu prototipo sale a la cancha</div><div class="tag">Te evalúan 2 equipos en su Forms y todo el grupo desde el celular.</div><div class="rules"><div>🧪 Prototipo</div><div>🎧 Soundtrack</div><div>🎤 Pitch</div><div>👥 '+N+' equipos · 3 min c/u</div></div><div class="blob">🎪</div></div>';}});
   add({id:'recap',blk:'Recap',t:'1–2',title:'Lo que traes de S19 a S21',notes:'<b>Min 1–2.</b> Recuerda la ruta: S19–S20 construyeron el prototipo (Partes A y B); S21 diseñó el instrumento de testeo y la tarjeta QR del stand. Hoy se usa todo.',
     html:function(){return '<h2>Lo que <em>ya traes</em></h2><div class="grid g3">'
       +cardT('🧱','S19–S20 · Prototipo','<p>Construyeron una versión que se puede probar: física o digital.</p>')
@@ -515,8 +515,8 @@ function buildSL(){
         ['Verifica','Abre tu carpeta desde otro celular: ¿se ven tus dos archivos?']]
         .map(function(x,i){return '<div class="st5"><span class="num">'+(i+1)+'</span><div><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div></div>';}).join('')+'</div>'
       +'<div class="callout">⏱ Tienes unos minutos. Cuando llegue tu turno, la profesora abre tu carpeta desde esta presentación.</div>';}});
-  add({id:'turno',blk:'Reglas',t:'8–10',title:'Cómo funciona cada turno',notes:'<b>Min 8–10.</b> Cada turno dura 5 minutos con un cronómetro por etapa. Evaluadores: solo escuchan y registran en su Forms; en su turno no usan el celular de la presentación. Público: reacciona y califica al final.',
-    html:function(){return '<h2>Un turno = <em>5 minutos</em></h2><div class="tl" style="gap:12px">'
+  add({id:'turno',blk:'Reglas',t:'8–10',title:'Cómo funciona cada turno',notes:'<b>Min 8–10.</b> Cada turno dura 3 minutos (más 1 de cambio) con un cronómetro por etapa. Evaluadores: solo escuchan y registran en su Forms; en su turno no usan el celular de la presentación. Público: reacciona y califica al final.',
+    html:function(){return '<h2>Un turno = <em>3 minutos</em></h2><div class="tl" style="gap:12px">'
       +STG.map(function(x,i){return '<div class="st"><span class="yr">'+x[2]+'</span><p><b>'+x[1]+'</b>'+['  · suena su música y se presentan','  · problema, usuario y valor del prototipo','  · los 2 equipos evaluadores preguntan con su instrumento','  · todos los demás califican en el celular'][i]+'</p></div>';}).join('')+'</div>'
       +'<div class="grid g3" style="margin-top:20px">'
       +cardT('🎤','Equipo en turno','<p>Presenta y responde.</p>')
@@ -535,15 +535,15 @@ function buildSL(){
       const rows=S.teams.map(function(t){return '<div class="evr"><div>'+chipS(t)+'</div><div class="ar">evalúa a ➜</div><div class="row" style="gap:8px">'+evaluates(t.id).map(chipId).join('')+'</div></div>';}).join('');
       return '<h2>Sorteo de <em>equipos evaluadores</em></h2><div class="evg">'+rows+'</div><div class="row" style="margin-top:14px"><button class="btn big" data-act="sort"'+(ringLocked()?' disabled':'')+'>'+(ringLocked()?'🔒 Sorteo bloqueado':'🎲 Sortear')+'</button><span class="sm">Cada equipo evalúa a 2 y es evaluado por 2, solo en su Forms.</span></div>';}});
   S.teams.forEach(function(t,i){
-    const m0=16+i*5;
-    add({id:'turn-'+t.id,turn:t.id,blk:'Turno '+(i+1)+' de '+N,t:m0+'–'+(m0+5),title:'Turno · '+t.name,
-      notes:'<b>Min '+m0+'–'+(m0+5)+'.</b> 1) Abre la carpeta del equipo en el recuadro (entra a “'+esc(t.name)+'”). 2) Etapas en orden: 🎧 Entrada 0:30 · 🎤 Pitch 2:00 · ❓ Preguntas de evaluadores 1:00 · ⭐ Califica 1:00; cada botón arranca su cronómetro. 3) Los evaluadores de este equipo no pueden reaccionar ni calificar desde el celular. 4) “Cerrar y seguir” cierra la calificación y pasa al siguiente. <b>Contingencia:</b> si vas atrasada, acorta el pitch a 1:30 o califica en 40 s; punto de no retorno: min 66 inicia el ranking.',
+    const m0=16+i*4;
+    add({id:'turn-'+t.id,turn:t.id,blk:'Turno '+(i+1)+' de '+N,t:m0+'–'+(m0+4),title:'Turno · '+t.name,
+      notes:'<b>Min '+m0+'–'+(m0+4)+'.</b> 1) Abre la carpeta del equipo en el recuadro (entra a “'+esc(t.name)+'”). 2) Etapas en orden: 🎧 Entrada 0:30 · 🎤 Pitch 2:00 · ❓ Preguntas de evaluadores 1:00 · ⭐ Califica 1:00; cada botón arranca su cronómetro. 3) Los evaluadores de este equipo no pueden reaccionar ni calificar desde el celular. 4) “Cerrar y seguir” cierra la calificación y pasa al siguiente. <b>Contingencia:</b> si vas atrasada, acorta el cambio entre equipos (1 min de margen por turno) o recorta las preguntas de evaluadores a 20 s; punto de no retorno: min 56 inicia el ranking.',
       html:function(){return turnHtml(t.id,i,N);}});
   });
-  add({id:'ranking',blk:'Resultados',t:'66–70',title:'Ranking: soundtrack, prototipo y pitch',notes:'<b>Min 66–70.</b> Pulsa “Revelar ranking”. Cada columna muestra a los 10 equipos de mejor a peor. El puntaje mezcla el promedio del grupo con tu calificación ('+Math.round(S.wp*100)+'%, ajustable en 🏆 Marcador).',html:rankHtml});
-  add({id:'podio',blk:'Resultados',t:'70–73',title:'Podio general y premios',notes:'<b>Min 70–73.</b> Podio por promedio general de los 4 criterios y premios por categoría; “Favorito del público” sale del conteo de reacciones.',html:podioHtml});
-  add({id:'quien',blk:'Resultados',t:'73–76',title:'Quién evaluó a quién',notes:'<b>Min 73–76.</b> Muestra qué equipos evaluaron a cuáles, cuántas calificaciones recibió cada uno y cuántos integrantes de cada equipo participaron. Las calificaciones de los evaluadores viven en sus Forms.',html:partHtml});
-  add({id:'cierre',blk:'Cierre',t:'76–80',title:'¿Qué me llevo hoy?',notes:'<b>Min 76–80.</b> Ronda rápida por equipo: “¿Qué fue lo más inesperado que te dijo un usuario?”. Avisa que la S23 se usa esa evidencia para iterar. Descarga el Excel antes de reiniciar o borrar datos.',
+  add({id:'ranking',blk:'Resultados',t:'56–60',title:'Ranking: soundtrack, prototipo y pitch',notes:'<b>Min 56–60.</b> Pulsa “Revelar ranking”. Cada columna muestra a los 10 equipos de mejor a peor. El puntaje mezcla el promedio del grupo con tu calificación ('+Math.round(S.wp*100)+'%, ajustable en 🏆 Marcador).',html:rankHtml});
+  add({id:'podio',blk:'Resultados',t:'60–64',title:'Podio general y premios',notes:'<b>Min 60–64.</b> Podio por promedio general de los 4 criterios y premios por categoría; “Favorito del público” sale del conteo de reacciones.',html:podioHtml});
+  add({id:'quien',blk:'Resultados',t:'64–68',title:'Quién evaluó a quién',notes:'<b>Min 64–68.</b> Muestra qué equipos evaluaron a cuáles, cuántas calificaciones recibió cada uno y cuántos integrantes de cada equipo participaron. Las calificaciones de los evaluadores viven en sus Forms.',html:partHtml});
+  add({id:'cierre',blk:'Cierre',t:'68–80',title:'¿Qué me llevo hoy?',notes:'<b>Min 68–80.</b> Ronda rápida por equipo: “¿Qué fue lo más inesperado que te dijo un usuario?”. Avisa que la S23 se usa esa evidencia para iterar. Descarga el Excel antes de reiniciar o borrar datos.',
     html:function(){return '<h2>¿Qué <em>me llevo hoy</em>?</h2><div class="grid g2">'
       +cardT('🧪','Probar antes de pulir','<p>Un prototipo sirve cuando alguien lo usa y te dice qué pasó.</p>')
       +cardT('👂','Escuchar sin defender','<p>Lo que te dijo el usuario vale más que lo que tú pensabas.</p>')
