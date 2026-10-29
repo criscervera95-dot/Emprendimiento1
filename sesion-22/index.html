@@ -361,8 +361,8 @@ const CRIT=[
   {ic:'💡',n:'Claridad del valor',d:'¿Entendí qué problema resuelve y para quién?'}
 ];
 const REACT=[{e:'🔥',n:'Está fuego'},{e:'👏',n:'Aplausos'},{e:'💡',n:'Qué idea'},{e:'🤯',n:'Wow'},{e:'🎧',n:'Buen soundtrack'}];
-const STG=[['ent','🎧 Entrada con soundtrack','0:20',20],['pit','🎤 Pitch','1:30',90],['pre','❓ Preguntas de evaluadores','0:30',30],['rate','⭐ Califica el grupo','0:40',40]];
-const RX_PHASES=['ent','pit','pre'];
+const STG=[['pit','▶ Inicia turno','3:00',180],['rate','⭐ Activar evaluaciones','0:40',40]];
+const RX_PHASES=['ent','pit','pre'];/* 'pit' = turno en curso */
 
 /* ================= Estado ================= */
 function defTeams(n){const a=[];for(let i=1;i<=n;i++)a.push({id:i,name:'Equipo '+i,c:(i-1)%COLORS.length});return a;}
@@ -540,9 +540,9 @@ function buildSL(){
         ['Verifica','Abre tu carpeta desde otro celular: ¿se ven tus dos archivos?']]
         .map(function(x,i){return '<div class="st5"><span class="num">'+(i+1)+'</span><div><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div></div>';}).join('')+'</div>'
       +'<div class="callout">⏱ Tienes unos minutos. Cuando llegue tu turno, la profesora abre tu carpeta desde esta presentación.</div>';}});
-  add({id:'turno',blk:'Reglas',t:'8–10',title:'Cómo funciona cada turno',notes:'<b>Min 8–10.</b> Cada turno dura 3 minutos (más 1 de cambio) con un cronómetro por etapa. Evaluadores: solo escuchan y registran en su Forms; en su turno no usan el celular de la presentación. Público: reacciona y califica al final.',
-    html:function(){return '<h2>Un turno = <em>3 minutos</em></h2><div class="tl" style="gap:12px">'
-      +STG.map(function(x,i){return '<div class="st"><span class="yr">'+x[2]+'</span><p><b>'+x[1]+'</b>'+['  · suena su música y se presentan','  · problema, usuario y valor del prototipo','  · los 2 equipos evaluadores preguntan con su instrumento','  · todos los demás califican en el celular'][i]+'</p></div>';}).join('')+'</div>'
+  add({id:'turno',blk:'Reglas',t:'8–10',title:'Cómo funciona cada turno',notes:'<b>Min 8–10.</b> Cada turno: botón Inicia turno (3:00), luego Activar evaluaciones (0:40) y Cerrar y seguir. Evaluadores: solo escuchan y registran en su Forms; en su turno no usan el celular de la presentación. Público: reacciona y califica al final.',
+    html:function(){return '<h2>Un turno = <em>3:40</em></h2><div class="tl" style="gap:12px">'
+      +STG.map(function(x,i){return '<div class="st"><span class="yr">'+x[2]+'</span><p><b>'+x[1]+'</b>'+['  · suena su música, se presentan y el grupo reacciona desde el celular','  · todos los demás califican en el celular; los evaluadores solo en su Forms'][i]+'</p></div>';}).join('')+'</div>'
       +'<div class="grid g3" style="margin-top:20px">'
       +cardT('🎤','Equipo en turno','<p>Presenta y responde.</p>')
       +cardT('📝','Equipos evaluadores','<p>Solo evalúan en <b>su Forms</b>. En este turno no reaccionan ni califican aquí.</p>')
