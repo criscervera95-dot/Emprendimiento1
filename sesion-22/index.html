@@ -366,14 +366,13 @@ const RX_PHASES=['ent','pit','pre'];
 
 /* ================= Estado ================= */
 function defTeams(n){const a=[];for(let i=1;i<=n;i++)a.push({id:i,name:'Equipo '+i,c:(i-1)%COLORS.length});return a;}
-function newPin(){return String(1000+Math.floor(Math.random()*9000));}
-function fresh(){return {teams:defTeams(10),idx:0,ring:null,ph:{},rt:{},pr:{},rx:{},rxd:{},people:{},wp:0.3,pin:newPin(),rankRev:false,nid:100,setup:false,live:false};}
+function fresh(){return {teams:defTeams(10),idx:0,ring:null,ph:{},rt:{},pr:{},rx:{},rxd:{},people:{},wp:0.3,rankRev:false,nid:100,setup:false,live:false};}
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){S=null;}
 if(!S||!S.teams){S=fresh();}
 ['ph','rt','pr','rx','rxd','people'].forEach(function(k){S[k]=S[k]||{};});
 if(typeof S.wp!=='number')S.wp=0.3;
-if(!S.pin)S.pin=newPin();
+delete S.pin;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const $=s=>document.querySelector(s);
 const sl=$('#sl'),cv=$('#cv');
@@ -763,7 +762,6 @@ function liveDraw(){
    +'<p class="lvbig">Escanea el QR<br>con tu celular</p><p class="lvurl"><a href="'+esc(ALUMNO)+'" target="_blank" rel="noopener" style="color:#3dd6f5">'+esc(ALUMNO)+'</a></p>'
    +'<p class="lvst">'+(LV.on?('Conexión: <b>'+up+'/'+LV.cl.length+'</b> servidores · <b>'+cn.tot+'</b> celulares conectados'):'Apagado')+'</p>';
   if(LV.on){h+='<div class="lvteams">'+S.teams.map(t=>'<span class="chip" style="--c:'+col(t)+'"><i></i>'+esc(t.name)+' · '+(cn.per[t.id]||0)+'</span>').join('')+'</div>';}
-  h+='<div class="pinbox">👩‍🏫 <b style="letter-spacing:0;font-size:22px">Tu acceso</b><br><span>Entra desde <u>otro dispositivo</u>, abre el enlace de alumnos y toca “Soy la profesora”. Escribe tu clave. Tus calificaciones no se ven en esta pantalla.</span></div>';
   h+='<div class="row" style="margin-top:14px">'+(LV.on?'<button class="btn alt" data-lv="stop">Apagar modo en vivo</button>':'<button class="btn big" data-lv="start">▶ Encender modo en vivo</button>')+'<button class="btn alt" data-lv="xlsx">📥 Excel</button><button class="btn alt" data-lv="close">Cerrar</button></div>'
    +'<p class="lvhelp">Cada alumno elige su equipo. Los equipos evaluadores del turno no pueden reaccionar ni calificar aquí. Cada celular califica una sola vez por equipo.</p></div></div>';
   $('#live').innerHTML=h;
