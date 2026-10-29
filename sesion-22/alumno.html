@@ -151,7 +151,7 @@ function draw(){
   if(!NM&&!PROF){
     if($('#nmf')||$('#pnf'))return;
     if(askPin){
-      m.innerHTML='<div class="kick">Acceso especial</div><h1>PIN de profesora</h1><p class="sub">Lo ves en la computadora, en el panel 📡 En vivo.</p><div id="pnf"><input id="pn" type="tel" inputmode="numeric" placeholder="PIN" maxlength="8" style="'+IN+'"><p class="sent" id="pne"></p><button class="tm" data-pin="1" style="--c:#ffc233;width:100%">Entrar</button><a class="lnk" data-back="1">← Volver</a></div>';
+      m.innerHTML='<div class="kick">Acceso especial</div><h1>Clave de profesora</h1><p class="sub">Escribe tu clave. Tus calificaciones no las ve el grupo.</p><div id="pnf"><input id="pn" type="password" autocapitalize="off" autocomplete="off" placeholder="Clave" maxlength="30" style="'+IN+'"><p class="sent" id="pne"></p><button class="tm" data-pin="1" style="--c:#ffc233;width:100%">Entrar</button><a class="lnk" data-back="1">← Volver</a></div>';
       return;
     }
     m.innerHTML='<div class="kick">Paso 1</div><h1>¿Cómo te llamas?</h1><p class="sub">Escribe tu nombre y tu apellido. Solo se pide una vez; la profe lo usa para registrar tu participación.</p><div id="nmf"><input id="n1" placeholder="Nombre" autocomplete="given-name" maxlength="30" style="'+IN+'"><input id="n2" placeholder="Apellido" autocomplete="family-name" maxlength="30" style="'+IN+'"><p class="sent" id="nme"></p><button class="tm" data-nm="1" style="--c:#ff6b1a;width:100%">Continuar</button><a class="lnk" data-prof="1">Soy la profesora</a></div>';
@@ -164,7 +164,7 @@ function draw(){
       +ST.teams.map(function(t){return '<button class="tm" style="--c:'+esc(t.c)+'" data-t="'+t.id+'">'+esc(t.n)+'</button>';}).join('')+'</div>';
     return;
   }
-  var sig=JSON.stringify([ST.sid,ST.k,ST.tid,ST.ph,ST.bl,ST.teams,team,RS,rxn,saved,rated(ST.tid)]);
+  var sig=JSON.stringify([ST.pr,ST.sid,ST.k,ST.tid,ST.ph,ST.bl,ST.teams,team,RS,rxn,saved,rated(ST.tid)]);
   if(sig===lastSig)return;lastSig=sig;
   var h='';
   if(PROF)h+='<div class="bar"><div class="me" style="--c:#ffc233">👩‍🏫 Acceso de profesora</div></div>';
@@ -188,7 +188,7 @@ function form(tid){
   }).join('');
   h+='<textarea id="yy" rows="2" maxlength="140" placeholder="Y si… (opcional): una idea para ayudarles a mejorar">'+esc(r.y)+'</textarea>';
   h+='<button class="go" data-send="'+tid+'"'+(ok?'':' disabled')+'>'+(PROF?'Guardar mi calificación':'Enviar calificación')+'</button>';
-  h+='<div class="sent">'+(PROF?(saved[tid]?'✔ Guardada. Puedes corregirla y volver a guardar.':'Se guarda en la computadora de la profesora.'):'Solo puedes enviar una vez por equipo.')+'</div>';
+  h+='<div class="sent">'+(PROF?((ST.pr&&ST.pr.indexOf(tid)>-1)?'✔ Registrada en la computadora. Puedes corregirla y volver a guardar.':(saved[tid]?'Enviada… si no aparece como registrada, revisa tu clave (sale y vuelve a entrar).':'Se guarda solo en la computadora de la profesora.')):'Solo puedes enviar una vez por equipo.')+'</div>';
   return h;
 }
 function drawTurn(){
@@ -215,7 +215,7 @@ $('#m').addEventListener('click',function(e){
   var b;
   if(e.target.closest('[data-prof]')){askPin=true;$('#m').innerHTML='';draw();return;}
   if(e.target.closest('[data-back]')){askPin=false;$('#m').innerHTML='';draw();return;}
-  if(e.target.closest('[data-pin]')){var pv=$('#pn').value.trim();if(pv.length<3){$('#pne').style.color='#ff9a9a';$('#pne').textContent='Escribe el PIN.';return;}
+  if(e.target.closest('[data-pin]')){var pv=$('#pn').value.trim();if(pv.length<2){$('#pne').style.color='#ff9a9a';$('#pne').textContent='Escribe tu clave.';return;}
     PIN=pv;PROF=true;team=-1;NM='Profesora';lsSet('s22prof_'+ROOM,'1');lsSet('s22pin_'+ROOM,PIN);lastSig='';draw();presence();setStatus();return;}
   if(e.target.closest('[data-nm]')){var a1=$('#n1').value.trim(),a2=$('#n2').value.trim();if(a1.length<2||a2.length<2){$('#nme').style.color='#ff9a9a';$('#nme').textContent='Escribe nombre y apellido.';return;}lsSet('edt_nombre',a1);lsSet('edt_apellido',a2);NM=a1+' '+a2;lastSig='';draw();presence();return;}
   if((b=e.target.closest('[data-t]'))){pickTeam(+b.dataset.t);return;}
