@@ -196,7 +196,7 @@ function drawTurn(){
   var h='<div class="kick">Turno en vivo</div><h1>'+esc(ST.tn)+'</h1>';
   if(PROF){
     if(ph==='idle')return h+'<div class="wait"><div class="big">⏳</div><p class="sub">Aún no inicia este turno.</p></div>';
-    return h+'<p class="sub">Tu calificación pesa en el ranking. Escala 1 a 5.</p>'+form(tid);
+    return h+(ph==='ent'||ph==='pit'||ph==='pre'?'<p class="sub">Reacciona en vivo:</p>'+rxGrid(tid):'')+'<p class="sub">Tu calificación pesa en el ranking. Escala 1 a 5.</p>'+form(tid);
   }
   if(bl.indexOf(team)>-1){
     if(team===tid)return h+'<div class="wait"><div class="big">🎤</div><h1>Es tu turno</h1><p class="sub">¡A lucirse! Tus compañeros reaccionan y te califican desde su celular.</p></div>';
@@ -224,7 +224,7 @@ $('#m').addEventListener('click',function(e){
   if((b=e.target.closest('[data-rx]'))){
     var tid=b.dataset.tid,now=Date.now();if(now-lastRx<600)return;lastRx=now;
     if((rxn[tid]||0)>=15)return;rxn[tid]=(rxn[tid]||0)+1;
-    send({t:'x',tid:tid==='w'?'w':+tid,e:+b.dataset.rx});try{navigator.vibrate&&navigator.vibrate(25);}catch(x){}
+    send(PROF?{t:'x',tid:tid==='w'?'w':+tid,e:+b.dataset.rx,pf:PIN}:{t:'x',tid:tid==='w'?'w':+tid,e:+b.dataset.rx});try{navigator.vibrate&&navigator.vibrate(25);}catch(x){}
     lastSig='';draw();return;}
   if((b=e.target.closest('[data-cr]'))){
     if(!PROF&&rated(ST.tid))return;

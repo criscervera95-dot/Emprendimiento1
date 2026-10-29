@@ -722,12 +722,12 @@ function onUp(txt){
   if(m.t==='p'){liveBtn();refreshTurn();if($('#live').style.display==='block')liveDraw();return;}
   const s=SL[S.idx];if(!s)return;
   if(m.t==='x'){
-    if(prof||!team(m.tm))return;
+    if(prof){if(sha256(String(m.pf||''))!==PROF_HASH)return;}else if(!team(m.tm))return;
     const isWarm=(s.id==='warm'&&m.tid==='w');
     const isTurn=(s.turn!=null&&+m.tid===s.turn&&RX_PHASES.indexOf(S.ph[s.turn]||'idle')>-1);
     if(!isWarm&&!isTurn)return;
     if(!(m.e>=0&&m.e<REACT.length))return;
-    if(isTurn&&blockedFor(s.turn).indexOf(+m.tm)>-1)return;
+    if(isTurn&&!prof&&blockedFor(s.turn).indexOf(+m.tm)>-1)return;
     const key=isWarm?'w':s.turn,cap=S.rxd[key]||(S.rxd[key]={});
     cap[m.d]=(cap[m.d]||0)+1;if(cap[m.d]>(isWarm?40:15))return;
     const R=S.rx[key]||(S.rx[key]={});R[m.e|0]=(R[m.e|0]||0)+1;
