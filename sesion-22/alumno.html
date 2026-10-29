@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Emprendimiento 1 · S22 · Mini feria en vivo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#10131b;--card:#1b2030;--line:rgba(255,255,255,.14);--mut:#9aa3b8;--or:#ff6b1a;--cy:#3dd6f5;--gr:#2ee6a6;--rd:#ff5d5d;--am:#ffc233}
+body{background:var(--bg);color:#fff;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mut)}
+header b{color:#fff}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#777;margin-right:6px}
+.dot.ok{background:var(--gr)}.dot.bad{background:var(--rd)}
+main{flex:1;padding:16px 14px 28px;max-width:560px;width:100%;margin:0 auto}
+h1{font-size:22px;line-height:1.2;margin-bottom:8px}
+.sub{color:var(--mut);font-size:15px;line-height:1.4;margin-bottom:14px}
+.kick{display:inline-block;background:rgba(255,107,26,.18);color:var(--or);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:99px;padding:5px 11px;margin-bottom:12px}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.tm{border:3px solid var(--c,#555);background:var(--card);color:#fff;border-radius:16px;padding:16px 8px;font:800 16px/1.2 inherit;cursor:pointer;min-height:64px}
+.tm:active{transform:scale(.97)}
+.me{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--c);border-radius:99px;padding:7px 14px;font-weight:800;font-size:14px}
+.me a{color:var(--mut);font-weight:600;margin-left:6px;text-decoration:underline;cursor:pointer}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.wait{text-align:center;padding:34px 10px;color:var(--mut)}
+.wait .big{font-size:54px;margin-bottom:10px}
+.wait h1{color:#fff}
+.ring{width:42px;height:42px;border:5px solid #2a3147;border-top-color:var(--or);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.rxg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.rxb{background:var(--card);border:2.5px solid var(--line);border-radius:20px;padding:16px 6px;color:#fff;font:700 14px/1.2 inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.rxb span{font-size:44px;line-height:1}
+.rxb:active{transform:scale(.94);border-color:var(--am)}
+.rxb:disabled{opacity:.4}
+.sent{margin-top:6px;color:var(--gr);font-weight:700;font-size:14px;min-height:20px}
+.crit{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.crit b{display:block;font-size:16px;margin-bottom:2px}
+.crit small{display:block;color:var(--mut);font-size:13px;margin-bottom:8px}
+.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sc button{border:2px solid var(--line);background:#12161f;color:#fff;border-radius:12px;font:800 18px/1 inherit;padding:12px 0;cursor:pointer}
+.sc button.on{border-color:var(--am);background:#3a3010;color:var(--am)}
+.sc button:disabled{opacity:.5}
+textarea{width:100%;padding:12px;border-radius:14px;border:2.5px solid var(--line);background:var(--card);color:#fff;font:500 15px/1.3 inherit;resize:none;margin:4px 0 10px}
+.go{width:100%;border:0;border-radius:16px;background:var(--gr);color:#04261b;font:800 18px/1 inherit;padding:16px;cursor:pointer}
+.go:disabled{background:#2a3147;color:#7c86a0}
+.res{margin-top:10px;padding:13px 14px;border-radius:14px;font-weight:800;font-size:16px;background:#0f3a2c;color:var(--gr)}
+.lnk{color:var(--mut);text-decoration:underline;cursor:pointer;font-size:14px;display:inline-block;margin-top:14px}
+footer{padding:10px 14px;text-align:center;color:#6b748a;font-size:12px}
+</style></head><body>
+<header><span><span class="dot" id="dot"></span><span id="st">Conectando…</span></span><span id="who"></span></header>
+<main id="m"></main>
+<footer>Emprendimiento 1 · Sesión 22 · Mini feria de prototipos · nada se guarda en esta página</footer>
+<script>
+(function(){
+'use strict';
+/* Cliente MQTT 3.1.1 mínimo sobre WebSocket (QoS 0). */
+function MQ(url,opt){
+  opt=opt||{};
+  var enc=new TextEncoder(),dec=new TextDecoder();
+  var ws=null,buf=new Uint8Array(0),pid=0,pingT=null,rcT=null,subs=[],up=false,closed=false,wait=1500;
+  var cid=opt.cid||('c'+Math.random().toString(36).slice(2,10));
+  function cat(a,b){var r=new Uint8Array(a.length+b.length);r.set(a,0);r.set(b,a.length);return r;}
+  function s2b(s){var b=enc.encode(s),r=new Uint8Array(b.length+2);r[0]=b.length>>8;r[1]=b.length&255;r.set(b,2);return r;}
+  function rl(n){var a=[];do{var d=n%128;n=Math.floor(n/128);if(n>0)d|=128;a.push(d);}while(n>0);return new Uint8Array(a);}
+  function pkt(h,body){var l=rl(body.length),r=new Uint8Array(1+l.length+body.length);r[0]=h;r.set(l,1);r.set(body,1+l.length);return r;}
+  function send(p){try{if(ws&&ws.readyState===1)ws.send(p);}catch(e){}}
+  function emit(s){if(opt.onState)opt.onState(s,api);}
+  function connect(){
+    if(closed)return;
+    var me;
+    try{me=ws=new WebSocket(url,'mqtt');}catch(e){retry();return;}
+    ws.binaryType='arraybuffer';buf=new Uint8Array(0);
+    ws.onopen=function(){send(pkt(0x10,cat(cat(s2b('MQTT'),new Uint8Array([4,2,0,30])),s2b(cid))));};
+    ws.onmessage=function(ev){buf=cat(buf,new Uint8Array(ev.data));parse();};
+    ws.onclose=function(){if(me!==ws)return;var was=up;up=false;clearInterval(pingT);if(was)emit('down');else emit('fail');retry();};
+    ws.onerror=function(){};
+  }
+  function retry(){if(closed)return;clearTimeout(rcT);rcT=setTimeout(connect,wait);wait=Math.min(wait*1.6,10000);}
+  function parse(){
+    while(buf.length>=2){
+      var i=1,m=1,len=0,b;
+      do{if(i>=buf.length)return;b=buf[i++];len+=(b&127)*m;m*=128;}while(b&128);
+      if(buf.length<i+len)return;
+      var h=buf[0],body=buf.subarray(i,i+len);buf=buf.subarray(i+len);
+      var t=h>>4;
+      if(t===2){
+        if(body[1]===0){up=true;wait=1500;subs.forEach(dosub);clearInterval(pingT);pingT=setInterval(function(){send(new Uint8Array([0xC0,0]));},15000);emit('up');}
+        else emit('refused');
+      }else if(t===3){
+        var tl=(body[0]<<8)|body[1],topic=dec.decode(body.subarray(2,2+tl)),o=2+tl;
+        if(((h>>1)&3)>0)o+=2;
+        if(opt.onMsg)opt.onMsg(topic,dec.decode(body.subarray(o)));
+      }
+    }
+  }
+  function dosub(t){pid=(pid%65535)+1;send(pkt(0x82,cat(new Uint8Array([pid>>8,pid&255]),cat(s2b(t),new Uint8Array([0])))));}
+  var api={
+    sub:function(t){if(subs.indexOf(t)<0)subs.push(t);if(up)dosub(t);},
+    pub:function(t,p,retain){if(!up)return false;send(pkt(0x30|(retain?1:0),cat(s2b(t),enc.encode(p))));return true;},
+    close:function(){closed=true;clearInterval(pingT);clearTimeout(rcT);try{ws.close();}catch(e){}},
+    isUp:function(){return up;},url:url
+  };
+  connect();return api;
+}
+
+var P=new URLSearchParams(location.search),ROOM=P.get('r')||'';
+var TOP='edt/ec1/s22/'+ROOM;
+var BRK=P.get('broker')?[P.get('broker')]:['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt','wss://test.mosquitto.org:8081'];
+var CRIT=[['🧪','Prototipo','¿Se entiende y se ve que resuelve algo real?'],['🎤','Pitch','¿Fue claro, ordenado y convincente?'],['🎧','Soundtrack','¿Conecta con la idea y con el momento?'],['💡','Claridad del valor','¿Entendí qué problema resuelve y para quién?']];
+var REACT=[['🔥','Está fuego'],['👏','Aplausos'],['💡','Qué idea'],['🤯','Wow'],['🎧','Buen soundtrack']];
+var $=function(s){return document.querySelector(s);};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+var dev=lsGet('edt_dev')||('d'+Math.random().toString(36).slice(2,10));lsSet('edt_dev',dev);
+var PROF=lsGet('s22prof_'+ROOM)==='1',PIN=lsGet('s22pin_'+ROOM)||'';
+var team=PROF?-1:lsGet('s22team_'+ROOM);team=(team===null||team===undefined)?null:+team;
+var NM=PROF?'Profesora':((lsGet('edt_nombre')||'')+' '+(lsGet('edt_apellido')||'')).trim();if(!PROF&&(!lsGet('edt_nombre')||!lsGet('edt_apellido')))NM='';
+var ST=null,lastSeq=0,lastSig='',cli=null,bi=0,gotState=false,swT=null,lastTs=0,RS={},rxn={},lastRx=0,askPin=false,saved={};
+function rsOf(t){return RS[t]||(RS[t]={v:[0,0,0,0],y:''});}
+function rated(t){return lsGet('s22r_'+ROOM+'_'+t)==='1';}
+
+function setStatus(){
+  var up=cli&&cli.isUp(),fresh=Date.now()-lastTs<40000;
+  $('#dot').className='dot '+(up?(fresh?'ok':''):'bad');
+  $('#st').textContent=!up?'Conectando…':(fresh?'En vivo · profe conectada':'Conectado · esperando a la profe');
+  var t=ST&&team!==null&&team>=0?ST.teams.filter(function(x){return x.id===team;})[0]:null;
+  $('#who').innerHTML=PROF?'<b>👩‍🏫 Profesora</b>':(t?('<b>'+esc(t.n)+'</b>'):'');
+}
+function send(o){o.r=ROOM;o.d=dev;o.tm=team;o.nm=NM;return cli&&cli.pub(TOP+'/up',JSON.stringify(o),false);}
+function presence(){if(team!==null)send({t:'p'});}
+function connect(){
+  if(cli){try{cli.close();}catch(e){}}
+  gotState=false;
+  var url=BRK[bi%BRK.length];
+  cli=MQ(url,{cid:'a'+dev,
+    onMsg:function(tp,tx){if(tp!==TOP+'/state')return;var o;try{o=JSON.parse(tx);}catch(e){return;}if(!o||o.r!==ROOM)return;if(o.seq<lastSeq)return;lastSeq=o.seq;lastTs=o.ts||Date.now();gotState=true;clearTimeout(swT);ST=o;draw();setStatus();},
+    onState:function(s,api){
+      if(s==='up'){api.sub(TOP+'/state');presence();clearTimeout(swT);swT=setTimeout(function(){if(!gotState){bi++;connect();}},6000);}
+      if(s==='fail'||s==='refused'){clearTimeout(swT);swT=setTimeout(function(){bi++;connect();},2500);}
+      setStatus();
+    }});
+}
+function pickTeam(id){team=id;lsSet('s22team_'+ROOM,String(id));lastSig='';draw();presence();setStatus();}
+function changeTeam(){team=null;try{localStorage.removeItem('s22team_'+ROOM);}catch(e){}lastSig='';draw();}
+function tname(id){var t=ST.teams.filter(function(x){return x.id===id;})[0];return t?t.n:'—';}
+function tcol(id){var t=ST.teams.filter(function(x){return x.id===id;})[0];return t?t.c:'#888';}
+var IN='width:100%;padding:15px;margin-bottom:10px;border-radius:14px;border:2.5px solid var(--line);background:var(--card);color:#fff;font:600 17px inherit';
+
+function draw(){
+  var m=$('#m');
+  if(!ROOM){m.innerHTML='<div class="wait"><div class="big">🤔</div><h1>Falta el código de sala</h1><p class="sub">Escanea de nuevo el QR que está en la pantalla.</p></div>';return;}
+  if(!NM&&!PROF){
+    if($('#nmf')||$('#pnf'))return;
+    if(askPin){
+      m.innerHTML='<div class="kick">Acceso especial</div><h1>PIN de profesora</h1><p class="sub">Lo ves en la computadora, en el panel 📡 En vivo.</p><div id="pnf"><input id="pn" type="tel" inputmode="numeric" placeholder="PIN" maxlength="8" style="'+IN+'"><p class="sent" id="pne"></p><button class="tm" data-pin="1" style="--c:#ffc233;width:100%">Entrar</button><a class="lnk" data-back="1">← Volver</a></div>';
+      return;
+    }
+    m.innerHTML='<div class="kick">Paso 1</div><h1>¿Cómo te llamas?</h1><p class="sub">Escribe tu nombre y tu apellido. Solo se pide una vez; la profe lo usa para registrar tu participación.</p><div id="nmf"><input id="n1" placeholder="Nombre" autocomplete="given-name" maxlength="30" style="'+IN+'"><input id="n2" placeholder="Apellido" autocomplete="family-name" maxlength="30" style="'+IN+'"><p class="sent" id="nme"></p><button class="tm" data-nm="1" style="--c:#ff6b1a;width:100%">Continuar</button><a class="lnk" data-prof="1">Soy la profesora</a></div>';
+    return;
+  }
+  if(!ST){m.innerHTML='<div class="wait"><div class="ring"></div><h1>Conectando con la clase…</h1><p class="sub">Si tarda, revisa que tengas internet. La profesora debe tener encendido el modo En vivo.</p></div>';return;}
+  if(!PROF&&(team===null||!ST.teams.some(function(t){return t.id===team;}))){
+    team=null;
+    m.innerHTML='<div class="kick">Paso 2</div><h1>¿De qué equipo eres?</h1><p class="sub">Elige tu equipo. Solo se hace una vez.</p><div class="teams">'
+      +ST.teams.map(function(t){return '<button class="tm" style="--c:'+esc(t.c)+'" data-t="'+t.id+'">'+esc(t.n)+'</button>';}).join('')+'</div>';
+    return;
+  }
+  var sig=JSON.stringify([ST.sid,ST.k,ST.tid,ST.ph,ST.bl,ST.teams,team,RS,rxn,saved,rated(ST.tid)]);
+  if(sig===lastSig)return;lastSig=sig;
+  var h='';
+  if(PROF)h+='<div class="bar"><div class="me" style="--c:#ffc233">👩‍🏫 Acceso de profesora</div></div>';
+  else h+='<div class="bar"><div class="me" style="--c:'+esc(tcol(team))+'">'+esc(tname(team))+'<a data-ch="1">cambiar</a></div></div>';
+  if(ST.k==='t')h+=drawTurn();
+  else if(ST.k==='w')h+=drawWarm();
+  else h+='<div class="wait"><div class="big">👀</div><h1>'+esc(ST.ti)+'</h1><p class="sub">Mira la pantalla del salón. Cuando sea tu momento de participar, aparecerá aquí.</p></div>';
+  m.innerHTML=h;
+}
+function rxGrid(tid){
+  var full=(rxn[tid]||0)>=15;
+  return '<div class="rxg">'+REACT.map(function(r,k){return '<button class="rxb" data-rx="'+k+'" data-tid="'+tid+'"'+(full?' disabled':'')+'><span>'+r[0]+'</span>'+r[1]+'</button>';}).join('')+'</div><div class="sent">'+((rxn[tid]||0)?('Llevas '+rxn[tid]+' reacción'+(rxn[tid]>1?'es':'')+(full?' · límite alcanzado':'')):'Toca las reacciones mientras presentan.')+'</div>';
+}
+function drawWarm(){
+  return '<div class="kick">🔥 Calentamiento</div><h1>Prueba tus reacciones</h1><p class="sub">Toca los botones. Deben aparecer en la pantalla del salón.</p>'+rxGrid('w');
+}
+function form(tid){
+  var r=rsOf(tid),ok=r.v.every(function(x){return x>0;});
+  var h=CRIT.map(function(c,ci){
+    return '<div class="crit"><b>'+c[0]+' '+c[1]+'</b><small>'+c[2]+'</small><div class="sc">'+[1,2,3,4,5].map(function(n){return '<button data-cr="'+ci+'" data-n="'+n+'" class="'+(r.v[ci]===n?'on':'')+'">'+n+'</button>';}).join('')+'</div></div>';
+  }).join('');
+  h+='<textarea id="yy" rows="2" maxlength="140" placeholder="Y si… (opcional): una idea para ayudarles a mejorar">'+esc(r.y)+'</textarea>';
+  h+='<button class="go" data-send="'+tid+'"'+(ok?'':' disabled')+'>'+(PROF?'Guardar mi calificación':'Enviar calificación')+'</button>';
+  h+='<div class="sent">'+(PROF?(saved[tid]?'✔ Guardada. Puedes corregirla y volver a guardar.':'Se guarda en la computadora de la profesora.'):'Solo puedes enviar una vez por equipo.')+'</div>';
+  return h;
+}
+function drawTurn(){
+  var tid=ST.tid,ph=ST.ph,bl=ST.bl||[];
+  var h='<div class="kick">Turno en vivo</div><h1>'+esc(ST.tn)+'</h1>';
+  if(PROF){
+    if(ph==='idle')return h+'<div class="wait"><div class="big">⏳</div><p class="sub">Aún no inicia este turno.</p></div>';
+    return h+'<p class="sub">Tu calificación pesa en el ranking. Escala 1 a 5.</p>'+form(tid);
+  }
+  if(bl.indexOf(team)>-1){
+    if(team===tid)return h+'<div class="wait"><div class="big">🎤</div><h1>Es tu turno</h1><p class="sub">¡A lucirse! Tus compañeros reaccionan y te califican desde su celular.</p></div>';
+    return h+'<div class="wait"><div class="big">📝</div><h1>Tú evalúas a este equipo</h1><p class="sub">En este turno solo calificas en el <b>Forms de tu equipo</b>. Aquí no puedes reaccionar ni calificar.</p></div>';
+  }
+  if(ph==='idle')return h+'<div class="wait"><div class="big">⏳</div><h1>Va a presentar</h1><p class="sub">Prepárate: cuando empiece podrás reaccionar.</p></div>';
+  if(ph==='ent'||ph==='pit'||ph==='pre')return h+'<p class="sub">'+(ph==='ent'?'Entra su soundtrack.':(ph==='pit'?'Escucha el pitch.':'Los evaluadores hacen preguntas.'))+' Reacciona en vivo:</p>'+rxGrid(tid);
+  if(ph==='rate'){
+    if(rated(tid))return h+'<div class="res">✔ Calificación enviada. ¡Gracias!</div><p class="sub" style="margin-top:12px">Mira la pantalla del salón.</p>';
+    return h+'<p class="sub">Califica de 1 a 5. Tienes un minuto.</p>'+form(tid);
+  }
+  return h+(rated(tid)?'<div class="res">✔ Calificación enviada. ¡Gracias!</div>':'<div class="wait"><div class="big">🔒</div><h1>Calificación cerrada</h1><p class="sub">Este turno ya terminó.</p></div>');
+}
+$('#m').addEventListener('input',function(e){if(e.target.id==='yy'&&ST){rsOf(ST.tid).y=e.target.value.slice(0,140);}});
+$('#m').addEventListener('click',function(e){
+  var b;
+  if(e.target.closest('[data-prof]')){askPin=true;$('#m').innerHTML='';draw();return;}
+  if(e.target.closest('[data-back]')){askPin=false;$('#m').innerHTML='';draw();return;}
+  if(e.target.closest('[data-pin]')){var pv=$('#pn').value.trim();if(pv.length<3){$('#pne').style.color='#ff9a9a';$('#pne').textContent='Escribe el PIN.';return;}
+    PIN=pv;PROF=true;team=-1;NM='Profesora';lsSet('s22prof_'+ROOM,'1');lsSet('s22pin_'+ROOM,PIN);lastSig='';draw();presence();setStatus();return;}
+  if(e.target.closest('[data-nm]')){var a1=$('#n1').value.trim(),a2=$('#n2').value.trim();if(a1.length<2||a2.length<2){$('#nme').style.color='#ff9a9a';$('#nme').textContent='Escribe nombre y apellido.';return;}lsSet('edt_nombre',a1);lsSet('edt_apellido',a2);NM=a1+' '+a2;lastSig='';draw();presence();return;}
+  if((b=e.target.closest('[data-t]'))){pickTeam(+b.dataset.t);return;}
+  if(e.target.closest('[data-ch]')){if(PROF){PROF=false;NM='';try{localStorage.removeItem('s22prof_'+ROOM);}catch(x){}}changeTeam();return;}
+  if(!ST)return;
+  if((b=e.target.closest('[data-rx]'))){
+    var tid=b.dataset.tid,now=Date.now();if(now-lastRx<600)return;lastRx=now;
+    if((rxn[tid]||0)>=15)return;rxn[tid]=(rxn[tid]||0)+1;
+    send({t:'x',tid:tid==='w'?'w':+tid,e:+b.dataset.rx});try{navigator.vibrate&&navigator.vibrate(25);}catch(x){}
+    lastSig='';draw();return;}
+  if((b=e.target.closest('[data-cr]'))){
+    if(!PROF&&rated(ST.tid))return;
+    rsOf(ST.tid).v[+b.dataset.cr]=+b.dataset.n;lastSig='';draw();return;}
+  if((b=e.target.closest('[data-send]'))){
+    var t2=+b.dataset.send,r=rsOf(t2);if(!r.v.every(function(x){return x>0;}))return;
+    if(PROF){send({t:'r',tid:t2,v:r.v.slice(),y:'',pf:PIN});saved[t2]=1;}
+    else{if(rated(t2))return;send({t:'r',tid:t2,v:r.v.slice(),y:r.y||''});lsSet('s22r_'+ROOM+'_'+t2,'1');}
+    try{navigator.vibrate&&navigator.vibrate([40,30,40]);}catch(x){}
+    lastSig='';draw();return;}
+});
+setInterval(function(){presence();setStatus();},15000);
+draw();setStatus();
+if(ROOM)connect();
+})();
+</script></body></html>
