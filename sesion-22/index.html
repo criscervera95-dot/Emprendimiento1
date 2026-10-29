@@ -287,6 +287,8 @@ kbd{background:#2a3040;border-radius:6px;padding:1px 7px;font-size:12px}
 .drvl .card{display:grid;grid-template-columns:100px 1fr;column-gap:20px;align-items:center;padding:18px 28px}.drvl .card .ic{grid-row:1/3;margin:0;font-size:64px}.drvl .card h3{font-size:34px;margin:0}.drvl .card p{font-size:30px}
 #timer{left:50%;top:10px;transform:translateX(-50%)}
 
+.qrbig a{display:block;margin-top:12px;background:#ff6b1a;color:#fff;font-weight:700;font-size:26px;padding:12px 20px;border-radius:99px;text-decoration:none}.qrbig a:hover{filter:brightness(1.1)}
+
 </style>
 </head>
 <body>
@@ -505,7 +507,7 @@ function buildSL(){
       +cardT('📁','Carpeta del equipo','<p>Crea una carpeta con el nombre <b>Equipo N</b> (ejemplo: Equipo 1).</p>')
       +cardT('🪪','Tarjeta QR de la S21','<p>Sube el PDF o la imagen de tu tarjeta del stand.</p>')
       +cardT('🎧','Enlace de tu soundtrack','<p>YouTube, Spotify o un audio. El enlace debe abrir sin cuenta.</p>')+'</div></div>'
-      +'<div class="qrbig">'+QRDRIVE+'<b>Escanea y sube</b><span>Carpeta compartida de la clase</span></div></div>';}});
+      +'<div class="qrbig">'+QRDRIVE+'<b>Escanea y sube</b><span>Carpeta compartida de la clase</span><a href="'+DRIVE_URL+'" target="_blank" rel="noopener">👉 Entrar directo a la carpeta</a></div></div>';}});
   add({id:'tutorial',blk:'Preparación',t:'5–8',title:'Cómo subirlo, paso a paso',notes:'<b>Min 5–8.</b> Recorre los 5 pasos. Pide que un integrante suba todo y otro confirme desde su celular que se ve. Al minuto 8 revisa en la carpeta que haya 10 subcarpetas; si falta alguna, el equipo sube mientras sigue la clase.',
     html:function(){return '<h2>Cómo subirlo, <em>paso a paso</em></h2><div class="steps5">'
       +[['Escanea el QR','o abre el enlace que está en la pantalla. Entra con tu cuenta de Google.'],
@@ -527,7 +529,7 @@ function buildSL(){
       +CRIT.map(function(c){return cardT(c.ic,c.n,'<p>'+c.d+'</p>');}).join('')+'</div>'
       +'<div class="grid g2" style="margin-top:22px"><div class="callout or" style="margin:0">Una sola calificación por equipo. Después de enviarla ya no se cambia.</div><div class="callout mint" style="margin:0">Opcional: escribe un “<b>Y si…</b>” para ayudarles a mejorar.</div></div>';}});
   add({id:'warm',blk:'Calentamiento',t:'11–13',title:'Calentamiento: prueba tus reacciones',notes:'<b>Min 11–13.</b> Pide que todos escaneen el QR, escriban nombre y apellido y elijan su equipo (una sola vez). Confirma que el panel 📡 muestre celulares conectados. Deja que toquen las reacciones; si hay problemas de red, pide datos móviles.',
-    html:function(){return '<h2>Entra y <em>prueba tus reacciones</em></h2><div class="warm"><div class="qrbig sm2">'+QRLIVE+'<b>Escanea</b><span>Nombre, apellido y equipo</span></div><div><div class="rxgrid">'
+    html:function(){return '<h2>Entra y <em>prueba tus reacciones</em></h2><div class="warm"><div class="qrbig sm2">'+QRLIVE+'<b>Escanea</b><span>Nombre, apellido y equipo</span><a href="'+ALUMNO+'" target="_blank" rel="noopener">👉 Entrar directo</a></div><div><div class="rxgrid">'
       +REACT.map(function(r,k){return '<div class="rxbig"><span>'+r.e+'</span><b id="wr'+k+'">'+((S.rx.w||{})[k]||0)+'</b><i>'+r.n+'</i></div>';}).join('')+'</div>'
       +'<div class="callout">Conectados: <b id="wcn">0</b> celulares. Tu equipo se elige <b>una sola vez</b>.</div></div></div>';}});
   add({id:'sorteo',blk:'Evaluadores',t:'13–16',title:'Sorteo de equipos evaluadores',notes:'<b>Min 13–16.</b> Pulsa “Sortear”. Cada equipo evalúa en su Forms a los 2 equipos que aparecen a su derecha y es evaluado por 2. El sorteo se bloquea en cuanto empieza el primer turno. Pide que cada equipo anote a quién evalúa. Orden de presentación: lista (Equipo 1, 2, 3…).',
@@ -734,7 +736,7 @@ function liveStop(){LV.on=false;S.live=false;save();LV.cl.forEach(c=>c.close());
 function liveDraw(){
   const up=LV.cl.filter(c=>c.isUp()).length,cn=liveCount();
   let h='<div class="lvwrap"><div class="lvqr">'+QRLIVE+'</div><div class="lvinfo"><h4>📡 Únete en vivo</h4>'
-   +'<p class="lvbig">Escanea el QR<br>con tu celular</p><p class="lvurl">'+esc(ALUMNO)+'</p>'
+   +'<p class="lvbig">Escanea el QR<br>con tu celular</p><p class="lvurl"><a href="'+esc(ALUMNO)+'" target="_blank" rel="noopener" style="color:#3dd6f5">'+esc(ALUMNO)+'</a></p>'
    +'<p class="lvst">'+(LV.on?('Conexión: <b>'+up+'/'+LV.cl.length+'</b> servidores · <b>'+cn.tot+'</b> celulares conectados'):'Apagado')+'</p>';
   if(LV.on){h+='<div class="lvteams">'+S.teams.map(t=>'<span class="chip" style="--c:'+col(t)+'"><i></i>'+esc(t.name)+' · '+(cn.per[t.id]||0)+'</span>').join('')+'</div>';}
   h+='<div class="pinbox">🔑 PIN de profesora: <b>'+esc(S.pin)+'</b><br><span>En tu celular, abre el QR y toca “Soy la profesora” para calificar a cada equipo sin usar esta pantalla. No lo muestres al grupo.</span></div>';
