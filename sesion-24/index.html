@@ -291,6 +291,10 @@ h2 em,h1 span,.gtitle em,.q em{font-style:italic;color:var(--or)}
 .src{font-size:22px;color:var(--mut);margin-top:14px}
 .topic{background:linear-gradient(160deg,#4a1620,#24151b);border:3px solid var(--or);border-radius:28px;padding:24px 30px;text-align:center}
 .tlabel{font-weight:800;letter-spacing:.16em;font-size:22px;color:var(--or);margin-bottom:6px}
+.rrows{display:flex;flex-direction:column;gap:12px;margin:10px 0 14px}
+.rrow{display:flex;flex-direction:column;gap:2px;text-align:left;background:rgba(0,0,0,.28);border-left:10px solid var(--c);border-radius:14px;padding:10px 18px}
+.rrow b{font-size:32px;color:var(--c)}.rrow span{font-size:30px;font-weight:700;line-height:1.15}
+.rtask{font-size:26px;margin:4px 0 14px;color:var(--ink)}.rnote{font-size:20px;color:var(--mut);margin:12px 0 0}
 .tbig{font-size:50px;font-weight:800;line-height:1.1;margin:8px 0 18px;min-height:110px;display:flex;align-items:center;justify-content:center}
 .gb1{background:var(--or)}
 .opt .L{font-family:var(--serif)}
@@ -334,12 +338,12 @@ const KEY='s24_storytelling_presentacion_v1';
 const COLORS=['#e8b04a','#e0485a','#5bc0be','#a78bfa','#7bd389','#f08fc0','#6fa8ff','#ff8a4c','#c9d36b','#4dd0e1','#e07be0','#b8ad9c'];
 function defTeams(n){const a=[];for(let i=1;i<=n;i++)a.push({id:i,name:'Equipo '+i,c:(i-1)%COLORS.length});return a;}
 function freshSteal(){return {t:null,v:null,n:1,st:'idle',q:-1,used:[],ans:{},att:0,hist:[],last:''};}
-function fresh(){return {teams:defTeams(10),idx:0,votes:{},bets:{},rev:{},log:[],clue:{},dv:{},people:{},res:{},launched:{},steal:freshSteal(),topic:{},topicUsed:[],nid:100,seq:0,setup:false,live:false};}
+function fresh(){return {teams:defTeams(10),idx:0,votes:{},bets:{},rev:{},log:[],clue:{},dv:{},people:{},res:{},launched:{},steal:freshSteal(),topic:{},topicUsed:[],reto:{},retoUsed:[],nid:100,seq:0,setup:false,live:false};}
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){S=null;}
 if(!S||!S.teams){S=fresh();}
-['votes','bets','rev','clue','dv','people','res','launched','topic'].forEach(function(k){S[k]=S[k]||{};});
-S.topicUsed=S.topicUsed||[];S.log=S.log||[];S.steal=S.steal||freshSteal();S.steal.ans=S.steal.ans||{};S.steal.used=S.steal.used||[];S.steal.hist=S.steal.hist||[];
+['votes','bets','rev','clue','dv','people','res','launched','topic','reto'].forEach(function(k){S[k]=S[k]||{};});
+S.topicUsed=S.topicUsed||[];S.retoUsed=S.retoUsed||[];S.log=S.log||[];S.steal=S.steal||freshSteal();S.steal.ans=S.steal.ans||{};S.steal.used=S.steal.used||[];S.steal.hist=S.steal.hist||[];
 Object.keys(S.clue).forEach(function(k){const c=S.clue[k];if(!c||c.st===undefined||c.st==='run'||c.st==='buzz'){delete S.clue[k];}});
 if(S.steal.st==='ask'){S.steal.st='idle';S.steal.ans={};}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -537,8 +541,16 @@ function stealSlide(){
 
 /* ================= Contenido ================= */
 const TOPICS=['Un paraguas que nunca se pierde','Un tupper que avisa cuándo se echa a perder la comida','Una mochila que te avisa si olvidaste algo','Una app para saber si el aguacate ya está listo','Unos audífonos que jamás se enredan','Una taza que mantiene tu café a la temperatura perfecta','Un despertador al que sí le haces caso','Una botella que te recuerda tomar agua','Una libreta que organiza tus apuntes sola','Un servicio de lavandería para estudiantes sin tiempo','Unas llaves que nunca se extravían','Una app para dividir gastos sin discutir'];
-function topicBox(sid){const tp=S.topic[sid];
-  return '<div class="topic"><div class="tlabel">🎰 TEMA DEL RETO</div><div class="tbig" id="tb-'+sid+'">'+(tp?esc(tp):'Gira la ruleta')+'</div><button class="btn" data-act="topic" data-sid="'+sid+'">'+(tp?'🎰 Otro tema':'🎰 Girar ruleta')+'</button></div>';}
+const RETO_TASK={reto1:'Escribir <b>2 frases</b>: el conflicto y el protagonista · <b>3 min</b>',reto2:'Escribir <b>4 frases</b>: conflicto, protagonista, solución y transformación · <b>4 min</b>',reto3:'Escribir <b>gancho + 5 etapas</b> en una hoja y contarlo en 60 s · <b>4 + 2 min</b>'};
+function topicBox(sid){
+  const r=S.reto[sid],ids=S.teams.map(t=>t.id),done=S.retoUsed.filter(i=>ids.indexOf(i)>=0).length;
+  let h='<div class="topic"><div class="tlabel">🎰 SORTEO · 3 EQUIPOS, TEMA Y TAREA</div>';
+  if(!r||!r.length){h+='<div class="tbig" id="tb-'+sid+'" style="min-height:90px;font-size:44px">Sortea equipos y temas</div>';}
+  else{h+='<div class="rrows" id="tb-'+sid+'">'+r.map(function(x){const t=team(x.t);return '<div class="rrow" style="--c:'+(t?col(t):'#888')+'"><b>'+esc(t?t.name:'(equipo eliminado)')+'</b><span>'+esc(x.topic)+'</span></div>';}).join('')+'</div>';}
+  h+='<p class="rtask">📋 Tarea: '+RETO_TASK[sid]+'</p>'
+   +'<button class="btn" data-act="topic" data-sid="'+sid+'">'+(r&&r.length?'🎰 Volver a sortear':'🎰 Sortear equipos y temas')+'</button>'
+   +'<p class="rnote">Ya pasaron <b>'+Math.min(done,ids.length)+'</b> de '+ids.length+' equipos · no repiten hasta que no alcance el número de equipos</p></div>';
+  return h;}
 function stage(n,name,q,mariana){
   return '<div class="stg"><span class="sn">'+n+'</span><div class="sb"><h3>'+name+'</h3><p class="sq">'+q+'</p><p class="sm2">'+mariana+'</p></div></div>';
 }
@@ -635,18 +647,18 @@ add(qSlide({id:'caso-etapa',blk:'Casos reales',t:'24–26',kind:'vote',pts:2,sma
  notes:'<b>24–26 min.</b> Comprobación de que identifican las etapas. +2 por acierto a cada integrante que acierte. Si hay confusión, regresa a la diapositiva del caso.'}));
 
 add({id:'reto1',blk:'Práctica 1 de 3',t:'26–30',title:'Reto 1 · Conflicto y protagonista',
-notes:'<b>26–30 min.</b> Primer escalón, con un tema <b>al azar</b> (no su proyecto). Gira la ruleta. En 3 minutos cada equipo escribe 2 frases: el conflicto y quién lo vive. Al terminar, 2 equipos al azar leen sus frases (20 s cada uno). Rubrica rápida: ¿se siente el problema?',
+notes:'<b>26–30 min.</b> Primer escalón, con un tema <b>al azar</b> (no su proyecto). Sortea: salen <b>3 equipos</b>, cada uno con un tema distinto, y la tarea queda asignada en pantalla. Solo esos 3 escriben en 3 minutos 2 frases: el conflicto y quién lo vive; los demás observan. Al terminar, los 3 leen (20 s cada uno). Los equipos que ya pasaron no repiten hasta agotar los equipos. Rubrica rápida: ¿se siente el problema?',
 html:function(){return '<h2>🥇 Reto 1 · <em>Conflicto</em> y protagonista</h2><div class="grid g2" style="margin-top:6px"><div>'
 +topicBox('reto1')
 +'<div class="callout or" style="margin-top:18px">En equipo escriban <b>2 frases</b>:<br>① El <b>conflicto</b>: ¿qué problema hay con este producto?<br>② El <b>protagonista</b>: ¿quién lo vive y cuándo?</div>'
-+'<div class="row" style="margin-top:20px"><button class="btn" data-act="timer" data-sec="180">▶ 3:00</button><button class="btn alt" data-act="rand">🎲 Equipo que lee</button></div></div>'
++'<div class="row" style="margin-top:20px"><button class="btn" data-act="timer" data-sec="180">▶ 3:00</button></div></div>'
 +'<div class="card"><h3>✅ Una buena frase de conflicto…</h3><p>Es <b>concreta</b>: una escena, no un concepto.</p><p>Muestra una <b>consecuencia</b>.</p><p>Se entiende <b>sin explicar el producto</b>.</p><div class="callout" style="margin-top:12px;font-size:28px">Ejemplo: “Mariana se va de viaje y <b>no sabe si su perro comió</b>.”</div></div></div>';}});
 
 add({id:'reto2',blk:'Práctica 2 de 3',t:'30–35',title:'Reto 2 · Cuatro frases',
-notes:'<b>30–35 min.</b> Segundo escalón con otro tema al azar. Ahora 4 frases: conflicto, protagonista, solución y transformación. 4 minutos para escribir y 1 minuto para que 2 equipos al azar la cuenten en 20 s. Recuerda: la transformación responde “¿qué cambió gracias a la solución?”.',
+notes:'<b>30–35 min.</b> Segundo escalón: sortea otros 3 equipos (sin repetir los del reto 1), cada uno con tema distinto. Ahora 4 frases: conflicto, protagonista, solución y transformación. 4 minutos para escribir y 1 minuto para que los 3 la cuenten en 20 s. Recuerda: la transformación responde “¿qué cambió gracias a la solución?”.',
 html:function(){return '<h2>🥈 Reto 2 · <em>Cuatro frases</em></h2><div class="grid g2" style="margin-top:6px"><div>'
 +topicBox('reto2')
-+'<div class="row" style="margin-top:20px"><button class="btn" data-act="timer" data-sec="240">▶ 4:00</button><button class="btn alt" data-act="rand">🎲 Equipo que cuenta</button></div></div>'
++'<div class="row" style="margin-top:20px"><button class="btn" data-act="timer" data-sec="240">▶ 4:00</button></div></div>'
 +'<div class="card"><h3>✍️ Escriban 4 frases</h3><div class="stls" style="gap:10px;margin-top:6px">'
 +tl('1','<b>Conflicto</b>')+tl('2','<b>Protagonista</b>')+tl('3','<b>Solución</b>')+tl('4','<b>Transformación</b>: ¿qué cambió?')+'</div>'
 +'<div class="callout mint" style="margin-top:14px;font-size:28px">Ahora la historia ya tiene <b>principio, nudo y final</b>.</div></div></div>';}});
@@ -671,13 +683,13 @@ add(qSlide({id:'gancho-v',blk:'El gancho',t:'37–38',kind:'vote',pts:2,small:tr
  notes:'<b>37–38 min.</b> Comprobación rápida. +2 por acierto a cada integrante. Si hay tiempo, pide que alguien reescriba la frase como “historia breve”.'}));
 
 add({id:'reto3',blk:'Práctica 3 de 3',t:'38–44',title:'Reto 3 · Gancho + 5 etapas',
-notes:'<b>38–44 min.</b> Tercer escalón, con tema nuevo al azar: ahora gancho + las 5 etapas completas en una hoja. 4 minutos para escribir y 2 para que dos equipos vecinos se la cuenten en 60 s. Es el ensayo general antes del proyecto.',
+notes:'<b>38–44 min.</b> Tercer escalón: sortea 3 equipos que aún no pasaron, cada uno con tema nuevo. Gancho + las 5 etapas completas en una hoja. 4 minutos para escribir y 2 para que cuenten su historia en 60 s. Es el ensayo general antes del proyecto.',
 html:function(){return '<h2>🥉 Reto 3 · <em>Gancho</em> + 5 etapas</h2><div class="grid g2" style="margin-top:6px"><div>'
 +topicBox('reto3')
 +'<div class="row" style="margin-top:20px"><button class="btn" data-act="timer" data-sec="240">▶ 4:00 escribir</button><button class="btn alt" data-act="timer" data-sec="120">▶ 2:00 contar</button></div></div>'
-+'<div class="card"><h3>📄 En una hoja por equipo</h3><div class="stls" style="gap:10px;margin-top:6px">'
++'<div class="card"><h3>📄 En una hoja</h3><div class="stls" style="gap:10px;margin-top:6px">'
 +tl('🪝','<b>Gancho</b> de apertura (1 frase)')+tl('1','Conflicto')+tl('2','Usuario o mercado')+tl('3','Solución')+tl('4','Diferenciador')+tl('5','Llamado a la acción')+'</div>'
-+'<div class="callout mint" style="margin-top:12px;font-size:28px">Después, <b>cuéntensela en 60 s</b> al equipo vecino.</div></div></div>';}});
++'<div class="callout mint" style="margin-top:12px;font-size:28px">Después, <b>cuéntensela a la clase en 60 s</b>.</div></div></div>';}});
 
 /* ---------- Arena ---------- */
 SL.push(clueSlide({id:'g-clue',blk:'Arena',t:'44–46',round:'RONDA 1 · BUZZER',title:'¿Qué es? 🕵️',
@@ -821,11 +833,22 @@ const ACT={
   xlsx:function(){exportXlsx();},
   timer:function(b){const s=+b.dataset.sec;if(!s){stopTimer();return;}startTimer(s);},
   topic:function(b){
-    const sid=b.dataset.sid,el=document.getElementById('tb-'+sid);let n=0;
-    let pool=TOPICS.filter(x=>S.topicUsed.indexOf(x)<0);if(!pool.length){S.topicUsed=[];pool=TOPICS.slice();}
-    const pick=pool[Math.floor(Math.random()*pool.length)];
-    const iv=setInterval(function(){if(el)el.textContent=TOPICS[Math.floor(Math.random()*TOPICS.length)];sfx('dice');n++;
-      if(n>=14){clearInterval(iv);S.topic[sid]=pick;S.topicUsed.push(pick);sfx('win');save();render();}},90);
+    const sid=b.dataset.sid,el=document.getElementById('tb-'+sid);
+    if(b.dataset.busy)return;b.dataset.busy='1';
+    const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;};
+    const ids=S.teams.map(t=>t.id);if(!ids.length)return;const n=Math.min(3,ids.length);
+    const prev=S.reto[sid];if(prev){S.retoUsed=S.retoUsed.filter(i=>!prev.some(x=>x.t===i));prev.forEach(x=>{S.topicUsed=S.topicUsed.filter(y=>y!==x.topic);});}
+    let used=S.retoUsed.filter(i=>ids.indexOf(i)>=0),pool=shuf(ids.filter(i=>used.indexOf(i)<0)),pick;
+    if(pool.length>=n)pick=pool.slice(0,n);
+    else{pick=pool.slice();used=[];pick=pick.concat(shuf(ids.filter(i=>pick.indexOf(i)<0)).slice(0,n-pick.length));}
+    S.retoUsed=used.concat(pick);
+    let tp=TOPICS.filter(x=>S.topicUsed.indexOf(x)<0);if(tp.length<n){S.topicUsed=[];tp=TOPICS.slice();}
+    tp=shuf(tp).slice(0,n);tp.forEach(x=>S.topicUsed.push(x));
+    const res=pick.map((t,i)=>({t:t,topic:tp[i]}));
+    let k=0;const iv=setInterval(function(){
+      if(el)el.innerHTML='<div class="rrows">'+res.map(function(){const t=S.teams[Math.floor(Math.random()*S.teams.length)];return '<div class="rrow" style="--c:'+col(t)+'"><b>'+esc(t.name)+'</b><span>'+esc(TOPICS[Math.floor(Math.random()*TOPICS.length)])+'</span></div>';}).join('')+'</div>';
+      sfx('dice');k++;
+      if(k>=14){clearInterval(iv);S.reto[sid]=res;sfx('win');save();render();}},90);
   },
   /* buzzer */
   cStart:function(b){const c=cs(b.dataset.sid);Object.assign(c,{st:'run',n:1,el:0,t0:Date.now(),buzz:null,locked:[],w:null,dev:null});sfx('start');render();},

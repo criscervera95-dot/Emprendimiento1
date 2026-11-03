@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 24 · Storytelling para emprendedores · Montaña + tráiler 3D (equipo)</title>
+<style>
+/* ============================================================
+   SESIÓN 24 · STORYTELLING PARA EMPRENDEDORES — CINE / TRÁILER
+   El alumno ARMA la historia de su proyecto y la ve ensamblarse
+   en vivo como el guion de un tráiler. El arco narrativo es una
+   MONTAÑA 3D que sube etapa por etapa: gancho (campamento base) →
+   problema → usuario → solución → diferenciador → llamado a la
+   acción (cima). Un caminante avanza a la etapa más alta que ya
+   completó. Autochequeo de los 3 ingredientes memorables
+   (emoción, solución clara, transformación). La historia
+   ensamblada = la evidencia que el alumno descarga en PDF.
+
+   VERSIÓN EQUIPO PARA BRIGHTSPACE: un archivo, sin CDN ni librerías.
+   El avance se guarda en localStorage de este navegador (clave
+   edt_s24_storytelling); nada se sube a la nube. Datos del equipo
+   (integrantes), % de participación individual al final, barra de
+   avance con sonido de "completado" y PDF bloqueado hasta el 100 %.
+   Sin alert(). 3D con CSS
+   (perspective / rotateX / translateZ) + SVG. Fallback plano en
+   @media print · respeta prefers-reduced-motion.
+   ============================================================ */
+:root{
+  --bg:#F4F1EA; --ink:#20180F; --ink-70:#57493a; --ink-45:#8a7862;
+  --card:#fffdf9; --line:#eae1d2; --line-2:#d9ccb6;
+  /* PALETA CURADA (cinematográfica, cálida): oro como acento + rampa
+     análoga frambuesa → magenta → púrpura → violeta → ciruela.
+     Nada de arcoíris; todo vive en la familia rosa-vino-violeta.
+     Cámbiala aquí y se propaga a toda la actividad. */
+  --c-hook:#E0A21A; /* Gancho        · oro       (acento cálido)  */
+  --c-p1:#D81E5B;   /* Problema      · frambuesa (el conflicto)   */
+  --c-p2:#C71D7E;   /* Usuario       · magenta   (el protagonista)*/
+  --c-p3:#A21CAF;   /* Solución      · púrpura   (la respuesta)   */
+  --c-p4:#7B2CBF;   /* Diferenciador · violeta   (la transformac.)*/
+  --c-p5:#5A189A;   /* Llamado       · ciruela   (la cima)        */
+  --c-idea:#D81E5B; --c-ticket:#A21CAF; --ok:#B57E12; --warn:#D81E5B;
+  --shadow:0 16px 40px rgba(60,40,20,.16);
+  --shadow-s:0 8px 22px rgba(60,40,20,.12); --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);line-height:1.55;-webkit-text-size-adjust:100%;
+  background:
+    radial-gradient(900px 520px at 3% -6%,rgba(216,30,91,.12),transparent 60%),
+    radial-gradient(900px 520px at 100% 0%,rgba(90,24,154,.11),transparent 60%),
+    radial-gradient(760px 520px at 50% 108%,rgba(224,162,26,.10),transparent 60%),
+    var(--bg);}
+h1,h2,h3{line-height:1.09;letter-spacing:-.02em;font-weight:800}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+button{font-family:inherit}
+
+/* ---------- barra superior ---------- */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(244,241,234,.92);
+  backdrop-filter:saturate(1.3) blur(10px);border-bottom:1px solid var(--line)}
+.topbar .row{display:flex;align-items:center;gap:12px;padding:10px 20px;max-width:1060px;margin:0 auto}
+.brand{font-weight:800;font-size:14px;white-space:nowrap}
+.brand small{display:block;font-weight:600;color:var(--ink-45);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.prog{flex:1;height:12px;background:#e7ddcd;border-radius:99px;overflow:hidden;min-width:70px}
+.prog>i{display:block;height:100%;width:0;border-radius:99px;transition:width .45s ease;
+  background:linear-gradient(90deg,var(--c-hook),var(--c-p2),var(--c-p5))}
+.prog-n{font-size:12px;font-weight:800;color:var(--ink-45);min-width:34px;text-align:right}
+.tb-btn{font:800 14px/1 inherit;border:0;border-radius:12px;padding:12px 15px;cursor:pointer;min-height:44px;white-space:nowrap}
+.tb-btn.pdf{background:linear-gradient(120deg,var(--c-p1),var(--c-p5));color:#fff}
+.tb-btn.pdf:hover{filter:brightness(1.06)}
+.tb-btn.ghost{background:#ece3d4;color:var(--ink-70)}
+
+/* ---------- portada ---------- */
+.hero{margin:24px 0 8px;border-radius:26px;padding:42px 32px 38px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(125deg,#E0A21A 0%,#D81E5B 30%,#C71D7E 55%,#7B2CBF 80%,#5A189A 100%);box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(560px 300px at 86% -20%,rgba(255,255,255,.30),transparent 60%)}
+.hero .eyebrow{display:inline-block;font-weight:800;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:rgba(255,255,255,.22);padding:7px 14px;border-radius:99px;position:relative;z-index:1}
+.hero h1{font-size:clamp(31px,6vw,58px);margin:16px 0 10px;text-shadow:0 2px 18px rgba(0,0,0,.16);position:relative;z-index:1}
+.hero p.lead{font-size:clamp(17px,2.5vw,22px);max-width:60ch;color:rgba(255,255,255,.97);position:relative;z-index:1}
+.hero .path{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;position:relative;z-index:1}
+.hero .path span{font-size:13px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:7px 13px;border-radius:99px}
+
+/* ---------- secciones ---------- */
+section.card{background:var(--card);border:1px solid var(--line);border-top:7px solid var(--c,#ccc);
+  border-radius:var(--r);padding:24px 24px 26px;margin:18px 0;box-shadow:var(--shadow-s)}
+.stepbar{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.stepbar .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;
+  background:var(--c);color:#fff;font-weight:800;font-size:20px;box-shadow:0 6px 14px rgba(0,0,0,.16)}
+.stepbar .kicker{font-weight:800;font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+section.card h2{font-size:clamp(22px,3.5vw,31px);margin:2px 0 6px}
+.hint{color:var(--ink-70);font-size:16px;max-width:80ch}
+.hint b{color:var(--ink)}
+.goal{display:inline-flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:13.5px;font-weight:800;
+  color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 26%,#fff);
+  border-radius:99px;padding:7px 14px}
+
+/* campos */
+label.f{display:block;font-weight:800;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-45);margin:14px 0 5px}
+input.t,textarea.t{width:100%;font:16px/1.45 inherit;color:var(--ink);background:#fff;
+  border:2px solid var(--line-2);border-radius:12px;padding:12px 13px;min-height:48px}
+textarea.t{min-height:70px;resize:vertical}
+input.t::placeholder,textarea.t::placeholder{color:#b3a58f}
+input.t:focus,textarea.t:focus{outline:none;border-color:var(--c,#999);box-shadow:0 0 0 4px color-mix(in srgb,var(--c,#999) 20%,transparent)}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.grid5{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.grid5,.grid2{grid-template-columns:1fr}}
+
+/* termómetro */
+.thermo{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.thermo button{border:2px solid var(--line-2);background:#fff;border-radius:12px;min-width:48px;min-height:48px;
+  font:800 18px/1 inherit;color:var(--ink-70);cursor:pointer;transition:transform .15s,background .15s}
+.thermo button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff;transform:scale(1.06)}
+
+/* en corto */
+.encorto{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+@media(max-width:720px){.encorto{grid-template-columns:1fr}}
+.encorto .e{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.encorto .e .h{font-weight:800;font-size:14.5px;display:flex;gap:8px;align-items:center}
+.encorto .e p{font-size:13.5px;color:var(--ink-70);margin-top:6px}
+.encorto .e p b{color:var(--ink)}
+.tiplegend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.tiplegend .tl{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;flex:1;min-width:180px}
+.tiplegend .tl .ic{font-size:20px}
+.tiplegend .tl b{font-size:13.5px}
+.tiplegend .tl span{font-size:12.5px;color:var(--ink-70);display:block}
+
+/* caso / destapable */
+.casebox{margin:14px 0 2px;border:1.5px dashed color-mix(in srgb,var(--c) 40%,#fff);border-radius:12px;
+  background:color-mix(in srgb,var(--c) 7%,#fff);overflow:hidden}
+.casebox summary{cursor:pointer;list-style:none;padding:13px 16px;font-weight:800;color:var(--c);display:flex;align-items:center;gap:10px}
+.casebox summary::-webkit-details-marker{display:none}
+.casebox summary .chev{margin-left:auto;transition:transform .3s}
+.casebox[open] summary .chev{transform:rotate(90deg)}
+.casebox .inner{padding:2px 16px 16px;font-size:14.5px;color:var(--ink-70)}
+.casebox .inner b{color:var(--ink)}
+.casebox .inner p{margin:8px 0}
+.casebox .warnlbl{display:inline-block;font-size:11.5px;font-weight:800;color:#8a3417;background:#fdeae4;border:1px solid #f0b8a4;border-radius:7px;padding:2px 8px;margin-bottom:4px}
+
+/* ============================================================
+   GANCHO · selector de tipo + ejemplo dinámico
+   ============================================================ */
+.hook-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.hook-btn{border:2px solid var(--line-2);background:#fff;border-radius:12px;padding:11px 15px;
+  font:800 14px/1 inherit;color:var(--ink-70);cursor:pointer;min-height:48px;display:inline-flex;align-items:center;gap:8px;
+  transition:transform .15s,border-color .2s,background .2s}
+.hook-btn .e{font-size:18px}
+.hook-btn[aria-pressed="true"]{background:color-mix(in srgb,var(--c-hook) 15%,#fff);border-color:var(--c-hook);color:var(--ink);transform:translateY(-1px)}
+.hook-btn:focus-visible{outline:3px solid var(--c-hook);outline-offset:2px}
+.hook-ex{margin-top:12px;border-left:4px solid var(--c-hook);background:color-mix(in srgb,var(--c-hook) 7%,#fff);
+  border-radius:0 12px 12px 0;padding:12px 15px}
+.hook-ex .lbl{font-size:11.5px;font-weight:800;color:#8a3417;background:#fdeae4;border:1px solid #f0b8a4;border-radius:7px;padding:2px 8px;display:inline-block;margin-bottom:7px}
+.hook-ex .ex{font-size:15px;color:var(--ink);font-style:italic}
+.hook-ex .ex b{font-style:normal}
+.hook-ex .why{font-size:12.5px;color:var(--ink-70);margin-top:7px}
+
+/* ============================================================
+   MONTAÑA 3D (protagonista, SVG + CSS 3D)
+   ============================================================ */
+.montana-escena{position:relative;perspective:1300px;perspective-origin:50% 26%;margin:10px auto 2px;max-width:680px;
+  background:linear-gradient(180deg,#FDEBD9 0%,#F6D8E6 46%,#E9D6F4 100%);border-radius:20px;padding:16px 10px 8px;overflow:hidden}
+.montana-escena::before{content:"";position:absolute;top:26px;right:42px;width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 40% 38%,#FFE7A6,#FFC24D 62%,rgba(255,194,77,0));pointer-events:none}
+.montana-3d{position:relative;width:100%;aspect-ratio:620/440;transform:rotateX(15deg);transform-style:preserve-3d;transition:transform .4s ease}
+.montana-svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 22px 26px rgba(60,40,20,.20))}
+.montana-svg .ridge-back{fill:#a878c9}
+.montana-svg .ridge-mid{fill:#7c44a6}
+.montana-svg .ridge-front{fill:#54216f}
+.montana-svg .snow{fill:#FFC24D;opacity:1}
+.montana-svg .base{fill:rgba(40,20,60,.20)}
+.montana-svg .seg{stroke:rgba(255,248,235,.6);stroke-width:7;stroke-linecap:round;fill:none;transition:stroke .5s ease}
+.montana-svg .flag-pole{stroke:#7a6850;stroke-width:3}
+
+/* campamentos (chips clicables sobre la montaña) */
+.camps{position:absolute;inset:0;transform-style:preserve-3d}
+.camp{position:absolute;transform:translate(-50%,-50%) translateZ(30px);
+  display:flex;flex-direction:column;align-items:center;gap:2px;min-width:70px;
+  border:2px dashed var(--sc,#bbb);background:rgba(255,255,255,.92);border-radius:12px;
+  padding:6px 8px;cursor:pointer;text-align:center;box-shadow:0 8px 16px rgba(40,25,10,.18);
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s,background .3s}
+.camp:hover{box-shadow:0 12px 22px rgba(40,25,10,.26)}
+.camp .cn{font:800 12px/1 inherit;color:var(--sc,#666)}
+.camp .lv{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-45)}
+.camp .st{font-size:15px;line-height:1}
+.camp.filled{border-style:solid;border-color:var(--sc);background:color-mix(in srgb,var(--sc) 14%,#fff)}
+.camp.done{border-style:solid;background:var(--sc);border-color:var(--sc);transform:translate(-50%,-50%) translateZ(44px) scale(1.05)}
+.camp.done .cn,.camp.done .lv{color:#fff}
+.camp:focus-visible{outline:3px solid var(--c-p1);outline-offset:3px}
+
+/* caminante */
+.hiker{position:absolute;transform:translate(-50%,-108%) translateZ(60px);font-size:30px;line-height:1;
+  filter:drop-shadow(0 8px 8px rgba(40,25,10,.35));transition:left .6s cubic-bezier(.5,0,.2,1),top .6s cubic-bezier(.5,0,.2,1);pointer-events:none;z-index:3}
+.hiker.step{animation:hop .6s ease}
+@keyframes hop{40%{transform:translate(-50%,-150%) translateZ(70px)}}
+.montana-cta{text-align:center;font-size:13.5px;font-weight:700;color:var(--ink-45);margin-top:4px}
+
+/* medidor de altura */
+.altura{background:#fff;border:1.5px solid var(--line-2);border-radius:14px;padding:14px 16px;margin-top:14px}
+.altura .ch{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:14px;color:var(--ink-70)}
+.altura .ch b{font-size:18px;color:var(--ink)}
+.altura .bar{height:16px;background:#eee3d2;border-radius:99px;overflow:hidden;margin-top:9px}
+.altura .bar>i{display:block;height:100%;width:0;border-radius:99px;transition:width .5s ease;
+  background:linear-gradient(90deg,var(--c-hook),var(--c-p2),var(--c-p5))}
+.altura .cmsg{margin-top:10px;font-size:14px;font-weight:700;border-radius:12px;padding:10px 12px;
+  background:color-mix(in srgb,var(--ok) 14%,#fff);color:#7a5410}
+.altura .cmsg.full{background:color-mix(in srgb,var(--c-p5) 14%,#fff);color:#4a1580}
+
+/* ============================================================
+   TRÁILER · se ensambla en vivo (tira de cine)
+   ============================================================ */
+.trailer{position:relative;margin-top:16px;border-radius:16px;overflow:hidden;
+  background:linear-gradient(160deg,#241a12,#3a2a1c);color:#fff;box-shadow:0 16px 36px rgba(30,18,8,.4)}
+.trailer::before,.trailer::after{content:"";position:absolute;top:0;bottom:0;width:20px;
+  background:repeating-linear-gradient(#0000 0 8px,rgba(255,255,255,.14) 8px 20px);}
+.trailer::before{left:0}.trailer::after{right:0}
+.trailer .tinner{padding:18px 34px 20px}
+.trailer .thead{display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:10px;margin-bottom:8px}
+.trailer .thead .play{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:15px;
+  border:0;color:#fff;cursor:pointer;padding:0;transition:background .2s,transform .2s}
+.trailer .thead .play:hover{background:rgba(255,255,255,.28);transform:scale(1.08)}
+.trailer .thead .play:disabled{opacity:.4;cursor:default}
+.trailer .thead .play.playing{background:#F4C752;color:#3a2a00}
+/* línea que se está "reproduciendo" */
+.tline.now{background:rgba(244,199,82,.12);border-radius:10px}
+.tline.now .tdot{box-shadow:0 0 0 4px color-mix(in srgb,var(--tc,#888) 45%,transparent),0 0 16px var(--tc,#888);transform:scale(1.25)}
+.tline.now .tval{text-shadow:0 0 14px rgba(255,255,255,.35)}
+@media (prefers-reduced-motion: reduce){.trailer .thead .play{transition:none}}
+.trailer .thead b{font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.trailer .thead .who{margin-left:auto;font-size:12px;color:rgba(255,255,255,.7);font-weight:700;text-align:right}
+.tline{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.1)}
+.tline:last-child{border-bottom:0}
+.tline .tdot{width:11px;height:11px;border-radius:50%;background:var(--tc,#888);flex:none;margin-top:6px;box-shadow:0 0 0 3px color-mix(in srgb,var(--tc,#888) 30%,transparent)}
+.tline .ttx{flex:1}
+.tline .trole{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tc,#aaa)}
+.tline .tval{font-size:15.5px;line-height:1.4;color:#fff;margin-top:1px;white-space:pre-wrap}
+.tline.ghost .tval{color:rgba(255,255,255,.34);font-style:italic}
+.tline.on .tdot{animation:pop .4s ease}
+@keyframes pop{50%{transform:scale(1.5)}}
+
+/* ============================================================
+   CONSTRUCTOR DEL ARCO (5 bloques)
+   ============================================================ */
+.bloque{margin-top:16px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.bloque .bhead{display:flex;align-items:center;gap:11px;padding:13px 15px;
+  background:color-mix(in srgb,var(--bc) 12%,#fff);border-bottom:1px solid color-mix(in srgb,var(--bc) 24%,#fff)}
+.bloque .bhead .dot{width:34px;height:34px;border-radius:10px;background:var(--bc);color:#fff;display:grid;place-items:center;font-size:18px;flex:none}
+.bloque .bhead .bt{font-weight:800;font-size:16px;color:var(--ink)}
+.bloque .bhead .bs{font-size:12.5px;color:var(--ink-70)}
+.bloque .bhead .block-lock{margin-left:auto;font-size:12.5px;font-weight:800;color:var(--ink-45);display:inline-flex;align-items:center;gap:6px}
+.bloque.ok .bhead .block-lock{color:var(--ok)}
+.bloque .bbody{padding:15px}
+.bloque .keys{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.bloque .keys span{font-size:12px;font-weight:700;color:var(--ink-70);background:color-mix(in srgb,var(--bc) 9%,#fff);
+  border:1px solid color-mix(in srgb,var(--bc) 22%,#fff);border-radius:99px;padding:5px 11px}
+.bloque textarea.t{min-height:66px}
+.bloque .exline{margin-top:9px;font-size:13px;color:var(--ink-70);background:#faf6ef;border:1px dashed var(--line-2);border-radius:11px;padding:10px 12px}
+.bloque .exline .lbl{font-size:11px;font-weight:800;color:#8a3417;background:#fdeae4;border:1px solid #f0b8a4;border-radius:6px;padding:1px 7px;margin-right:6px}
+.bloque .exline em{color:var(--ink);font-style:italic}
+
+/* ============================================================
+   3 INGREDIENTES · autochequeo
+   ============================================================ */
+.ingr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+@media(max-width:720px){.ingr-grid{grid-template-columns:1fr}}
+.ingr{border:2px solid var(--line-2);border-radius:14px;padding:14px;cursor:pointer;background:#fff;
+  transition:border-color .2s,background .2s,transform .15s;text-align:left}
+.ingr:hover{transform:translateY(-1px)}
+.ingr .ih{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15.5px}
+.ingr .ih .chk{margin-left:auto;font-size:18px}
+.ingr p{font-size:13px;color:var(--ink-70);margin-top:7px}
+.ingr[aria-pressed="true"]{border-color:var(--ic);background:color-mix(in srgb,var(--ic) 10%,#fff)}
+.ingr:focus-visible{outline:3px solid var(--c-p4);outline-offset:2px}
+
+/* ticket + insignias */
+.ticket{border:2px dashed var(--c-ticket);border-radius:14px;padding:18px;margin-top:18px;background:color-mix(in srgb,var(--c-ticket) 7%,#fff)}
+.ticket .stepbar .num{background:var(--c-ticket)}
+.ticket .stepbar .kicker{color:var(--c-ticket)}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.badge{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:9px 15px;font-weight:800;font-size:14px;color:#fff;opacity:.32;transition:opacity .3s,transform .2s;background:var(--bc2,#999)}
+.badge.on{opacity:1;transform:translateY(-1px)}
+
+/* modo analógico */
+details.ana{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+details.ana summary{cursor:pointer;font-weight:800;color:var(--c);padding:6px 0;list-style:none}
+details.ana summary::-webkit-details-marker{display:none}
+details.ana summary::before{content:"▸ "}
+details.ana[open] summary::before{content:"▾ "}
+details.ana .body{font-size:14.5px;color:var(--ink-70);max-width:80ch;padding:6px 0 4px}
+.footer-note{text-align:center;color:var(--ink-45);font-size:14px;padding:22px 0 60px}
+
+
+/* ============================================================
+   EQUIPO · navegación por fases · participación · PDF
+   ============================================================ */
+.stepsrow{background:rgba(244,241,234,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:66px;z-index:55}
+.steps{display:flex;gap:6px;overflow-x:auto;padding:8px 20px;max-width:1060px;margin:0 auto;scrollbar-width:thin}
+.stp{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:transparent;cursor:pointer;font-family:inherit;min-width:62px;padding:2px 4px}
+.stp span:first-child{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;border:2.5px solid var(--line-2);font-weight:800;font-size:16px;color:var(--ink-70);transition:all .2s}
+.stp .l{font-size:10.5px;font-weight:800;color:var(--ink-45);text-transform:uppercase;letter-spacing:.04em}
+.stp.cur span:first-child{border-color:var(--c-p2);box-shadow:0 0 0 4px rgba(199,29,126,.18)}
+.stp.done span:first-child{background:var(--ok);border-color:var(--ok);color:#fff}
+.stp:focus-visible{outline:3px solid var(--c-p1);outline-offset:2px;border-radius:12px}
+.req::after{content:" *";color:var(--warn)}
+.team5{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:6px}
+@media(max-width:560px){.team5{grid-template-columns:1fr}}
+.aviso{background:color-mix(in srgb,var(--c-p4) 10%,#fff);border:1.5px solid color-mix(in srgb,var(--c-p4) 30%,#fff);border-radius:12px;padding:11px 14px;font-size:14px;color:var(--ink-70);margin-top:10px}
+.partic-row{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:8px;flex-wrap:wrap}
+.partic-row .nm{flex:1;min-width:160px;font-weight:800}
+.partic-row input{width:96px;text-align:center;font:800 18px/1 inherit;min-height:44px}
+.partic-row .pc{font-weight:800;color:var(--ink-45)}
+.falta{font-size:13.5px;color:#b13a1c;font-weight:700;margin-top:12px;min-height:18px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{border:0;border-radius:12px;padding:13px 18px;font:800 15px/1 inherit;cursor:pointer;min-height:48px;color:#fff;background:linear-gradient(120deg,var(--c-p1),var(--c-p5))}
+.btn:disabled,.tb-btn.pdf:disabled{background:#d7ccb9;color:#8a7862;cursor:not-allowed;filter:none}
+.btn.sec{background:#ece3d4;color:var(--ink-70)}
+.donebox{margin-top:14px;border-radius:14px;padding:14px 16px;background:color-mix(in srgb,var(--ok) 13%,#fff);border:1.5px solid var(--ok);color:#6b4a0c;font-weight:700}
+.sheet .tb2{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+.sheet .tb2 td{border-bottom:1px solid #ddd;padding:4px 6px}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .montana-3d{transform:none}
+}
+
+/* ============================================================
+   HOJA / HISTORIA — solo impresión / PDF (hoja limpia, plana)
+   ============================================================ */
+#hoja{display:none}
+.sheet{color:#000}
+.sheet .shead{border-bottom:3px solid var(--c-p1);padding-bottom:10px;margin-bottom:12px}
+.sheet .shead .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#b1401f;font-weight:800}
+.sheet .shead h2{font-size:22px;margin-top:4px;color:#000}
+.sheet .idrow{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 24px;margin:9px 0 12px;font-size:13px}
+.sheet .idrow div{border-bottom:1px solid #ccc;padding:4px 0}
+.sheet .idrow span{color:#666;font-weight:800}
+.sheet .block{border:1px solid #bbb;border-radius:8px;padding:10px 12px;margin:9px 0;break-inside:avoid}
+.sheet .block h3{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:#b1401f;margin-bottom:6px}
+.sheet .srow{margin:6px 0}
+.sheet .srow .q{font-weight:800;font-size:12px;color:#333}
+.sheet .srow .a{font-size:13.5px;min-height:16px;border-bottom:1px dotted #bbb;padding:3px 0;white-space:pre-wrap}
+.sheet .arc{margin:8px 0;break-inside:avoid}
+.sheet .arc .n{display:flex;gap:8px;align-items:baseline}
+.sheet .arc .tag{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;border-radius:5px;padding:1px 7px;flex:none}
+.sheet .arc .qt{font-size:13.5px;color:#111;white-space:pre-wrap;padding:2px 0}
+.sheet .story{background:#f7f7f7;border:1px solid #bbb;border-radius:8px;padding:12px 14px;margin:9px 0;font-size:14px;line-height:1.5;white-space:pre-wrap;break-inside:avoid}
+.sheet .fecha-firma{margin-top:14px;font-size:12px;color:#444;display:flex;justify-content:space-between;gap:20px}
+.sheet .fecha-firma div{border-top:1px solid #999;padding-top:5px;flex:1;text-align:center}
+
+@media print{
+  @page{margin:12mm}
+  html,body{background:#fff}
+  .screen,.topbar,.stepsrow{display:none!important}
+  #hoja{display:block!important}
+}
+</style>
+</head>
+<body>
+<!-- ================= BARRA SUPERIOR ================= -->
+<div class="topbar screen">
+  <div class="row">
+    <div class="brand">Emprendimiento 1<small>Sesión 24 · Storytelling</small></div>
+    <div class="prog" aria-label="Avance de la actividad"><i id="progbar"></i></div>
+    <span class="prog-n" id="progn">0%</span>
+    <button class="tb-btn ghost" id="sndbtn" type="button" aria-pressed="true" title="Sonido">🔊 Sonido</button>
+    <button class="tb-btn pdf" id="pdfbtn" type="button" disabled>🔒 PDF al 100%</button>
+  </div>
+</div>
+<div class="stepsrow screen"><nav class="steps" id="steps" aria-label="Fases de la actividad"></nav></div>
+
+<div class="wrap">
+
+  <!-- ================= PORTADA ================= -->
+  <div class="hero screen">
+    <span class="eyebrow">Cierre · Comunicar la solución</span>
+    <h1>Sube tu historia a la cima</h1>
+    <p class="lead">Tu proyecto ya está testeado. Hoy le pones <b>historia</b>. Vas a subir una montaña narrativa en seis pasos —desde el gancho hasta el llamado a la acción— y, mientras la subes, tu <b>tráiler se arma solo</b> con lo que escribes. Al llegar a la cima te llevas tu historia lista para contarla y para imprimir.</p>
+    <div class="path">
+      <span>🪝 Gancho</span><span>⛰️ Problema</span><span>🧗 Usuario</span><span>💡 Solución</span><span>✨ Diferenciador</span><span>🚩 Llamado</span>
+    </div>
+  </div>
+
+  <!-- ================= EQUIPO + DETONADOR + ANTES ================= -->
+  <section class="card screen" id="sec-equipo" style="--c:var(--c-p1)">
+    <div class="stepbar"><span class="num">👥</span><span class="kicker">Antes de empezar · Equipo</span></div>
+    <h2>¿Quiénes cuentan esta historia?</h2>
+    <p class="hint">Un integrante captura por todo el equipo. Lo que registren encabeza su hoja. El avance se guarda en este navegador (no se sube a ninguna nube): usen siempre el mismo dispositivo y descarguen el PDF antes de salir.</p>
+    <div class="aviso" id="avisoPrev" hidden></div>
+    <div class="grid2" style="margin-top:6px">
+      <div><label class="f req">Nombre o número del equipo</label><input class="t" data-k="equipo" placeholder="Ej. Equipo 3"></div>
+      <div><label class="f">Carrera / grupo</label><input class="t" data-k="carrera" placeholder="Ej. Derecho · 1A"></div>
+    </div>
+    <div class="grid2"><div><label class="f">Fecha</label><input class="t" data-k="fecha" placeholder="dd / mm / aaaa"></div><div></div></div>
+    <label class="f req" style="margin-top:14px">Integrantes del equipo (nombre completo y matrícula)</label>
+    <div class="team5" id="team"></div>
+
+    <label class="f" style="margin-top:18px">El detonador · dos maneras de presentar lo mismo</label>
+    <p class="hint" style="font-size:14.5px">Versión A: <b>"Vendo un termo de acero inoxidable de 750 ml con doble pared al vacío."</b> Versión B: <b>"Mi abuelo trabajaba de albañil bajo el sol; a media mañana ya se le calentaba el agua. Por él hice un termo que la mantiene fría siete horas."</b> Mismo producto. ¿Cuál se te queda? Esa diferencia es el storytelling: no cambia el termo, cambia cómo lo recuerdas.</p>
+
+    <label class="f" style="margin-top:16px">Antes de empezar, ¿qué tan capaz se siente su equipo de contar su proyecto como una historia que enganche? (1 = nada · 5 = mucho; decídanlo juntos)</label>
+    <div class="thermo" data-thermo="antes" role="group" aria-label="Seguridad antes" style="--c:var(--c-p1)">
+      <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
+      <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
+      <button type="button" data-v="5">5</button>
+    </div>
+  </section>
+
+  <!-- ================= EN CORTO (teoría mínima) ================= -->
+  <section class="card screen" style="--c:var(--c-p3)">
+    <div class="stepbar"><span class="num">📌</span><span class="kicker">En corto</span></div>
+    <h2>Lo justo para armar bien</h2>
+    <div class="encorto">
+      <div class="e"><div class="h">⛰️ El arco de 5 etapas</div><p>Una historia sube como montaña: <b>problema → usuario → solución → diferenciador → llamado a la acción</b>. Cada etapa prepara la siguiente.</p></div>
+      <div class="e"><div class="h">🪝 El gancho de apertura</div><p>Los primeros segundos deciden si te siguen escuchando. Un buen gancho es <b>breve, relevante y despierta curiosidad</b>.</p></div>
+      <div class="e"><div class="h">💛 Los 3 ingredientes</div><p>Una historia memorable lleva <b>emoción</b> (que sientan), <b>solución</b> (cómo mejora la vida) y <b>transformación</b> (qué cambió).</p></div>
+    </div>
+
+    <label class="f" style="margin-top:16px">Los cuatro tipos de gancho que puedes usar</label>
+    <div class="tiplegend">
+      <div class="tl"><span class="ic">❓</span><div><b>Pregunta</b><span>Que la audiencia se responda por dentro.</span></div></div>
+      <div class="tl"><span class="ic">📊</span><div><b>Dato</b><span>Un número que sorprenda y dé contexto.</span></div></div>
+      <div class="tl"><span class="ic">🎬</span><div><b>Historia</b><span>Una escena breve y concreta de una persona.</span></div></div>
+      <div class="tl"><span class="ic">💬</span><div><b>Cita</b><span>Una frase que resuma el sentir del problema.</span></div></div>
+    </div>
+
+    <details class="casebox screen">
+      <summary>Tres casos mexicanos: qué historia cuentan. Destápalo <span class="chev">▸</span></summary>
+      <div class="inner">
+        <span class="warnlbl">Otros proyectos · no los copies</span>
+        <p><b>Kavak</b> parte del miedo de comprar un auto usado y no saber si te están viendo la cara. Su historia promete comprar un seminuevo con confianza y garantía.</p>
+        <p><b>Clip</b> arranca del negocio chico que perdía ventas por no poder cobrar con tarjeta. Su historia: un lector diminuto que le abre las ventas a cualquiera.</p>
+        <p><b>Bitso</b> nace de querer entrar al mundo cripto sin saber cómo ni por dónde. Su historia: hacerlo simple y en pesos.</p>
+        <p>Fíjate en el patrón: todos abren con un <b>problema humano</b>, no con las características técnicas. Estas son sus historias, <b>no la tuya</b>: la tuya la escribes abajo.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= PASO 1 · TU PROYECTO ================= -->
+  <section class="card screen" id="sec-proy" style="--c:var(--c-p1)">
+    <div class="stepbar"><span class="num">1</span><span class="kicker">Paso 1 · Tu proyecto</span></div>
+    <h2>🎬 ¿De qué historia hablamos?</h2>
+    <span class="goal">Meta: tener claro el proyecto antes de narrarlo</span>
+    <p class="hint">Usa el proyecto del semestre, el que ya testeaste. Ponle nombre y di en pocas palabras qué hace. Esto encabeza tu tráiler.</p>
+    <div class="grid2">
+      <div><label class="f">Nombre de tu proyecto</label><input class="t" data-k="proy_nombre" placeholder="Ej. el nombre de tu app, producto o servicio"></div>
+      <div><label class="f">Tu solución en pocas palabras</label><input class="t" data-k="proy_sol" placeholder="Ej. qué hace, sin tecnicismos"></div>
+    </div>
+    <label class="f">¿A quién le vas a contar esta historia? (tu audiencia)</label>
+    <input class="t" data-k="proy_aud" placeholder="Ej. posibles clientes en la miniferia; un inversionista; un aliado">
+    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">En su cuaderno, cada quien anota arriba: nombre del proyecto, qué hace en una línea y a quién le va a contar la historia. Ese encabezado manda: la historia se cuenta pensando en esa audiencia.</div></details>
+  </section>
+
+  <!-- ================= PASO 2 · GANCHO ================= -->
+  <section class="card screen" id="sec-gancho" style="--c:var(--c-hook)">
+    <div class="stepbar"><span class="num">2</span><span class="kicker">Paso 2 · El gancho</span></div>
+    <h2>🪝 Los primeros segundos</h2>
+    <span class="goal">Meta: una apertura que haga querer escuchar más</span>
+    <p class="hint">Elige el <b>tipo de gancho</b> que mejor le va a tu proyecto. Abajo verás un ejemplo de ese tipo (de otro proyecto) para ver la forma. Después escribe el tuyo.</p>
+    <div class="hook-row" id="hookRow" role="group" aria-label="Tipo de gancho"></div>
+    <div class="hook-ex" id="hookEx" hidden>
+      <span class="lbl">Otro proyecto · no lo copies</span>
+      <div class="ex" id="hookExText"></div>
+      <div class="why" id="hookExWhy"></div>
+    </div>
+    <label class="f" style="margin-top:14px">Tu gancho de apertura</label>
+    <textarea class="t" data-k="hook_txt" placeholder="Escribe la primera frase con la que arrancarías…"></textarea>
+    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">Cada quien prueba tres ganchos distintos en tres tarjetas (una pregunta, un dato, una historia breve) y el equipo vota cuál engancha más. Ese gana y va al inicio de la historia.</div></details>
+  </section>
+
+  <!-- ================= MONTAÑA 3D + TRÁILER ================= -->
+  <section class="card screen" id="sec-montana" style="--c:var(--c-p4)">
+    <div class="stepbar"><span class="num">⛰️</span><span class="kicker">Tu montaña narrativa</span></div>
+    <h2>La historia sube sola</h2>
+    <p class="hint">Conforme completes el gancho y los cinco bloques de abajo, el caminante <b>sube a la siguiente etapa</b> y tu <b>tráiler</b> se va escribiendo. Toca un campamento para saltar a ese bloque.</p>
+    <div class="montana-escena">
+      <div class="montana-3d">
+        <svg class="montana-svg" viewBox="0 0 620 440" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <ellipse class="base" cx="310" cy="418" rx="250" ry="20"></ellipse>
+          <polygon class="ridge-back" points="0,410 180,150 330,410"></polygon>
+          <polygon class="ridge-back" points="250,410 430,120 610,410"></polygon>
+          <polygon class="ridge-mid" points="60,410 300,90 540,410"></polygon>
+          <polygon class="ridge-front" points="120,415 527,50 615,415"></polygon>
+          <polygon class="snow" points="527,50 500,92 515,96 494,120 545,120 560,96 548,92"></polygon>
+          <path class="seg" id="seg1" d="M74 361 L149 299"></path>
+          <path class="seg" id="seg2" d="M149 299 L248 246"></path>
+          <path class="seg" id="seg3" d="M248 246 L341 189"></path>
+          <path class="seg" id="seg4" d="M341 189 L434 132"></path>
+          <path class="seg" id="seg5" d="M434 132 L527 66"></path>
+          <line class="flag-pole" x1="527" y1="66" x2="527" y2="40"></line>
+          <path id="flagCloth" d="M527 40 L552 47 L527 54 Z" fill="#5A189A"></path>
+        </svg>
+        <div class="camps" id="camps"></div>
+        <div class="hiker" id="hiker" aria-hidden="true">🥾</div>
+      </div>
+    </div>
+    <p class="montana-cta screen" id="montanaCta">El caminante está en la base. Escribe tu gancho para empezar a subir.</p>
+
+    <div class="altura">
+      <div class="ch"><span>🏔️ Altura de tu historia</span><b><span id="alturaN">0</span> / 6 etapas</b></div>
+      <div class="bar"><i id="alturaBar"></i></div>
+      <div class="cmsg" id="alturaMsg">Una etapa cuenta cuando su bloque tiene contenido.</div>
+    </div>
+
+    <!-- TRÁILER que se ensambla en vivo -->
+    <div class="trailer" id="trailer">
+      <div class="tinner">
+        <div class="thead">
+          <button class="play" id="trPlay" type="button" aria-label="Reproducir el tráiler">▶</button>
+          <b>Tráiler de tu historia</b>
+          <span class="who" id="trWho">Tu proyecto</span>
+        </div>
+        <div id="trLines"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PASO 3 · CONSTRUCTOR DEL ARCO ================= -->
+  <section class="card screen" id="sec-arco" style="--c:var(--c-p2)">
+    <div class="stepbar"><span class="num">3</span><span class="kicker">Paso 3 · Arma tu arco</span></div>
+    <h2>🧗 Bloque por bloque hasta la cima</h2>
+    <span class="goal">Meta: las 5 etapas escritas, sin saltarte ninguna</span>
+    <p class="hint">Escribe cada bloque pensando en tu audiencia. Usa las <b>preguntas clave</b> como guía y el ejemplo (de otro proyecto) solo para ver la forma. Un bloque cuenta como subido cuando tiene contenido de verdad.</p>
+    <div id="constructor"></div>
+    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">Pega en el pizarrón cinco carteles con los encabezados del arco. Cada quien escribe su historia en el cuaderno bajo esos cinco encabezados. Luego el equipo se turna para leer cada bloque y dar retro: "aquí sí me enganchaste" o "aquí falta emoción".</div></details>
+  </section>
+
+  <!-- ================= PASO 4 · 3 INGREDIENTES ================= -->
+  <section class="card screen" id="sec-ingr" style="--c:var(--c-p4)">
+    <div class="stepbar"><span class="num">4</span><span class="kicker">Paso 4 · Autochequeo</span></div>
+    <h2>💛 ¿Tu historia tiene los 3 ingredientes?</h2>
+    <span class="goal">Meta: revisar tu propia historia como crítico exigente</span>
+    <p class="hint">Lee tu tráiler ya armado y sé honesto: ¿de verdad tiene cada ingrediente? Márcalo solo si lo cumple. Si falta alguno, regresa al bloque y súbelo.</p>
+    <div class="ingr-grid" id="ingredientes"></div>
+    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">En el cuaderno, cada quien subraya en su historia dónde está la emoción, dónde la solución y dónde la transformación. Si no puede subrayar alguna, ahí tiene que trabajar.</div></details>
+  </section>
+
+  <!-- ================= CIERRE · TICKET + BADGES ================= -->
+  <section class="card screen" id="sec-cierre" style="--c:var(--c-ticket)">
+    <div class="stepbar"><span class="num">🏁</span><span class="kicker">Cierre</span></div>
+    <h2>Tu historia quedó en la cima</h2>
+    <p class="hint">Con lo que capturaste, tu historia se ensambló sola: gancho, las cinco etapas y tu llamado a la acción. Léanla en voz alta, respondan el ticket y registren la participación de cada integrante.</p>
+
+    <div class="ticket">
+      <div class="stepbar"><span class="num">✓</span><span class="kicker">Ticket de salida</span></div>
+      <label class="f" style="margin-top:8px">1 · ¿Por qué una historia se recuerda mejor que una lista de características?</label>
+      <textarea class="t" data-k="t1" placeholder="Con tus palabras."></textarea>
+      <label class="f">2 · ¿Cuál es la función del gancho de apertura?</label>
+      <textarea class="t" data-k="t2"></textarea>
+      <label class="f">3 · De los 3 ingredientes (emoción, solución, transformación), ¿cuál te costó más y por qué?</label>
+      <input class="t" data-k="t3" placeholder="Ej. …">
+      <label class="f">Ya para cerrar, ¿qué tan capaz se siente ahora su equipo de contar su proyecto como historia? (1–5)</label>
+      <div class="thermo" data-thermo="despues" role="group" aria-label="Seguridad después" style="--c:var(--c-ticket)">
+        <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
+        <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
+        <button type="button" data-v="5">5</button>
+      </div>
+    </div>
+
+    <div class="badges" id="badges">
+      <span class="badge" data-badge="gancho" style="--bc2:var(--c-hook)">🪝 Gancho listo</span>
+      <span class="badge" data-badge="arco" style="--bc2:var(--c-p2)">⛰️ Arco completo</span>
+      <span class="badge" data-badge="ingr" style="--bc2:var(--c-p4)">💛 Con los 3 ingredientes</span>
+      <span class="badge" data-badge="cima" style="--bc2:var(--c-p5)">🚩 Historia en la cima</span>
+      <span class="badge" data-badge="brecha" style="--bc2:var(--ok)">📈 Cerré la brecha</span>
+    </div>
+  </section>
+
+  <section class="card screen" id="sec-partic" style="--c:var(--c-p1)">
+    <div class="stepbar"><span class="num">%</span><span class="kicker">Último paso · Participación individual</span></div>
+    <h2>🙋 ¿Cuánto aportó cada quien?</h2>
+    <p class="hint">Decidan juntos el % de participación de cada integrante. Cada uno puede llegar hasta <b>100%</b>; <b>no tienen que sumar 100</b> entre todos. Se imprime en su PDF.</p>
+    <div id="particList"></div>
+    <p class="falta" id="faltaMsg"></p>
+    <div class="actions">
+      <button type="button" class="btn" id="pdfbtn2" disabled>🔒 PDF del equipo (al 100%)</button>
+      <button type="button" class="btn sec" id="clrbtn">🗑 Borrar datos</button>
+    </div>
+    <div class="donebox" id="doneBox" hidden>🎉 <b>Actividad completa.</b> Descarguen el <b>PDF del equipo</b> (en el cuadro de impresión elijan “Guardar como PDF”) y súbanlo a Brightspace.</div>
+  </section>
+
+  <p class="footer-note screen">La historia del equipo es la evidencia que suben a Brightspace. El avance se guarda en este navegador; nada se sube a la nube. Cuando lleguen al 100%, descarguen el PDF del equipo.</p>
+
+  <!-- ================= HOJA / HISTORIA (SOLO PDF) ================= -->
+  <div id="hoja"><div class="sheet">
+    <div class="shead"><div class="k">Emprendimiento 1 · Sesión 24 · Storytelling para emprendedores</div><h2>La historia de nuestro proyecto (equipo)</h2></div>
+    <div class="idrow">
+      <div><span>Equipo:</span> <em id="s_equipo"></em></div>
+      <div><span>Carrera / grupo:</span> <em id="s_carrera"></em></div>
+      <div><span>Fecha:</span> <em id="s_fecha"></em></div>
+      <div style="grid-column:1/-1"><span>Integrantes:</span> <em id="s_integrantes"></em></div>
+      <div><span>Capacidad (antes → después):</span> <em id="s_seg"></em></div>
+    </div>
+
+    <div class="block">
+      <h3>El proyecto</h3>
+      <div class="srow"><div class="q">Nombre</div><div class="a" id="s_proy_nombre"></div></div>
+      <div class="srow"><div class="q">Solución en pocas palabras</div><div class="a" id="s_proy_sol"></div></div>
+      <div class="srow"><div class="q">Audiencia</div><div class="a" id="s_proy_aud"></div></div>
+    </div>
+
+    <div class="block">
+      <h3>Gancho de apertura</h3>
+      <div class="srow"><div class="q">Tipo</div><div class="a" id="s_hook_tipo"></div></div>
+      <div class="srow"><div class="a" id="s_hook_txt"></div></div>
+    </div>
+
+    <div class="block">
+      <h3>Arco narrativo (5 etapas)</h3>
+      <div id="s_arco"></div>
+    </div>
+
+    <div class="block">
+      <h3>Nuestra historia, de corrido</h3>
+      <div class="story" id="s_story"></div>
+    </div>
+
+    <div class="block">
+      <h3>Los 3 ingredientes memorables</h3>
+      <div class="srow"><div class="a" id="s_ingr"></div></div>
+    </div>
+
+    <div class="block">
+      <h3>Ticket de salida</h3>
+      <div class="srow"><div class="q">Por qué se recuerda una historia</div><div class="a" id="s_t1"></div></div>
+      <div class="srow"><div class="q">Función del gancho</div><div class="a" id="s_t2"></div></div>
+      <div class="srow"><div class="q">Ingrediente más difícil</div><div class="a" id="s_t3"></div></div>
+      <div class="srow"><div class="q">Insignias logradas</div><div class="a" id="s_badges"></div></div>
+    </div>
+
+    <div class="block">
+      <h3>Participación individual</h3>
+      <div id="s_partic"></div>
+    </div>
+
+    <div class="fecha-firma">
+      <div>Firma del equipo</div>
+      <div>Validado por la profesora</div>
+    </div>
+  </div></div>
+
+</div>
+
+<script>
+/* ============================================================================
+   CONTENIDO EDITABLE — Irene puede cambiar esto sin tocar la lógica de abajo.
+   Los ejemplos son de un proyecto ficticio ("Citas Claras"), rotulados para
+   que el alumno vea la FORMA y NO los copie. Nunca dan la respuesta del alumno.
+   ============================================================================ */
+const CONTENIDO = {
+
+  /* Tipos de gancho. 'ex' es un ejemplo de OTRO proyecto; 'why' explica por
+     qué funciona (forma, no contenido a copiar). */
+  ganchos:[
+    {id:'pregunta', n:'Pregunta', e:'❓',
+      ex:'¿Cuántas veces un familiar mayor tuyo perdió una cita médica solo porque el papelito se traspapeló?',
+      why:'La pregunta hace que la audiencia se conteste sola y se meta en el problema.'},
+    {id:'dato', n:'Dato', e:'📊',
+      ex:'Una sola cita médica perdida puede retrasar meses un tratamiento; y muchas se pierden solo por olvido.',
+      why:'El dato sorprende y le da peso al problema antes de contar tu solución.'},
+    {id:'historia', n:'Historia', e:'🎬',
+      ex:'Don Rafael tiene 68 años y vive solo. El mes pasado llegó a su cita con el cardiólogo… un día tarde.',
+      why:'Una escena concreta de una persona engancha más que hablar en general.'},
+    {id:'cita', n:'Cita', e:'💬',
+      ex:'"No falté por floja —me dijo una señora en la sala de espera—, falté porque nadie me lo recordó a tiempo."',
+      why:'Una frase dicha por alguien real resume el sentir del problema en segundos.'}
+  ],
+
+  /* Las 5 etapas del arco, en orden de subida. 'xy' = [left%, top%] del
+     campamento sobre la montaña. 'keys' = preguntas clave (guía, no respuesta).
+     'ex' = ejemplo del proyecto ficticio, rotulado. 'cvar' = color de la etapa. */
+  etapas:[
+    {id:'problema', rol:'Problema', emoji:'⛰️', cvar:'--c-p1', xy:[24,68],
+      sub:'El conflicto que hay que resolver',
+      keys:['¿Qué problema enfrenta?','¿Qué consecuencias tiene?','¿Por qué importa resolverlo?'],
+      ex:'Muchas personas mayores pierden sus citas médicas porque dependen de un papel o de que un familiar se acuerde. Perder una cita puede retrasar meses un tratamiento.'},
+    {id:'usuario', rol:'Usuario / mercado', emoji:'🧗', cvar:'--c-p2', xy:[40,56],
+      sub:'El protagonista y su situación',
+      keys:['¿Quién es el protagonista?','¿Dónde ocurre?','¿Cuál es la situación inicial?'],
+      ex:'Don Rafael, 68 años, diabético, vive solo. Sus hijos trabajan y no siempre pueden recordarle. Como él, muchos adultos mayores de la ciudad.'},
+    {id:'solucion', rol:'Solución', emoji:'💡', cvar:'--c-p3', xy:[55,43],
+      sub:'Cómo se resuelve el problema',
+      keys:['¿Cómo se resolvió?','¿Qué hace la solución?'],
+      ex:'Citas Claras: una app sencilla, con letra grande y avisos por voz, que recuerda cada cita médica y avisa también a un familiar.'},
+    {id:'diferenciador', rol:'Diferenciador', emoji:'✨', cvar:'--c-p4', xy:[70,30],
+      sub:'Qué cambió y por qué eres distinto',
+      keys:['¿Qué cambió?','¿Qué impacto tuvo?','¿Qué te hace diferente?'],
+      ex:'Ahora Don Rafael no ha vuelto a perder una cita. Citas Claras está pensada para quien no es experto en el celular: letra grande, voz y un solo botón. Ahí gana a las agendas comunes, que dan por hecho que ya sabes moverte.'},
+    {id:'llamado', rol:'Llamado a la acción', emoji:'🚩', cvar:'--c-p5', xy:[85,15],
+      sub:'Qué quieres que haga la audiencia',
+      keys:['¿Qué quieres que haga la audiencia?'],
+      ex:'Si tienes un familiar mayor que se cuida solo, prueba Citas Claras un mes gratis. Que ninguna cita se vuelva a perder.'}
+  ],
+
+  /* Los 3 ingredientes memorables (autochequeo honesto del alumno). */
+  ingredientes:[
+    {id:'emocion', n:'Emoción', e:'💛', cvar:'--c-p1',
+      pregunta:'¿Tu historia hace SENTIR algo (empatía, esperanza, sorpresa)?'},
+    {id:'solucion', n:'Solución clara', e:'💡', cvar:'--c-p3',
+      pregunta:'¿Se entiende cómo tu solución mejora la vida del protagonista?'},
+    {id:'transformacion', n:'Transformación', e:'🔁', cvar:'--c-p4',
+      pregunta:'¿Se nota un antes y un después gracias a tu solución?'}
+  ]
+};
+/* ========================================================================== */
+const $  = (s,c)=> (c||document).querySelector(s);
+const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+const esc = s => (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const CFG={ls:'edt_s24_storytelling',doneKey:'edt_s24_completo',s22Key:'edt_s22_entregable',s21Key:'edt_s21_instrumento'};
+const state = {
+  campos:{},              /* todos los data-k */
+  hookTipo:'',            /* id del tipo de gancho elegido */
+  etapas:{},              /* id de etapa -> texto */
+  ingr:{},                /* id de ingrediente -> true */
+  thermo:{},              /* antes / despues */
+  partic:{}               /* nº de integrante -> % de participación */
+};
+/* --- persistencia en localStorage (solo este navegador) --- */
+let _sv=null,_quota=false;
+function flush(){ clearTimeout(_sv); try{ localStorage.setItem(CFG.ls,JSON.stringify(state)); _quota=false; }catch(e){ _quota=true; } }
+function save(){ clearTimeout(_sv); _sv=setTimeout(flush,150); }
+window.addEventListener('pagehide',flush);
+document.addEventListener('visibilitychange',()=>{ if(document.hidden) flush(); });
+(function load(){ try{ const r=localStorage.getItem(CFG.ls); if(!r) return; const o=JSON.parse(r)||{};
+  ['campos','etapas','ingr','thermo','partic'].forEach(k=>{ if(o[k]&&typeof o[k]==='object') state[k]=o[k]; });
+  if(typeof o.hookTipo==='string') state.hookTipo=o.hookTipo; }catch(e){} })();
+CONTENIDO.etapas.forEach(e=> state.etapas[e.id]=state.etapas[e.id]||'');
+
+/* --- sonido (WebAudio, sin archivos) --- */
+let sndOn=true, actx=null;
+function tone(f,t0,d,vol){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(),g=actx.createGain(); o.frequency.value=f; o.connect(g); g.connect(actx.destination);
+  const t=actx.currentTime+t0; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(vol||.10,t+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,t+d); o.start(t); o.stop(t+d+.02);}catch(e){} }
+function ding(freq){ if(sndOn) tone(freq||880,0,.18); }
+function fanfare(){ if(!sndOn) return; [523,659,784,1047].forEach((f,i)=>tone(f,i*.13,.28,.12)); }
+$('#sndbtn').addEventListener('click',function(){ sndOn=!sndOn; this.setAttribute('aria-pressed',sndOn);
+  this.textContent=sndOn?'🔊 Sonido':'🔇 Sonido'; if(sndOn) ding(); });
+
+/* --- campos con data-k --- */
+function buildTeam(){ let h=''; for(let i=1;i<=5;i++) h+='<input class="t" data-k="integrante'+i+'" placeholder="Integrante '+i+(i===1?' (obligatorio)':'')+'" aria-label="Nombre integrante '+i+'"><input class="t" data-k="matricula'+i+'" placeholder="Matrícula" aria-label="Matrícula integrante '+i+'">'; $('#team').innerHTML=h; }
+buildTeam();
+$$('[data-k]').forEach(el=>{
+  const k=el.dataset.k; state.campos[k]=state.campos[k]||''; el.value=state.campos[k];
+  el.addEventListener('input',()=>{ state.campos[k]=el.value; if(/^(integrante|matricula)\d$/.test(k)) renderPartic(); updateTrailer(); updateAll(); });
+});
+function setCampo(k,v){ state.campos[k]=v; const el=$('[data-k='+k+']'); if(el) el.value=v; }
+function campo(k){ return (state.campos[k]||'').trim(); }
+
+/* --- termómetros antes / después --- */
+$$('[data-thermo]').forEach(g=>{ const key=g.dataset.thermo;
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); state.thermo[key]=+b.dataset.v; ding(); updateAll();
+  }));
+});
+
+/* color CSS de una variable */
+function cvar(v){ return 'var('+v+')'; }
+
+/* refs por etapa, para actualizar sin re-render */
+const EREF = {};   /* id -> {camp, textarea, block, lock, seg} */
+/* ============================================================
+   GANCHO · selector de tipo + ejemplo dinámico
+   ============================================================ */
+const hookRow=$('#hookRow'), hookEx=$('#hookEx'), hookExText=$('#hookExText'), hookExWhy=$('#hookExWhy');
+CONTENIDO.ganchos.forEach(g=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='hook-btn'; b.dataset.tipo=g.id; b.setAttribute('aria-pressed','false');
+  b.innerHTML='<span class="e">'+g.e+'</span>'+esc(g.n);
+  b.addEventListener('click',()=>{
+    const cur=state.hookTipo;
+    state.hookTipo=(cur===g.id)?'':g.id;
+    $$('.hook-btn',hookRow).forEach(x=>x.setAttribute('aria-pressed', x.dataset.tipo===state.hookTipo?'true':'false'));
+    if(state.hookTipo){
+      hookEx.hidden=false;
+      hookExText.innerHTML='<b>'+esc(g.n)+':</b> '+esc(g.ex);
+      hookExWhy.textContent=g.why;
+    } else { hookEx.hidden=true; }
+    ding(720); updateTrailer(); updateAll();
+  });
+  hookRow.appendChild(b);
+});
+/* ============================================================
+   CAMPAMENTOS DE LA MONTAÑA (chips clicables) + caminante
+   ============================================================ */
+const campsEl=$('#camps');
+CONTENIDO.etapas.forEach((e,i)=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='camp'; b.dataset.id=e.id;
+  b.style.left=e.xy[0]+'%'; b.style.top=e.xy[1]+'%';
+  b.style.setProperty('--sc',cvar(e.cvar));
+  b.setAttribute('aria-label','Etapa '+(i+1)+' · '+e.rol+'. Ir a escribirla.');
+  b.innerHTML='<span class="cn">'+esc(e.rol)+'</span><span class="lv">Etapa '+(i+1)+'</span><span class="st">·</span>';
+  b.addEventListener('click',()=>{ const ta=EREF[e.id] && EREF[e.id].textarea;
+    if(ta){ ta.focus(); ta.scrollIntoView({block:'center',behavior:'smooth'}); } });
+  campsEl.appendChild(b);
+  EREF[e.id]={camp:b, seg:document.getElementById('seg'+(i+1))};
+});
+
+/* posición del caminante: base + etapas alcanzadas (gancho + 5) */
+const hikerEl=$('#hiker');
+/* camino de puntos: base (gancho) y luego cada campamento */
+const HIKE_XY=[[12,80]].concat(CONTENIDO.etapas.map(e=>[e.xy[0],e.xy[1]]));
+function moveHiker(reached){   /* reached: 0..6 (0 = base) */
+  const pt=HIKE_XY[Math.min(reached,HIKE_XY.length-1)];
+  hikerEl.style.left=pt[0]+'%'; hikerEl.style.top=pt[1]+'%';
+  hikerEl.textContent = reached>=6 ? '🧗' : '🥾';
+  hikerEl.classList.remove('step'); void hikerEl.offsetWidth; hikerEl.classList.add('step');
+}
+/* ============================================================
+   CONSTRUCTOR DEL ARCO (5 bloques)
+   ============================================================ */
+const consEl=$('#constructor');
+CONTENIDO.etapas.forEach((e,i)=>{
+  const bloque=document.createElement('div');
+  bloque.className='bloque'; bloque.style.setProperty('--bc',cvar(e.cvar)); bloque.dataset.id=e.id;
+  const keys=e.keys.map(k=>'<span>'+esc(k)+'</span>').join('');
+  bloque.innerHTML=
+    '<div class="bhead"><span class="dot">'+e.emoji+'</span>'+
+      '<div><div class="bt">'+(i+1)+'. '+esc(e.rol)+'</div><div class="bs">'+esc(e.sub)+'</div></div>'+
+      '<span class="block-lock" data-role="lock">◻︎ Falta</span></div>'+
+    '<div class="bbody">'+
+      '<div class="keys">'+keys+'</div>'+
+      '<textarea class="t" data-role="texto" placeholder="Escríbelo como se lo contarías a tu audiencia…"></textarea>'+
+      '<div class="exline"><span class="lbl">Otro proyecto · no lo copies</span><em>'+esc(e.ex)+'</em></div>'+
+    '</div>';
+  consEl.appendChild(bloque);
+  const ta=$('[data-role=texto]',bloque);
+  EREF[e.id].textarea=ta; EREF[e.id].block=bloque; EREF[e.id].lock=$('[data-role=lock]',bloque);
+  ta.addEventListener('input',()=>{ state.etapas[e.id]=ta.value; evalEtapa(e.id); updateTrailer(); updateAll(); });
+});
+
+/* una etapa cuenta como "subida" si tiene contenido de verdad */
+function etapaLista(id){ return (state.etapas[id]||'').trim().length>=12; }
+
+function evalEtapa(id){
+  const lista=etapaLista(id), ref=EREF[id];
+  const tiene=(state.etapas[id]||'').trim().length>0;
+  ref.block.classList.toggle('ok',lista);
+  ref.lock.textContent = lista ? '✅ Subida' : (tiene ? '✍︎ En proceso' : '◻︎ Falta');
+  ref.camp.classList.remove('filled','done');
+  if(lista) ref.camp.classList.add('done'); else if(tiene) ref.camp.classList.add('filled');
+  const st=$('.st',ref.camp); if(st) st.textContent = lista?'✓':(tiene?'…':'·');
+}
+/* ============================================================
+   3 INGREDIENTES · autochequeo honesto
+   ============================================================ */
+const ingrEl=$('#ingredientes');
+CONTENIDO.ingredientes.forEach(g=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='ingr'; b.dataset.id=g.id; b.setAttribute('aria-pressed','false');
+  b.style.setProperty('--ic',cvar(g.cvar));
+  b.innerHTML='<div class="ih">'+g.e+' '+esc(g.n)+'<span class="chk" data-role="chk">◻︎</span></div>'+
+    '<p>'+esc(g.pregunta)+'</p>';
+  b.addEventListener('click',()=>{
+    const on=!state.ingr[g.id]; state.ingr[g.id]=on;
+    b.setAttribute('aria-pressed',on?'true':'false');
+    $('[data-role=chk]',b).textContent=on?'✅':'◻︎'; ding(on?820:500); updateAll();
+  });
+  ingrEl.appendChild(b);
+});
+
+/* ============================================================
+   TRÁILER · se ensambla en vivo
+   ============================================================ */
+const trLines=$('#trLines'), trWho=$('#trWho');
+/* filas del tráiler: gancho + 5 etapas */
+const TR_ROWS=[{id:'__hook__', rol:'Gancho', cvar:'--c-hook',
+    ghost:'Elige un tipo de gancho y escríbelo arriba.'}]
+  .concat(CONTENIDO.etapas.map(e=>({id:e.id, rol:e.rol, cvar:e.cvar,
+    ghost:'Escribe el bloque de '+e.rol.toLowerCase()+' abajo.'})));
+TR_ROWS.forEach(r=>{
+  const d=document.createElement('div');
+  d.className='tline ghost'; d.dataset.id=r.id; d.style.setProperty('--tc',cvar(r.cvar));
+  d.innerHTML='<span class="tdot"></span><div class="ttx"><div class="trole">'+esc(r.rol)+'</div>'+
+    '<div class="tval" data-role="val">'+esc(r.ghost)+'</div></div>';
+  trLines.appendChild(d); r.el=d; r.val=$('[data-role=val]',d);
+});
+function trValor(id){
+  if(id==='__hook__') return campo('hook_txt');
+  return (state.etapas[id]||'').trim();
+}
+function updateTrailer(){
+  const who=campo('proy_nombre'); trWho.textContent = who || 'Tu proyecto';
+  TR_ROWS.forEach(r=>{
+    const v=trValor(r.id), had=r.el.classList.contains('ghost');
+    if(v){ if(had){ r.el.classList.add('on'); setTimeout(()=>r.el.classList.remove('on'),450); }
+      r.el.classList.remove('ghost'); r.val.textContent=v; }
+    else { r.el.classList.add('ghost'); r.val.textContent=r.ghost; }
+  });
+  syncPlayBtn();
+}
+
+/* ============================================================
+   REPRODUCIR EL TRÁILER · enciende las líneas llenas una por una
+   ============================================================ */
+const trPlay=$('#trPlay');
+let playTimer=null;
+function lineasLlenas(){ return TR_ROWS.filter(r=>trValor(r.id)); }
+function syncPlayBtn(){
+  if(playTimer) return;                       /* no tocar mientras reproduce */
+  trPlay.disabled = lineasLlenas().length===0;
+  trPlay.textContent='▶'; trPlay.classList.remove('playing');
+  trPlay.setAttribute('aria-label', trPlay.disabled ? 'Escribe tu historia para reproducir el tráiler' : 'Reproducir el tráiler');
+}
+function stopPlay(){
+  if(playTimer){ clearTimeout(playTimer); playTimer=null; }
+  TR_ROWS.forEach(r=>r.el.classList.remove('now'));
+  syncPlayBtn();
+}
+function playTrailer(){
+  if(playTimer){ stopPlay(); return; }        /* segundo clic = detener */
+  const llenas=lineasLlenas(); if(!llenas.length) return;
+  trPlay.textContent='⏸'; trPlay.classList.add('playing'); trPlay.setAttribute('aria-label','Detener el tráiler');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i=0;
+  function paso(){
+    TR_ROWS.forEach(r=>r.el.classList.remove('now'));
+    if(i>=llenas.length){ stopPlay(); return; }
+    const r=llenas[i]; r.el.classList.add('now');
+    r.el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+    ding(520+i*70);
+    i++; playTimer=setTimeout(paso, reduce?300:1400);
+  }
+  paso();
+}
+trPlay.addEventListener('click',playTrailer);
+/* ============================================================
+   ALTURA (montaña), CAMINANTE y SEGMENTOS del camino
+   ============================================================ */
+const SEGCOL={'--c-p1':'#D81E5B','--c-p2':'#C71D7E','--c-p3':'#A21CAF','--c-p4':'#7B2CBF','--c-p5':'#5A189A'};
+function updateMontana(){
+  const listas=CONTENIDO.etapas.filter(e=>etapaLista(e.id)).length;
+  const ganchoOk = !!campo('hook_txt');
+  const alcanzadas = (ganchoOk?1:0) + listas;   /* 0..6 */
+  $('#alturaN').textContent=alcanzadas;
+  $('#alturaBar').style.width=(alcanzadas/6*100)+'%';
+
+  /* segmentos del camino se pintan cuando su etapa está lista */
+  CONTENIDO.etapas.forEach(e=>{
+    const seg=EREF[e.id].seg;
+    if(seg) seg.setAttribute('stroke', etapaLista(e.id)?SEGCOL[e.cvar]:'#efe5d4');
+  });
+
+  moveHiker(alcanzadas);
+
+  const msg=$('#alturaMsg');
+  if(alcanzadas===0){ msg.className='cmsg'; msg.textContent='Una etapa cuenta cuando su bloque tiene contenido.'; }
+  else if(alcanzadas<6){ msg.className='cmsg'; msg.textContent='Vas '+alcanzadas+' de 6. Te faltan '+(6-alcanzadas)+' para la cima.'; }
+  else { msg.className='cmsg full'; msg.textContent='¡Llegaste a la cima! Tu historia tiene gancho y arco completo. 🚩'; }
+
+  const cta=$('#montanaCta');
+  if(cta) cta.textContent = alcanzadas===0
+    ? 'El caminante está en la base. Escribe tu gancho para empezar a subir.'
+    : (alcanzadas<6 ? 'El caminante va en la etapa '+alcanzadas+'. Sigue subiendo.' : '¡Cima alcanzada! Ese es tu tráiler completo.');
+}
+
+/* ============================================================
+   HISTORIA DE CORRIDO (para la hoja / PDF)
+   ============================================================ */
+function historiaCorrida(){
+  const partes=[];
+  const h=campo('hook_txt'); if(h) partes.push(h);
+  CONTENIDO.etapas.forEach(e=>{ const v=(state.etapas[e.id]||'').trim(); if(v) partes.push(v); });
+  return partes.join('\n\n');
+}
+
+/* ============================================================
+   INTEGRANTES + PARTICIPACIÓN INDIVIDUAL
+   ============================================================ */
+function integrantes(){ const a=[]; for(let i=1;i<=5;i++){ const n=campo('integrante'+i); if(n) a.push({i:i,n:n,m:campo('matricula'+i)}); } return a; }
+function integrantesTxt(){ return integrantes().map(x=>x.n+(x.m?' ('+x.m+')':'')).join(' · '); }
+function renderPartic(){ const box=$('#particList'), ints=integrantes();
+  if(!ints.length){ box.innerHTML='<p class="hint">Primero capturen a los integrantes al inicio de la actividad.</p>'; return; }
+  box.innerHTML=ints.map(x=>'<div class="partic-row"><span class="nm">'+esc(x.n)+(x.m?' · '+esc(x.m):'')+'</span><input class="t" type="number" min="0" max="100" inputmode="numeric" data-pi="'+x.i+'" value="'+(state.partic[x.i]!=null?state.partic[x.i]:'')+'" aria-label="Porcentaje de '+esc(x.n)+'"><span class="pc">%</span></div>').join('');
+  $$('[data-pi]',box).forEach(inp=>inp.addEventListener('input',()=>{
+    const v=inp.value===''?null:Math.max(0,Math.min(100,Math.round(+inp.value)));
+    state.partic[inp.dataset.pi]=v; if(v!==null&&String(v)!==inp.value) inp.value=v; updateAll(); }));
+}
+function particCompleta(){ const ints=integrantes(); return ints.length>0 && ints.every(x=>state.partic[x.i]!=null); }
+
+/* --- fases (círculos superiores, clic directo) --- */
+const FASES=[
+ {id:'sec-equipo',l:'👥',n:'Equipo',ok:()=>!!campo('equipo')&&!!campo('integrante1')},
+ {id:'sec-proy',l:'1',n:'Proyecto',ok:()=>!!campo('proy_nombre')&&!!campo('proy_sol')},
+ {id:'sec-gancho',l:'🪝',n:'Gancho',ok:()=>!!campo('hook_txt')&&!!state.hookTipo},
+ {id:'sec-arco',l:'🧗',n:'Arco',ok:()=>CONTENIDO.etapas.every(e=>etapaLista(e.id))},
+ {id:'sec-ingr',l:'💛',n:'Ingredientes',ok:()=>Object.values(state.ingr).filter(Boolean).length===3},
+ {id:'sec-cierre',l:'🏁',n:'Ticket',ok:()=>!!campo('t1')&&!!campo('t2')&&!!campo('t3')&&!!state.thermo.despues},
+ {id:'sec-partic',l:'%',n:'Participación',ok:particCompleta}
+];
+(function buildFases(){ const nav=$('#steps'); FASES.forEach(f=>{ const b=document.createElement('button'); b.type='button'; b.className='stp'; b.dataset.id=f.id;
+  b.setAttribute('aria-label','Ir a '+f.n); b.title=f.n; b.innerHTML='<span>'+f.l+'</span><span class="l">'+f.n+'</span>';
+  b.addEventListener('click',()=>{ const t=document.getElementById(f.id); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }); nav.appendChild(b); }); })();
+let _sT=null;
+function marcarActual(){ let cur=FASES[0].id; FASES.forEach(f=>{ const t=document.getElementById(f.id); if(t&&t.getBoundingClientRect().top<window.innerHeight*0.4) cur=f.id; });
+  $$('.stp').forEach(b=>b.classList.toggle('cur',b.dataset.id===cur)); }
+window.addEventListener('scroll',()=>{ if(_sT) return; _sT=setTimeout(()=>{ _sT=null; marcarActual(); },80); },{passive:true});
+
+/* --- restaurar lo guardado en la interfaz --- */
+function restaurarUI(){
+  const g=CONTENIDO.ganchos.find(x=>x.id===state.hookTipo);
+  if(g){ $$('.hook-btn',hookRow).forEach(x=>x.setAttribute('aria-pressed',x.dataset.tipo===g.id?'true':'false'));
+    hookEx.hidden=false; hookExText.innerHTML='<b>'+esc(g.n)+':</b> '+esc(g.ex); hookExWhy.textContent=g.why; } else { state.hookTipo=''; }
+  CONTENIDO.etapas.forEach(e=>{ EREF[e.id].textarea.value=state.etapas[e.id]||''; evalEtapa(e.id); });
+  $$('[data-thermo]').forEach(g2=>{ const v=state.thermo[g2.dataset.thermo]; g2.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',(+b.dataset.v===v)?'true':'false')); });
+  $$('.ingr').forEach(b=>{ const on=!!state.ingr[b.dataset.id]; b.setAttribute('aria-pressed',on?'true':'false'); $('[data-role=chk]',b).textContent=on?'✅':'◻︎'; });
+}
+/* --- datos de equipo de sesiones anteriores (si el navegador los tiene) --- */
+function prefillPrev(){ try{
+  if(!(campo('equipo')||campo('integrante1'))) prefillEquipo(); }catch(e){}
+  if(!campo('fecha')){ const d=new Date(); setCampo('fecha',String(d.getDate()).padStart(2,'0')+' / '+String(d.getMonth()+1).padStart(2,'0')+' / '+d.getFullYear()); }
+}
+function prefillEquipo(){ try{
+  let a=null,de='';
+  [[CFG.s22Key,'Sesión 22'],[CFG.s21Key,'Sesión 21']].some(p=>{ const r=localStorage.getItem(p[0]); if(!r) return false; const o=JSON.parse(r); const v=(o&&(o.v||o.campos))||null; if(v&&(v.equipo||v.integrante1)){ a=v; de=p[1]; return true; } return false; });
+  if(!a) return;
+  ['equipo','carrera','integrante1','integrante2','integrante3','integrante4','integrante5','matricula1','matricula2','matricula3','matricula4','matricula5'].forEach(k=>{ if(a[k]) setCampo(k,a[k]); });
+  if(!campo('proy_nombre')&&(a.proto||a.app_nombre)) setCampo('proy_nombre',a.proto||a.app_nombre);
+  const av=$('#avisoPrev'); av.hidden=false; av.innerHTML='✅ <b>Datos retomados de la '+de+'</b> (equipo e integrantes). Revísenlos y corríjanlos si cambió algo.';
+  renderPartic(); }catch(e){}
+}
+
+/* ============================================================
+   PROGRESO + INSIGNIAS
+   ============================================================ */
+function setBadge(k,on){ const b=$('.badge[data-badge='+k+']'); if(b){ const was=b.classList.contains('on'); b.classList.toggle('on',!!on); if(on&&!was) ding(900); } }
+function updateProgress(){
+  const listas=CONTENIDO.etapas.filter(e=>etapaLista(e.id)).length;
+  const ganchoOk = !!campo('hook_txt') && !!state.hookTipo;
+  const arcoOk = listas===5;
+  const ingrN = Object.values(state.ingr).filter(Boolean).length;
+  const ingrOk = ingrN===3;
+  const cimaOk = ganchoOk && arcoOk;
+  const brechaOk = (state.thermo.despues||0)>=4 && (state.thermo.despues||0)>(state.thermo.antes||0);
+  setBadge('gancho',ganchoOk); setBadge('arco',arcoOk); setBadge('ingr',ingrOk);
+  setBadge('cima',cimaOk); setBadge('brecha',brechaOk);
+
+  const checks=[campo('equipo'),campo('integrante1'),particCompleta(),campo('proy_nombre'),campo('proy_sol'),ganchoOk,
+    etapaLista('problema'),etapaLista('usuario'),etapaLista('solucion'),
+    etapaLista('diferenciador'),etapaLista('llamado'),
+    ingrOk, campo('t1'), campo('t2'), campo('t3'), state.thermo.despues];
+  const done=checks.filter(Boolean).length;
+  const pct=Math.round(done/checks.length*100);
+  $('#progbar').style.width=pct+'%'; $('#progn').textContent=pct+'%';
+  const ok100=pct===100, falta=FASES.filter(f=>!f.ok()).map(f=>f.n);
+  FASES.forEach(f=>{ const b=$('.stp[data-id='+f.id+']'); if(b) b.classList.toggle('done',!!f.ok()); });
+  $('#pdfbtn').disabled=!ok100; $('#pdfbtn').textContent=ok100?'📄 Descargar PDF del equipo':'🔒 PDF al 100%';
+  $('#pdfbtn2').disabled=!ok100; $('#pdfbtn2').textContent=ok100?'📄 PDF del equipo':'🔒 PDF del equipo (al 100%)';
+  $('#doneBox').hidden=!ok100; $('#faltaMsg').textContent=ok100?'':(falta.length?('Les falta completar: '+falta.join(' · ')+'.'):'Revisen los campos pendientes del ticket y del arco.');
+  try{ if(ok100) localStorage.setItem(CFG.doneKey,JSON.stringify({equipo:campo('equipo')})); else localStorage.removeItem(CFG.doneKey); }catch(e){}
+  if(ok100&&_wasDone===false) fanfare(); _wasDone=ok100;
+}
+let _wasDone=null;
+
+function updateAll(){ updateMontana(); updateProgress(); save(); }
+/* ============================================================
+   HOJA / PDF · ensambla la historia con lo capturado
+   ============================================================ */
+function setS(id,v){ const e=document.getElementById(id); if(e) e.textContent = (v && (''+v).trim()) ? v : '—'; }
+function fillSheet(){
+  ['carrera','equipo','fecha','proy_nombre','proy_sol','proy_aud',
+   'hook_txt','t1','t2','t3'].forEach(k=> setS('s_'+k, campo(k)));
+  setS('s_integrantes', integrantesTxt());
+  const ints=integrantes();
+  $('#s_partic').innerHTML = ints.length ? '<table class="tb2">'+ints.map(x=>'<tr><td>'+esc(x.n)+(x.m?' · '+esc(x.m):'')+'</td><td style="text-align:right"><b>'+(state.partic[x.i]==null?'—':state.partic[x.i]+'%')+'</b></td></tr>').join('')+'</table>' : '—';
+  setS('s_seg', (state.thermo.antes||'—')+' → '+(state.thermo.despues||'—'));
+
+  const g=CONTENIDO.ganchos.find(x=>x.id===state.hookTipo);
+  setS('s_hook_tipo', g?g.n:'—');
+
+  const col={'--c-p1':'#B01048','--c-p2':'#A11065','--c-p3':'#7A1583','--c-p4':'#5E2299','--c-p5':'#46127A'};
+  $('#s_arco').innerHTML = CONTENIDO.etapas.map((e,i)=>{
+    const v=(state.etapas[e.id]||'').trim();
+    return '<div class="arc"><div class="n"><span class="tag" style="background:'+col[e.cvar]+'">'+(i+1)+' · '+esc(e.rol)+'</span></div>'+
+      '<div class="qt">'+(esc(v)||'—')+'</div></div>';
+  }).join('');
+
+  const story=historiaCorrida();
+  setS('s_story', story || 'Completa el gancho y las 5 etapas para ver tu historia de corrido.');
+
+  const ing=CONTENIDO.ingredientes.filter(x=>state.ingr[x.id]).map(x=>x.n);
+  setS('s_ingr', ing.length?('Confirmados: '+ing.join(' · ')):'—');
+
+  const earned=$$('#badges .badge.on').map(b=>b.textContent.trim());
+  setS('s_badges', earned.length?earned.join('   '):'—');
+}
+let _tOrig=document.title;
+function imprimir(){ if($('#pdfbtn').disabled) return; fillSheet(); _tOrig=document.title; document.title='S24 Storytelling - '+(campo('equipo')||'Equipo'); window.print(); }
+$('#pdfbtn').addEventListener('click',imprimir); $('#pdfbtn2').addEventListener('click',imprimir);
+/* textareas largos: expandirlos a su altura completa al imprimir (el navegador solo imprime la altura visible) */
+const _ta=[];
+window.addEventListener('beforeprint',()=>{ fillSheet(); $$('textarea').forEach(t=>{ _ta.push([t,t.style.height]); t.style.height=t.scrollHeight+'px'; }); });
+window.addEventListener('afterprint',()=>{ _ta.splice(0).forEach(p=>{ p[0].style.height=p[1]; }); document.title=_tOrig; });
+$('#clrbtn').addEventListener('click',()=>{ const b=$('#clrbtn');
+  if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='⚠️ ¿Seguro? Toca otra vez'; clearTimeout(window.__ct); window.__ct=setTimeout(()=>{ b.dataset.armed=''; b.textContent='🗑 Borrar datos'; },4000); }
+  else{ try{ localStorage.removeItem(CFG.ls); localStorage.removeItem(CFG.doneKey); }catch(e){} location.reload(); } });
+
+/* --- arranque --- */
+restaurarUI(); prefillPrev(); renderPartic();
+updateTrailer(); updateAll(); marcarActual();
+if(_quota){ const a=$('#avisoPrev'); a.hidden=false; a.textContent='⚠️ Este navegador no pudo guardar el avance para después. Terminen la actividad y descarguen el PDF sin cerrar la página.'; }
+
+</script>
+</body>
+</html>
