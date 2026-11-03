@@ -227,6 +227,17 @@ kbd{background:#2a3040;border-radius:6px;padding:1px 7px;font-size:12px}
 .card.glow{box-shadow:0 0 30px rgba(240,138,93,.18);border-color:rgba(240,138,93,.35)}
 .pop{position:absolute;font-size:60px;pointer-events:none;z-index:40;animation:pp 1.6s ease-out forwards}
 @keyframes pp{to{transform:translate(var(--dx),var(--dy)) rotate(40deg);opacity:0}}
+#roster{inset:0;border-radius:0;display:none;background:#080405;padding:34px 44px;overflow:auto}
+#roster h4{font-family:var(--serif);font-size:34px;margin:0 0 6px;color:var(--am)}
+#roster .rsum{font-size:22px;color:var(--mut);margin:0 0 18px}#roster .rsum b{color:var(--ink)}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.rcard{background:var(--card);border:1px solid rgba(255,255,255,.1);border-top:6px solid var(--c);border-radius:14px;padding:12px 16px}
+.rcard h5{margin:0 0 8px;font-size:24px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.rcard h5 span{font-size:20px;font-weight:800;white-space:nowrap}
+.rcard ul{list-style:none;margin:0;padding:0}.rcard li{font-size:20px;padding:2px 0;display:flex;gap:8px;align-items:center}
+.rcard li i{width:11px;height:11px;border-radius:50%;background:#5b5560;flex:none}.rcard li.on i{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.rcard li.off{color:var(--mut)}.rcard .em{color:var(--mut);font-size:18px;font-style:italic}
+#roster .rclose{position:fixed;top:20px;right:28px;z-index:2}
 /* ===== Estética cine / cuentacuentos ===== */
 .g2>div>.card p,.g2>.card p{font-size:36px}.g2>.card h3{font-size:42px}
 .g3 .card p,.g4 .card p{font-size:34px}.g3 .card h3,.g4 .card h3{font-size:40px}
@@ -297,6 +308,7 @@ h2 em,h1 span,.gtitle em,.q em{font-style:italic;color:var(--or)}
   <button data-b="goto" title="Ir a… (G)">☰ Ir a</button>
   <button data-b="score" title="Marcador (S)">🏆 Marcador</button>
   <button data-b="teams" title="Equipos (E)">👥 Equipos</button>
+  <button data-b="roster" title="Integrantes y conectados por equipo (I)">🧑‍🤝‍🧑 Integrantes</button>
   <button data-b="rand" title="Equipo al azar (R)">🎲 Al azar</button>
   <button data-b="timer" title="Temporizador (T)">⏱</button>
   <button data-b="notes" title="Notas de la profesora (N)">📝 Guía</button>
@@ -309,6 +321,7 @@ h2 em,h1 span,.gtitle em,.q em{font-style:italic;color:var(--or)}
 <div class="panel" id="goto"></div>
 <div class="panel" id="notes"></div>
 <div class="panel" id="live"></div>
+<div class="panel" id="roster"></div>
 <div class="panel" id="timer"><span class="tt" id="tt">00:00</span><button data-t="toggle">⏯</button><button data-t="reset">↺</button><button data-t="add60">+1 min</button><button data-t="sub60">−1 min</button><button data-t="hide">✕</button></div>
 <div class="panel" id="rand"><div class="box"><div class="st">Equipo elegido al azar</div><div class="big" id="rbig">…</div><div class="row" style="justify-content:center"><button class="btn" id="ragain">🎲 Otra vez</button><button class="btn alt" id="rclose">Cerrar</button></div></div></div>
 
@@ -941,6 +954,7 @@ function onUp(txt){
     const nom=String(m.nom).slice(0,30),ape=String(m.ape).slice(0,30),p=S.people[m.d];
     if(!p)S.people[m.d]={nom:nom,ape:ape,tm:+m.tm,first:Date.now()};else{p.nom=nom;p.ape=ape;p.tm=+m.tm;}
   }
+  if($('#roster').style.display==='block')rosterDraw();
   if(m.t==='p'){liveBtn();if($('#live').style.display==='block')liveDraw();renderSoon();return;}
   const s=SL[S.idx];if(!s||m.sid!==s.id||!tmOk)return;
   if(m.t==='v'&&s.q){
@@ -1055,6 +1069,26 @@ function exportXlsx(){
   a.download='Storytelling S24 participacion '+dt.getFullYear()+'-'+p2(dt.getMonth()+1)+'-'+p2(dt.getDate())+'.xlsx';
   document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2500);
 }
+
+/* ================= Integrantes por equipo ================= */
+function rosterDraw(){
+  const now=Date.now(),on=d=>{const p=LV.pres[d];return !!(p&&fresh45(p));};
+  const by={};S.teams.forEach(t=>{by[t.id]=[];});let orphan=[];
+  Object.keys(S.people).forEach(function(d){const p=S.people[d];const o={d:d,n:(p.nom+' '+p.ape).trim(),on:on(d)};if(by[p.tm])by[p.tm].push(o);else orphan.push(o);});
+  const cn=liveCount(),reg=Object.keys(S.people).length;
+  let h='<button class="btn alt rclose" data-r="close">Cerrar (Esc)</button><h4>🧑‍🤝‍🧑 Integrantes por equipo</h4>'
+   +'<p class="rsum">'+(LV.on?'<b>'+cn.tot+'</b> conectados ahora · ':'<b>Modo en vivo apagado</b> · ')+'<b>'+reg+'</b> registrados · 🟢 conectado (visto hace menos de 45 s) · ⚪ registrado, sin señal</p><div class="rgrid">';
+  S.teams.forEach(function(t){
+    const m=by[t.id].sort((a,b)=>(b.on-a.on)||a.n.localeCompare(b.n,'es')),c=m.filter(x=>x.on).length;
+    h+='<div class="rcard" style="--c:'+col(t)+'"><h5>'+esc(t.name)+'<span>'+(LV.on?c+' conectados · ':'')+m.length+' reg.</span></h5>'
+     +(m.length?'<ul>'+m.map(x=>'<li class="'+(x.on?'on':'off')+'"><i></i>'+esc(x.n)+'</li>').join('')+'</ul>':'<p class="em">Nadie se ha registrado aún</p>')+'</div>';
+  });
+  if(orphan.length)h+='<div class="rcard" style="--c:#888"><h5>Equipo ya no existe<span>'+orphan.length+'</span></h5><ul>'+orphan.map(x=>'<li class="off"><i></i>'+esc(x.n)+'</li>').join('')+'</ul></div>';
+  h+='</div>';$('#roster').innerHTML=h;
+}
+function toggleRoster(){const el=$('#roster');if(el.style.display==='block'){el.style.display='none';}else{rosterDraw();el.style.display='block';}}
+$('#roster').addEventListener('click',function(e){if(e.target.closest('[data-r="close"]'))$('#roster').style.display='none';});
+setInterval(function(){if($('#roster').style.display==='block')rosterDraw();},3000);
 
 const CRCT=(function(){const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
 function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRCT[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
@@ -1177,13 +1211,13 @@ function toggle(id,fn){const el=$(id);if(el.style.display==='block'){el.style.di
 $('#bar').addEventListener('click',function(e){
   const b=e.target.closest('[data-b]');if(!b)return;const k=b.dataset.b;
   if(k==='prev')prev();else if(k==='next')next();else if(k==='goto')openGoto();
-  else if(k==='score')toggle('#score',renderScoreShow);else if(k==='teams')openTeams();else if(k==='rand')randTeam();
+  else if(k==='score')toggle('#score',renderScoreShow);else if(k==='teams')openTeams();else if(k==='roster')toggleRoster();else if(k==='rand')randTeam();
   else if(k==='timer'){const t=$('#timer');if(t.style.display==='flex'){stopTimer();}else{t.style.display='flex';drawT();}}
   else if(k==='notes')toggle('#notes',showNotes);else if(k==='live')toggleLive();else if(k==='fs')fs();
 });
 function renderScoreShow(){renderScore();$('#score').style.display='block';}
 function fs(){try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();}catch(e){}}
-function closeAll(){['#score','#modal','#goto','#notes','#live'].forEach(s=>$(s).style.display='none');$('#rand').style.display='none';clearInterval(rIv);if(S.teams)resetArm=false;}
+function closeAll(){['#score','#modal','#goto','#notes','#live','#roster'].forEach(s=>$(s).style.display='none');$('#rand').style.display='none';clearInterval(rIv);if(S.teams)resetArm=false;}
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT')return;
   const k=e.key;
@@ -1192,6 +1226,7 @@ document.addEventListener('keydown',function(e){
   else if(k==='Home')go(0);else if(k==='End')go(SL.length-1);
   else if(k==='s'||k==='S')toggle('#score',renderScoreShow);
   else if(k==='e'||k==='E')openTeams();
+  else if(k==='i'||k==='I')toggleRoster();
   else if(k==='n'||k==='N')toggle('#notes',showNotes);
   else if(k==='g'||k==='G')openGoto();
   else if(k==='r'||k==='R')randTeam();
