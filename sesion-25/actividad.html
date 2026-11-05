@@ -1,0 +1,938 @@
+﻿<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 25 · Estructura del pitch · Escenario 3D</title>
+<style>
+/* ============================================================
+   SESIÓN 25 · ESTRUCTURA DEL PITCH — ESCENARIO 3D + TELEPROMPTER
+   El alumno ARMA y ENSAYA su pitch sobre un escenario 3D con
+   reflectores. Cada parte de la estructura (Gancho · Problema ·
+   Usuario · Solución · Diferenciador · Petición) es un bloque de
+   su color; al completarlo se enciende su reflector y el
+   escenario se ilumina. Un teleprompter ensambla el guion en vivo
+   y un cronómetro de ensayo marca la franja verde de 3 a 5 min.
+   El guion ensamblado = la evidencia que el alumno descarga (PDF).
+
+   Offline · un archivo · sin CDN ni librerías. Sin localStorage /
+   sessionStorage · sin alert(). Estado en memoria. 3D con CSS
+   (perspective / rotateX / translateZ) + SVG. Hoja plana en
+   @media print · respeta prefers-reduced-motion.
+   ============================================================ */
+:root{
+  --bg:#141019; --ink:#211a2b; --ink-70:#5b5168; --ink-45:#8a7f98;
+  --card:#fffdfa; --line:#efe9f3; --line-2:#e0d6ea;
+  /* PALETA CURADA · teatro / reflector: violeta profundo (primario) + ámbar
+     dorado del spotlight + una familia cálida magenta-coral entre ambos.
+     Sin arcoíris (nada de verde/azul/teal). Cada parte usa un tinte de la
+     misma familia; cámbialos aquí y se propagan. */
+  --c-gan:#E0567E;  /* Gancho        · rosa    */
+  --c-pro:#F0714E;  /* Problema      · coral   */
+  --c-usu:#F5A524;  /* Usuario       · ámbar   */
+  --c-sol:#C6379B;  /* Solución      · magenta */
+  --c-dif:#9D2FD6;  /* Diferenciador · púrpura */
+  --c-acc:#6D28D9;  /* Petición · VIOLETA primario (chrome: barra, hero, ficha) */
+  --ok:#C6379B; --warn:#F0714E; --gold:#F5A524;
+  --shadow:0 20px 46px rgba(10,4,20,.5);
+  --shadow-s:0 10px 26px rgba(60,30,80,.14); --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);line-height:1.55;-webkit-text-size-adjust:100%;
+  background:
+    radial-gradient(820px 480px at 4% -6%,rgba(109,40,217,.24),transparent 60%),
+    radial-gradient(820px 480px at 100% 2%,rgba(245,165,36,.18),transparent 60%),
+    radial-gradient(760px 520px at 50% 112%,rgba(198,55,155,.20),transparent 60%),
+    var(--bg);}
+h1,h2,h3{line-height:1.09;letter-spacing:-.02em;font-weight:800}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+button{font-family:inherit}
+
+/* ---------- barra superior ---------- */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(20,16,25,.86);
+  backdrop-filter:saturate(1.3) blur(10px);border-bottom:1px solid rgba(255,255,255,.09)}
+.topbar .row{display:flex;align-items:center;gap:12px;padding:10px 20px;max-width:1060px;margin:0 auto}
+.brand{font-weight:800;font-size:14px;white-space:nowrap;color:#fff}
+.brand small{display:block;font-weight:600;color:#b7abc6;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.prog{flex:1;height:12px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;min-width:70px}
+.prog>i{display:block;height:100%;width:0;border-radius:99px;transition:width .45s ease;
+  background:linear-gradient(90deg,var(--c-acc),var(--c-sol),var(--c-usu))}
+.prog-n{font-size:12px;font-weight:800;color:#cdbfe0;min-width:34px;text-align:right}
+.tb-btn{font:800 14px/1 inherit;border:0;border-radius:12px;padding:12px 15px;cursor:pointer;min-height:44px;white-space:nowrap}
+.tb-btn.pdf{background:linear-gradient(120deg,var(--c-acc),var(--c-usu));color:#fff}
+.tb-btn.pdf:hover{filter:brightness(1.08)}
+.tb-btn.ghost{background:rgba(255,255,255,.12);color:#e7ddf2}
+
+/* ---------- portada ---------- */
+.hero{margin:24px 0 8px;border-radius:26px;padding:40px 30px 34px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(125deg,#2A1A4A 0%,#6D28D9 34%,#C6379B 66%,#F5A524 100%);box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(560px 300px at 84% -24%,rgba(255,255,255,.34),transparent 60%)}
+.hero .eyebrow{display:inline-block;font-weight:800;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:rgba(255,255,255,.22);padding:7px 14px;border-radius:99px;position:relative;z-index:1}
+.hero h1{font-size:clamp(31px,6vw,58px);margin:16px 0 10px;text-shadow:0 2px 18px rgba(0,0,0,.22);position:relative;z-index:1}
+.hero p.lead{font-size:clamp(17px,2.5vw,22px);max-width:60ch;color:rgba(255,255,255,.98);position:relative;z-index:1}
+.hero .path{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;position:relative;z-index:1}
+.hero .path span{font-size:13px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:7px 13px;border-radius:99px}
+
+/* ---------- secciones (tarjetas claras) ---------- */
+section.card{background:var(--card);border:1px solid var(--line);border-top:7px solid var(--c,#ccc);
+  border-radius:var(--r);padding:24px 24px 26px;margin:18px 0;box-shadow:var(--shadow-s)}
+.stepbar{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.stepbar .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;
+  background:var(--c);color:#fff;font-weight:800;font-size:20px;box-shadow:0 6px 14px rgba(0,0,0,.16)}
+.stepbar .kicker{font-weight:800;font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+section.card h2{font-size:clamp(22px,3.5vw,31px);margin:2px 0 6px}
+.hint{color:var(--ink-70);font-size:16px;max-width:82ch}
+.hint b{color:var(--ink)}
+.goal{display:inline-flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:13.5px;font-weight:800;
+  color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 26%,#fff);
+  border-radius:99px;padding:7px 14px}
+
+/* campos */
+label.f{display:block;font-weight:800;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-45);margin:14px 0 5px}
+input.t,textarea.t{width:100%;font:16px/1.45 inherit;color:var(--ink);background:#fff;
+  border:2px solid var(--line-2);border-radius:12px;padding:12px 13px;min-height:48px}
+textarea.t{min-height:74px;resize:vertical}
+input.t::placeholder,textarea.t::placeholder{color:#b3a8c0}
+input.t:focus,textarea.t:focus{outline:none;border-color:var(--c,#999);box-shadow:0 0 0 4px color-mix(in srgb,var(--c,#999) 20%,transparent)}
+.ints{display:grid;gap:8px;margin-top:6px}
+.irow{display:grid;grid-template-columns:30px 1fr 190px;gap:8px;align-items:center}
+.irow .in{width:28px;height:28px;border-radius:50%;background:var(--c-acc);color:#fff;font-weight:800;display:grid;place-items:center;font-size:13px}
+@media(max-width:560px){.irow{grid-template-columns:30px 1fr}.irow input:last-child{grid-column:2}}
+.part{border:2px dashed var(--c-pro);border-radius:14px;padding:18px;margin-top:16px;background:color-mix(in srgb,var(--c-pro) 7%,#fff)}
+.prow{display:grid;grid-template-columns:1fr 130px;gap:10px;align-items:center;margin-top:8px}
+.prow b{font-size:15px}.prow .pc{position:relative}.prow .pc input{padding-right:30px;text-align:right}
+.prow .pc i{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-weight:800;color:#777}
+.pwarn{margin-top:8px;font-size:13.5px;color:#a33;font-weight:700}
+.tb-btn.pdf[disabled]{opacity:.45;cursor:not-allowed}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.grid5{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.grid5,.grid2{grid-template-columns:1fr}}
+
+/* termómetro */
+.thermo{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.thermo button{border:2px solid var(--line-2);background:#fff;border-radius:12px;min-width:48px;min-height:48px;
+  font:800 18px/1 inherit;color:var(--ink-70);cursor:pointer;transition:transform .15s,background .15s}
+.thermo button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff;transform:scale(1.06)}
+
+/* selector de tipo de pitch */
+.tipos-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.tipo-btn{border:2px solid var(--line-2);background:#fff;border-radius:12px;padding:10px 14px;
+  font:800 13.5px/1 inherit;color:var(--ink-70);cursor:pointer;min-height:46px;display:inline-flex;align-items:center;gap:8px;
+  transition:transform .15s,border-color .2s,background .2s}
+.tipo-btn .e{font-size:18px}
+.tipo-btn[aria-pressed="true"]{background:color-mix(in srgb,var(--c-acc) 15%,#fff);border-color:var(--c-acc);color:var(--ink);transform:translateY(-1px)}
+.tipo-btn:focus-visible{outline:3px solid var(--c-acc);outline-offset:2px}
+.tipo-desc{margin-top:9px;font-size:14px;color:var(--ink-70);min-height:20px}
+.tipo-desc b{color:var(--ink)}
+
+/* en corto (teoría mínima) */
+.encorto{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+@media(max-width:720px){.encorto{grid-template-columns:1fr}}
+.encorto .e{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.encorto .e .h{font-weight:800;font-size:14.5px;display:flex;gap:8px;align-items:center}
+.encorto .e p{font-size:13.5px;color:var(--ink-70);margin-top:6px}
+.encorto .e p b{color:var(--ink)}
+.arco{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;align-items:center}
+.arco .p{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:#fff;
+  border-radius:99px;padding:8px 13px;background:var(--pc)}
+.arco .ar{color:var(--ink-45);font-weight:800}
+
+/* caso / destapable */
+.casebox{margin:12px 0 2px;border:1.5px dashed color-mix(in srgb,var(--bc) 42%,#fff);border-radius:12px;
+  background:color-mix(in srgb,var(--bc) 7%,#fff);overflow:hidden}
+.casebox summary{cursor:pointer;list-style:none;padding:12px 15px;font-weight:800;color:var(--bc);display:flex;align-items:center;gap:10px;font-size:14px}
+.casebox summary::-webkit-details-marker{display:none}
+.casebox summary .chev{margin-left:auto;transition:transform .3s}
+.casebox[open] summary .chev{transform:rotate(90deg)}
+.casebox .inner{padding:2px 15px 15px;font-size:14px;color:var(--ink-70)}
+.casebox .inner b{color:var(--ink)}
+.casebox .inner p{margin:7px 0}
+.otro{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  color:#fff;background:var(--ink-45);border-radius:6px;padding:2px 8px;margin-bottom:4px}
+
+/* ============================================================
+   ESCENARIO 3D (protagonista · SVG + CSS 3D)
+   ============================================================ */
+.escena-sec{background:linear-gradient(180deg,#1b1526,#120d1c);border:1px solid rgba(255,255,255,.08);
+  border-top:7px solid var(--c-acc);border-radius:var(--r);padding:22px 22px 24px;margin:18px 0;box-shadow:var(--shadow)}
+.escena-sec .stepbar .kicker{color:#e7c7f2}
+.escena-sec h2{color:#fff;font-size:clamp(21px,3.4vw,29px);margin:2px 0 4px}
+.escena-sec .hint{color:#c9bcd8}
+.escena-sec .hint b{color:#fff}
+.escena-wrap{position:relative;perspective:1300px;perspective-origin:50% 30%;margin:10px auto 4px;max-width:680px}
+.stage-3d{position:relative;transform-style:preserve-3d;transform:rotateX(7deg);transition:transform .5s ease}
+.stage-svg{width:100%;height:auto;display:block;border-radius:16px;filter:drop-shadow(0 22px 40px rgba(0,0,0,.55))}
+/* reflectores: encienden con .lit */
+.stage-svg .cone{transition:opacity .5s ease;opacity:.06}
+.stage-svg .cone.lit{opacity:.5}
+.stage-svg .pool{transition:opacity .5s ease;opacity:.08}
+.stage-svg .pool.lit{opacity:.55}
+.stage-svg .lamp{transition:filter .4s ease}
+.stage-svg .lamp.lit{filter:drop-shadow(0 0 6px currentColor)}
+.stage-svg #speaker{transition:opacity .6s ease;opacity:.28}
+.stage-svg #speaker.up{opacity:1}
+.stage-svg #floorGlow{transition:opacity .6s ease;opacity:0}
+/* etiquetas clicables sobre cada reflector */
+.lights{position:absolute;inset:0}
+.light-tag{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;
+  min-width:56px;border:2px solid var(--lc,#666);background:rgba(24,18,32,.82);border-radius:11px;padding:5px 6px;
+  cursor:pointer;text-align:center;color:#efe6f6;transition:transform .3s,box-shadow .3s,background .3s}
+.light-tag:hover{transform:translate(-50%,-50%) translateY(-2px)}
+.light-tag .ln{font:800 10.5px/1.05 inherit;letter-spacing:.02em}
+.light-tag .st{font-size:13px;line-height:1}
+.light-tag.on{background:var(--lc);color:#fff;box-shadow:0 0 18px var(--lc)}
+.light-tag:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* medidor de iluminación */
+.ilum{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 15px;margin-top:14px}
+.ilum .ch{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:14px;color:#d6c9e6}
+.ilum .ch b{font-size:18px;color:#fff}
+.ilum .bar{height:15px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-top:9px}
+.ilum .bar>i{display:block;height:100%;width:0;border-radius:99px;transition:width .5s ease;
+  background:linear-gradient(90deg,var(--c-acc),var(--c-sol),var(--c-usu))}
+.ilum .imsg{margin-top:10px;font-size:13.5px;font-weight:700;color:#e5d9f0}
+.ilum .imsg.full{color:var(--gold)}
+
+/* teleprompter */
+.prompter-wrap{perspective:1100px;margin-top:16px}
+.prompter-head{display:flex;align-items:center;gap:8px;color:#c9bcd8;font-weight:800;font-size:12.5px;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.prompter{transform:rotateX(11deg);transform-origin:top center;
+  background:linear-gradient(180deg,#0c0a13,#171023);border:1px solid #2c2442;border-radius:14px;
+  padding:20px 22px 24px;color:#efe7f7;max-height:250px;overflow:auto;position:relative;
+  box-shadow:inset 0 2px 30px rgba(150,110,220,.14),0 16px 34px rgba(0,0,0,.4);
+  font-size:16.5px;line-height:1.6;scroll-behavior:smooth}
+.prompter::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(232,78,138,.55),transparent);pointer-events:none}
+.prompter .pl{margin:0 0 15px;padding-left:12px;border-left:3px solid var(--pc,#555)}
+.prompter .pl .lab{display:block;font:800 10.5px/1 inherit;letter-spacing:.06em;text-transform:uppercase;color:var(--pc,#999);margin-bottom:3px}
+.prompter .pl .tx{color:#f3ecfa}
+.prompter .pl .tx.ghost{color:#8a7ea0;font-style:italic}
+.prompter .empty-note{color:#8a7ea0;font-style:italic;font-size:14px}
+
+/* cronómetro de ensayo */
+.timer{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 15px}
+.timer .trow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.timer .clock{font:800 30px/1 ui-monospace,Menlo,Consolas,monospace;color:#fff;min-width:100px;letter-spacing:.02em}
+.timer .clock.go{color:var(--gold)}
+.timer .clock.warn{color:var(--warn)}
+.timer button{border:0;border-radius:11px;padding:11px 16px;font:800 14px/1 inherit;cursor:pointer;min-height:44px;color:#fff;background:var(--c-acc)}
+.timer button.sec{background:rgba(255,255,255,.14);color:#e7ddf2}
+.timer .tmsg{font-size:13.5px;font-weight:700;color:#d6c9e6;flex:1;min-width:150px}
+.band{position:relative;height:16px;background:rgba(255,255,255,.12);border-radius:99px;margin-top:14px;overflow:hidden}
+.band .green{position:absolute;top:0;bottom:0;left:50%;width:33.333%;
+  background:linear-gradient(90deg,rgba(27,153,139,.55),rgba(27,153,139,.8));border-radius:2px}
+.band .marker{position:absolute;top:-4px;width:4px;height:24px;background:#fff;border-radius:2px;
+  box-shadow:0 0 8px rgba(255,255,255,.7);transition:left .25s linear}
+.band-scale{display:flex;justify-content:space-between;font-size:11px;color:#a99cbb;font-weight:700;margin-top:6px}
+
+/* ============================================================
+   CONSTRUCTOR DE BLOQUES
+   ============================================================ */
+.bloque{margin-top:16px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;
+  border-left:6px solid var(--bc)}
+.bloque .bhead{display:flex;align-items:center;gap:11px;padding:13px 15px;
+  background:color-mix(in srgb,var(--bc) 11%,#fff);border-bottom:1px solid color-mix(in srgb,var(--bc) 22%,#fff)}
+.bloque .bhead .dot{width:36px;height:36px;border-radius:10px;background:var(--bc);color:#fff;display:grid;place-items:center;font-size:19px;flex:none}
+.bloque .bhead .bt{font-weight:800;font-size:16px;color:var(--ink)}
+.bloque .bhead .bs{font-size:12.5px;color:var(--ink-70)}
+.bloque .bhead .block-lock{margin-left:auto;font-size:12.5px;font-weight:800;color:var(--ink-45);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.bloque.ok .bhead .block-lock{color:var(--ok)}
+.bloque .bbody{padding:15px}
+.bloque .qhint{font-size:13.5px;color:var(--ink-70);margin:0 0 4px}
+.opt-tag{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--ink-45);border:1px solid var(--line-2);border-radius:6px;padding:1px 7px;margin-left:6px}
+
+/* cierre · ticket + badges */
+.ticket{border:2px dashed var(--c-acc);border-radius:14px;padding:18px;margin-top:16px;background:color-mix(in srgb,var(--c-acc) 7%,#fff)}
+.ticket .stepbar .num{background:var(--c-acc)}
+.ticket .stepbar .kicker{color:var(--c-acc)}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.badge{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:9px 15px;font-weight:800;font-size:14px;color:#fff;opacity:.32;transition:opacity .3s,transform .2s;background:var(--bc,#999)}
+.badge.on{opacity:1;transform:translateY(-1px)}
+
+/* modo analógico */
+details.ana{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+details.ana summary{cursor:pointer;font-weight:800;color:var(--c);padding:6px 0;list-style:none}
+details.ana summary::-webkit-details-marker{display:none}
+details.ana summary::before{content:"▸ "}
+details.ana[open] summary::before{content:"▾ "}
+details.ana .body{font-size:14.5px;color:var(--ink-70);max-width:82ch;padding:6px 0 4px}
+.footer-note{text-align:center;color:#c1b4d3;font-size:14px;padding:22px 0 60px}
+
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .stage-3d,.prompter{transform:none}
+}
+
+/* ============================================================
+   HOJA / GUION — solo impresión / PDF (hoja limpia, plana)
+   ============================================================ */
+#hoja{display:none}
+.sheet{color:#000}
+.sheet .shead{border-bottom:3px solid var(--c-acc);padding-bottom:10px;margin-bottom:12px}
+.sheet .shead .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#7a2fb0;font-weight:800}
+.sheet .shead h2{font-size:22px;margin-top:4px;color:#000}
+.sheet .idrow{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 24px;margin:9px 0 12px;font-size:13px}
+.sheet .idrow div{border-bottom:1px solid #ccc;padding:4px 0}
+.sheet .idrow span{color:#666;font-weight:800}
+.sheet .block{border:1px solid #bbb;border-radius:8px;padding:10px 12px;margin:9px 0;break-inside:avoid}
+.sheet .block h3{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:#7a2fb0;margin-bottom:6px}
+.sheet .grow{display:flex;gap:8px;align-items:baseline;margin:8px 0;break-inside:avoid}
+.sheet .grow .n{font-weight:800;color:#fff;background:#333;border-radius:6px;padding:2px 8px;font-size:11.5px;flex:none}
+.sheet .grow .gg{flex:1}
+.sheet .grow .glab{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#555}
+.sheet .grow .gtx{font-size:13.5px;color:#111;white-space:pre-wrap;border-bottom:1px dotted #bbb;min-height:16px;padding:2px 0}
+.sheet .srow{margin:6px 0}
+.sheet .srow .q{font-weight:800;font-size:12px;color:#333}
+.sheet .srow .a{font-size:13.5px;min-height:16px;border-bottom:1px dotted #bbb;padding:3px 0;white-space:pre-wrap}
+.sheet .fecha-firma{margin-top:14px;font-size:12px;color:#444;display:flex;justify-content:space-between;gap:20px}
+.sheet .fecha-firma div{border-top:1px solid #999;padding-top:5px;flex:1;text-align:center}
+
+@media print{
+  @page{margin:12mm}
+  html,body{background:#fff}
+  .screen,.topbar{display:none!important}
+  #hoja{display:block!important}
+}
+</style>
+</head>
+<body>
+<!-- ================= BARRA SUPERIOR ================= -->
+<div class="topbar screen">
+  <div class="row">
+    <div class="brand">Emprendimiento 1<small>Sesión 25 · Estructura del pitch</small></div>
+    <div class="prog" aria-label="Avance de la actividad"><i id="progbar"></i></div>
+    <span class="prog-n" id="progn">0%</span>
+    <button class="tb-btn ghost" id="sndbtn" type="button" aria-pressed="false" title="Sonido">🔇 Sonido</button>
+    <button class="tb-btn pdf" id="pdfbtn" type="button">📄 Descargar mi guion (PDF)</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ================= PORTADA ================= -->
+  <div class="hero screen">
+    <span class="eyebrow">Cierre · Comunicar la solución</span>
+    <h1>Tu pitch, bajo los reflectores</h1>
+    <p class="lead">Las mejores ideas no siempre ganan: ganan las que mejor comunican su valor. Hoy <b>armas y ensayas tu pitch</b> sobre un escenario. Cada parte que completas prende un reflector; el teleprompter va ensamblando tu guion en vivo y el cronómetro te mantiene en los <b>3 a 5 minutos</b>. Te llevas tu guion listo para presentar.</p>
+    <div class="path">
+      <span>🎬 Gancho</span><span>🎯 Problema</span><span>👤 Usuario</span><span>💡 Solución</span><span>⭐ Diferenciador</span><span>🙋 Petición</span>
+    </div>
+  </div>
+
+  <!-- ================= IDENTIDAD + TIPO + ANTES ================= -->
+  <section class="card screen" style="--c:var(--c-acc)">
+    <div class="stepbar"><span class="num">✦</span><span class="kicker">Antes de empezar</span></div>
+    <h2>¿Quién sube al escenario?</h2>
+    <p class="hint">Lo que registres aquí encabeza tu guion. Nada se guarda en la nube: si cierras la pestaña, se borra. Descarga tu PDF antes de salir del salón.</p>
+    <label class="f" style="margin-top:6px">Integrantes del equipo (mínimo 1, máximo 5)</label>
+    <div class="ints">
+      <div class="irow"><span class="in">1</span><input class="t" data-k="i1n" placeholder="Nombre completo del integrante 1 (obligatorio)"><input class="t" data-k="i1m" placeholder="Matrícula"></div>
+      <div class="irow"><span class="in">2</span><input class="t" data-k="i2n" placeholder="Nombre completo del integrante 2"><input class="t" data-k="i2m" placeholder="Matrícula"></div>
+      <div class="irow"><span class="in">3</span><input class="t" data-k="i3n" placeholder="Nombre completo del integrante 3"><input class="t" data-k="i3m" placeholder="Matrícula"></div>
+      <div class="irow"><span class="in">4</span><input class="t" data-k="i4n" placeholder="Nombre completo del integrante 4"><input class="t" data-k="i4m" placeholder="Matrícula"></div>
+      <div class="irow"><span class="in">5</span><input class="t" data-k="i5n" placeholder="Nombre completo del integrante 5"><input class="t" data-k="i5m" placeholder="Matrícula"></div>
+    </div>
+    <div class="grid5" style="margin-top:14px;grid-template-columns:repeat(3,1fr)">
+      <div><label class="f">Carrera / grupo</label><input class="t" data-k="carrera" placeholder="Ej. Derecho · 1B"></div>
+      <div><label class="f">Equipo</label><input class="t" data-k="equipo" placeholder="Nombre o número"></div>
+      <div><label class="f">Fecha</label><input class="t" data-k="fecha" placeholder="dd / mm / aaaa"></div>
+    </div>
+
+    <label class="f" style="margin-top:18px">Nombre de tu proyecto</label>
+    <input class="t" data-k="proyecto" placeholder="Ej. cómo se llama tu idea de negocio">
+
+    <label class="f" style="margin-top:16px">¿Qué tipo de pitch vas a armar? (define a quién le hablas)</label>
+    <div class="tipos-row" id="tiposRow" role="group" aria-label="Tipo de pitch"></div>
+    <p class="tipo-desc" id="tipoDesc">Elige uno para ver a quién va dirigido.</p>
+
+    <label class="f" style="margin-top:16px">Antes de empezar, ¿qué tan listo te sientes para presentar tu idea en 3 minutos? (1 = nada · 5 = muy listo)</label>
+    <div class="thermo" data-thermo="antes" role="group" aria-label="Seguridad antes" style="--c:var(--c-acc)">
+      <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
+      <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
+      <button type="button" data-v="5">5</button>
+    </div>
+  </section>
+
+  <!-- ================= EN CORTO (teoría mínima) ================= -->
+  <section class="card screen" style="--c:var(--c-usu)">
+    <div class="stepbar"><span class="num">📌</span><span class="kicker">En corto</span></div>
+    <h2>Lo justo para armar bien tu pitch</h2>
+    <div class="encorto">
+      <div class="e"><div class="h">🎯 ¿Qué es un pitch?</div><p>Una presentación breve para <b>despertar interés</b>. No busca vender ahí mismo: busca <b>el siguiente paso</b> (una reunión, un cliente, un sí). Responde una pregunta: ¿por qué debería importarme tu proyecto?</p></div>
+      <div class="e"><div class="h">⏱️ 3 a 5 minutos</div><p>Cada palabra pesa. Con ese tiempo no cabe todo: cabe <b>lo que hace que quieran saber más</b>. Por eso hoy ensayas contra reloj.</p></div>
+      <div class="e"><div class="h">🚫 Lo que hunde un pitch</div><p>Leer las diapositivas, hablar demasiado rápido, pasarte de tiempo, saturar de datos y no mirar a la gente. Tu guion es para <b>hablar</b>, no para leer.</p></div>
+    </div>
+    <label class="f" style="margin-top:16px">El arco que vas a construir</label>
+    <div class="arco">
+      <span class="p" style="--pc:var(--c-pro)">🎯 Problema</span><span class="ar">→</span>
+      <span class="p" style="--pc:var(--c-usu)">👤 Usuario</span><span class="ar">→</span>
+      <span class="p" style="--pc:var(--c-sol)">💡 Solución</span><span class="ar">→</span>
+      <span class="p" style="--pc:var(--c-dif)">⭐ Diferenciador</span><span class="ar">→</span>
+      <span class="p" style="--pc:var(--c-acc)">🙋 Petición</span>
+    </div>
+    <p class="hint" style="margin-top:12px;font-size:14px">Si falta una parte, el pitch pierde fuerza. El <b>gancho</b> es la primera frase que abre todo (aquí puedes usar tu storytelling de la sesión pasada).</p>
+  </section>
+
+  <!-- ================= ESCENARIO 3D + TELEPROMPTER + CRONÓMETRO ================= -->
+  <section class="escena-sec screen">
+    <div class="stepbar"><span class="num" style="background:var(--c-acc)">🎭</span><span class="kicker">Tu escenario</span></div>
+    <h2>Cada parte prende un reflector</h2>
+    <p class="hint">Conforme completes tus bloques abajo, los reflectores se encienden y el escenario se ilumina. El <b>teleprompter</b> ensambla tu guion en vivo. Cuando estés listo, dale <b>Ensayar</b> y quédate en la franja verde: 3 a 5 minutos. Toca un reflector para saltar a esa parte.</p>
+
+    <div class="escena-wrap">
+      <div class="stage-3d">
+        <svg class="stage-svg" viewBox="0 0 720 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="backwall" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#241a35"></stop><stop offset="1" stop-color="#160f24"></stop>
+            </linearGradient>
+            <linearGradient id="floorg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2a2140"></stop><stop offset="1" stop-color="#0d0918"></stop>
+            </linearGradient>
+            <radialGradient id="glowg" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#ffe9c2" stop-opacity="0.5"></stop><stop offset="1" stop-color="#ffe9c2" stop-opacity="0"></stop>
+            </radialGradient>
+          </defs>
+          <!-- muro y piso -->
+          <rect x="0" y="0" width="720" height="300" fill="url(#backwall)"></rect>
+          <polygon points="60,300 660,300 720,460 0,460" fill="url(#floorg)"></polygon>
+          <line x1="120" y1="360" x2="600" y2="360" stroke="rgba(255,255,255,.05)" stroke-width="1"></line>
+          <line x1="90" y1="410" x2="630" y2="410" stroke="rgba(255,255,255,.05)" stroke-width="1"></line>
+          <ellipse id="floorGlow" cx="360" cy="392" rx="250" ry="46" fill="url(#glowg)"></ellipse>
+          <!-- truss -->
+          <rect x="48" y="34" width="624" height="12" rx="6" fill="#0c0814"></rect>
+          <!-- 6 reflectores: gancho, problema, usuario, solucion, difer, accion -->
+          <g id="rig"></g>
+          <!-- orador -->
+          <g id="speaker">
+            <ellipse cx="360" cy="398" rx="44" ry="12" fill="rgba(0,0,0,.35)"></ellipse>
+            <rect x="336" y="330" width="48" height="70" rx="10" fill="#3a2f52"></rect>
+            <circle cx="360" cy="312" r="17" fill="#e9c9a8"></circle>
+            <rect x="330" y="392" width="60" height="14" rx="4" fill="#241a35"></rect>
+          </g>
+        </svg>
+        <div class="lights" id="lights"></div>
+      </div>
+    </div>
+
+    <div class="ilum">
+      <div class="ch"><span>💡 Iluminación del escenario</span><b><span id="ilumN">0</span> / 6 reflectores</b></div>
+      <div class="bar"><i id="ilumBar"></i></div>
+      <div class="imsg" id="ilumMsg">El escenario está a oscuras. Completa tus bloques y míralo encenderse.</div>
+    </div>
+
+    <div class="prompter-wrap">
+      <div class="prompter-head">📺 Teleprompter · tu guion en vivo</div>
+      <div class="prompter" id="prompter" tabindex="0" aria-label="Vista previa de tu guion"></div>
+    </div>
+
+    <div class="timer">
+      <div class="trow">
+        <span class="clock" id="clock">0:00</span>
+        <button type="button" id="tStart">▶︎ Ensayar</button>
+        <button type="button" class="sec" id="tPause">⏸ Pausa</button>
+        <button type="button" class="sec" id="tReset">↺ Reiniciar</button>
+        <span class="tmsg" id="tMsg">Practica tu pitch en voz alta. La franja verde es de 3:00 a 5:00.</span>
+      </div>
+      <div class="band"><div class="green"></div><div class="marker" id="tMarker" style="left:0%"></div></div>
+      <div class="band-scale"><span>0:00</span><span>1:00</span><span>2:00</span><span>3:00</span><span>4:00</span><span>5:00</span><span>6:00</span></div>
+    </div>
+  </section>
+
+  <!-- ================= CONSTRUCTOR DE BLOQUES ================= -->
+  <section class="card screen" style="--c:var(--c-pro)">
+    <div class="stepbar"><span class="num">🧱</span><span class="kicker">Arma tu pitch, bloque por bloque</span></div>
+    <h2>Escribe cada parte con tus palabras</h2>
+    <span class="goal">Meta: las 5 partes de la estructura + tu gancho</span>
+    <p class="hint">Cada bloque tiene una pista de <b>cómo</b> escribirlo y un ejemplo de <b>otro proyecto</b> para que veas la forma. No lo copies: el tuyo lo escribes tú. Al completar un bloque se prende su reflector arriba.</p>
+    <div id="bloques"></div>
+    <details class="ana"><summary>Modo analógico (sin pantalla)</summary><div class="body">En una hoja, cada equipo escribe las 6 partes en orden: gancho, problema (con un dato y a quién afecta), usuario (edad, dónde, hábito), solución (qué hace y el beneficio), diferenciador (por qué ustedes) y petición (qué quieren que haga la audiencia). Luego uno del equipo lo lee en voz alta mientras otro cronometra: el pitch debe durar entre 3 y 5 minutos.</div></details>
+  </section>
+
+  <!-- ================= CIERRE · TICKET + BADGES ================= -->
+  <section class="card screen" style="--c:var(--c-acc)">
+    <div class="stepbar"><span class="num">🏁</span><span class="kicker">Cierre</span></div>
+    <h2>Tu guion quedó armado</h2>
+    <p class="hint">Con lo que escribiste, tu guion se ensambló solo. Responde el ticket, revisa tus insignias y descarga el PDF.</p>
+
+    <div class="ticket">
+      <div class="stepbar"><span class="num">✓</span><span class="kicker">Ticket de salida</span></div>
+      <label class="f" style="margin-top:8px">1 · ¿Cuál es el verdadero objetivo de un pitch (qué quieres lograr al terminar)?</label>
+      <textarea class="t" data-k="t1" placeholder="Con tus palabras."></textarea>
+      <label class="f">2 · ¿Por qué es un error terminar solo con "muchas gracias"?</label>
+      <textarea class="t" data-k="t2"></textarea>
+      <label class="f">3 · La gente no compra funciones, compra beneficios. Explica la diferencia con un ejemplo tuyo.</label>
+      <input class="t" data-k="t3" placeholder="Ej. …">
+      <label class="f">Ya para cerrar, ¿qué tan listo te sientes ahora para presentar tu pitch? (1–5)</label>
+      <div class="thermo" data-thermo="despues" role="group" aria-label="Seguridad después" style="--c:var(--c-acc)">
+        <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
+        <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
+        <button type="button" data-v="5">5</button>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="stepbar"><span class="num" style="background:var(--c-pro)">%</span><span class="kicker" style="color:var(--c-pro)">Participación del equipo</span></div>
+      <p class="hint" style="margin-top:6px">Cada integrante anota qué porcentaje (0 a 100 %) aportó a este trabajo. Sean honestos: el máximo por persona es 100 %.</p>
+      <div id="partRows"><div class="hint">Escribe arriba los nombres de los integrantes y aquí aparecerán.</div></div>
+      <div class="pwarn" id="partWarn"></div>
+    </div>
+
+    <div class="badges" id="badges">
+      <span class="badge" data-badge="problema" style="--bc:var(--c-pro)">🎯 Problema claro</span>
+      <span class="badge" data-badge="valor" style="--bc:var(--c-sol)">💎 Propuesta de valor</span>
+      <span class="badge" data-badge="peticion" style="--bc:var(--c-acc)">🙋 Con petición</span>
+      <span class="badge" data-badge="tiempo" style="--bc:var(--gold)">⏱️ Dentro de tiempo</span>
+      <span class="badge" data-badge="funcion" style="--bc:var(--c-dif)">🌟 Función lista</span>
+    </div>
+  </section>
+
+  <p class="footer-note screen">Tu guion es la evidencia que subes a la plataforma. Antes de salir presiona <b>"Descargar mi guion (PDF)"</b>. No se guarda nada en la nube: tu trabajo vive en este dispositivo hasta que lo descargas.</p>
+
+  <!-- ================= HOJA / GUION (SOLO PDF) ================= -->
+  <div id="hoja"><div class="sheet">
+    <div class="shead"><div class="k">Emprendimiento 1 · Sesión 25 · Estructura del pitch</div><h2>Guion de mi pitch (3 a 5 minutos)</h2></div>
+    <div class="idrow">
+      <div style="grid-column:1/-1"><span>Integrantes (matrícula · % de participación):</span> <em id="s_ints" style="display:block;white-space:pre-wrap"></em></div>
+      <div><span>Carrera / grupo:</span> <em id="s_carrera"></em></div>
+      <div><span>Equipo:</span> <em id="s_equipo"></em></div>
+      <div><span>Proyecto:</span> <em id="s_proyecto"></em></div>
+      <div><span>Fecha:</span> <em id="s_fecha"></em></div>
+      <div><span>Tipo de pitch:</span> <em id="s_tipo"></em></div>
+      <div><span>Ensayo (tiempo):</span> <em id="s_tiempo"></em></div>
+    </div>
+
+    <div class="block">
+      <h3>Mi guion, parte por parte</h3>
+      <div id="s_guion"></div>
+    </div>
+
+    <div class="block">
+      <h3>Ticket de salida</h3>
+      <div class="srow"><div class="q">Objetivo real del pitch</div><div class="a" id="s_t1"></div></div>
+      <div class="srow"><div class="q">Por qué no cerrar solo con "gracias"</div><div class="a" id="s_t2"></div></div>
+      <div class="srow"><div class="q">Función vs. beneficio</div><div class="a" id="s_t3"></div></div>
+      <div class="srow"><div class="q">Seguridad (antes → después)</div><div class="a" id="s_seg"></div></div>
+      <div class="srow"><div class="q">Insignias logradas</div><div class="a" id="s_badges"></div></div>
+    </div>
+
+    <div class="fecha-firma">
+      <div>Firma del alumno</div>
+      <div>Validado por el profesor</div>
+    </div>
+  </div></div>
+
+</div>
+
+<script>
+/* ============================================================================
+   CONTENIDO EDITABLE — Irene puede cambiar esto sin tocar la lógica de abajo.
+   Cada bloque es una PARTE del pitch. 'ejemplo' es de OTRO proyecto (una app
+   que conecta alumnos con tutores del mismo campus): muestra la FORMA, nunca
+   se copia. 'campos' son los cuadros que llena el alumno.
+   ============================================================================ */
+const CONTENIDO = {
+
+  /* Tipos de pitch (encuadre; no cambian la lógica, solo a quién le hablas). */
+  tipos:[
+    {id:'elevator', n:'Elevator', e:'🛗', desc:'Brevísimo, el tiempo de un elevador. Para <b>despertar interés</b> y conseguir una segunda charla. Público: contactos, jurados, reclutadores.'},
+    {id:'comercial', n:'Comercial', e:'🛍️', desc:'Para convencer a un <b>cliente</b> de comprar. Empatizas con su problema y ofreces la solución. Público: clientes, empresas, consumidores.'},
+    {id:'inversion', n:'Inversión', e:'📈', desc:'Para convencer a quien puede <b>financiarte</b>. Aquí vendes la oportunidad de negocio, no solo el producto. Público: inversionistas, aceleradoras.'},
+    {id:'concurso', n:'Concurso / clase', e:'🏆', desc:'Para un <b>jurado o profesor</b>. Se juzga la claridad y la fuerza de tu idea. Público: jueces, maestros, comités.'}
+  ],
+
+  /* Los 6 bloques del pitch, en orden. 'req' = obligatorio para su reflector.
+     'lc' es la variable CSS de color. 'xy' = [left%, top%] de su etiqueta sobre
+     el escenario. Cada 'campo' = {k, label, ph, area?}. */
+  bloques:[
+    { id:'gancho', nombre:'Gancho', emoji:'🎬', lc:'--c-gan', sub:'Tu primera frase', req:false, xy:[13,20],
+      hint:'La frase que abre y hace que levanten la vista. Puede ser un dato que sorprenda, una pregunta o el inicio de tu historia (tu storytelling). No digas "hola, les voy a hablar de…".',
+      campos:[{k:'gan1', area:true, label:'Tu frase de apertura', ph:'Ej. la pregunta, el dato o la escena con la que arrancas.'}],
+      ejemplo:'<b>Otro proyecto (app de tutorías entre alumnos):</b> "Levanta la mano si alguna vez reprobaste un parcial que sí entendías… solo que nadie te explicó a tiempo."' },
+
+    { id:'problema', nombre:'Problema', emoji:'🎯', lc:'--c-pro', sub:'Qué duele y a quién', req:true, xy:[30,16],
+      hint:'Un problema real, importante y que afecta a personas. Ponle contexto y un dato o impacto. No basta "la gente olvida X": di a quién le pasa y qué consecuencia tiene.',
+      campos:[{k:'pro1', area:true, label:'El problema (con contexto, dato o impacto)', ph:'Ej. quién lo vive, con qué frecuencia y qué consecuencia trae.'}],
+      ejemplo:'<b>Otro proyecto:</b> "4 de cada 10 alumnos de primer semestre reprueban al menos una materia; muchos no porque no estudien, sino porque piden ayuda cuando ya es tarde." (real, con dato, con impacto).' },
+
+    { id:'usuario', nombre:'Usuario', emoji:'👤', lc:'--c-usu', sub:'Quién tiene el problema', req:true, xy:[50,13],
+      hint:'Describe a la persona concreta que sufre el problema: edad, dónde está, qué hábitos y necesidades tiene. Mientras más específico, mejor tu proyecto.',
+      campos:[{k:'usu1', area:true, label:'Tu usuario, en concreto', ph:'Ej. edad, ocupación, dónde pasa el día, qué hábito o necesidad clave tiene.'}],
+      ejemplo:'<b>Otro proyecto:</b> "Estudiante de primer semestre, 18–19 años, foráneo, con horario pesado y sin red de compañeros que ya pasaron la materia." (una persona, no "los jóvenes").' },
+
+    { id:'solucion', nombre:'Solución', emoji:'💡', lc:'--c-sol', sub:'Qué hace y qué gana el usuario', req:true, xy:[70,16],
+      hint:'Explica qué hace tu propuesta y cómo resuelve el problema. Luego lo más importante: el beneficio. La gente no compra funciones, compra beneficios.',
+      campos:[
+        {k:'sol1', area:true, label:'¿Qué hace y cómo resuelve el problema?', ph:'Ej. qué es y cómo ataca justo ese problema.'},
+        {k:'sol2', area:true, label:'El beneficio concreto para el usuario', ph:'Ej. qué gana la persona (tiempo, dinero, tranquilidad…), no la tecnología que usas.'}
+      ],
+      ejemplo:'<b>Otro proyecto:</b> función = "app que conecta al alumno con un tutor de su campus en minutos". Beneficio = "resuelve tu duda el mismo día y llegas al parcial entendiéndolo, no memorizando".' },
+
+    { id:'difer', nombre:'Diferenciador', emoji:'⭐', lc:'--c-dif', sub:'¿Por qué ustedes?', req:true, xy:[85,22],
+      hint:'Hay miles de proyectos parecidos. ¿Por qué el tuyo? Elige tu ventaja: precio, rapidez, innovación, experiencia, servicio, personalización… y dilo claro.',
+      campos:[{k:'dif1', area:true, label:'Lo que te hace distinto', ph:'Ej. en qué eres claramente mejor o diferente frente a lo que ya existe.'}],
+      ejemplo:'<b>Otro proyecto:</b> "Otras plataformas traen tutores externos y caros; nosotros usamos alumnos avanzados del mismo campus: más barato, en tu idioma y que ya pasaron esa clase." (Como Uber: no inventó el taxi, ofreció otra experiencia).' },
+
+    { id:'accion', nombre:'Petición', emoji:'🙋', lc:'--c-acc', sub:'El siguiente paso', req:true, xy:[68,30],
+      hint:'Nunca cierres solo con "gracias". Di claro qué esperas que haga la audiencia: invertir, registrarse, agendar, comprar, ser tu aliado. Que nadie tenga que adivinar.',
+      campos:[{k:'acc1', area:true, label:'Tu llamado a la acción', ph:'Ej. la invitación concreta con la que cierras.'}],
+      ejemplo:'<b>Otro proyecto:</b> "Si te interesa que ningún alumno vuelva a reprobar por falta de ayuda a tiempo, agenda 15 minutos con nosotros esta semana y te mostramos la demo." (invitación clara, con siguiente paso).' }
+  ]
+};
+/* ========================================================================== */
+
+const $  = (s,c)=> (c||document).querySelector(s);
+const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
+const esc = s => (s+'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const state = {
+  campos:{},          /* todos los data-k (identidad, proyecto, ticket) */
+  bloques:{},         /* id -> {campoKey: valor} */
+  tipo:'',            /* tipo de pitch elegido */
+  thermo:{},          /* antes / despues */
+  ensayoSeg:0,        /* segundos del último ensayo (al pausar/detener) */
+  dentroTiempo:false  /* alcanzó la franja 3–5 min */
+};
+CONTENIDO.bloques.forEach(b=>{ state.bloques[b.id]={}; b.campos.forEach(c=>state.bloques[b.id][c.k]=''); });
+
+/* refs por bloque para actualizar reflectores sin re-render */
+const REF = {};
+/* --- sonido opcional (WebAudio, sin archivos) --- */
+let sndOn=false, actx=null;
+function ding(freq){ if(!sndOn) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(),g=actx.createGain(); o.frequency.value=freq||880; o.connect(g); g.connect(actx.destination);
+  g.gain.setValueAtTime(.0001,actx.currentTime); g.gain.exponentialRampToValueAtTime(.10,actx.currentTime+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+.18); o.start(); o.stop(actx.currentTime+.19);}catch(e){} }
+$('#sndbtn').addEventListener('click',function(){ sndOn=!sndOn; this.setAttribute('aria-pressed',sndOn);
+  this.textContent=sndOn?'🔊 Sonido':'🔇 Sonido'; if(sndOn) ding(); });
+
+/* --- campos sueltos con data-k (identidad, proyecto, ticket) --- */
+$$('[data-k]').forEach(el=>{
+  const k=el.dataset.k; state.campos[k]='';
+  el.addEventListener('input',()=>{ state.campos[k]=el.value; renderPart(); updateProgress(); });
+});
+function campo(k){ return (state.campos[k]||'').trim(); }
+/* --- integrantes + % de participación --- */
+state.part={};
+function integrantes(){
+  const out=[]; for(let i=1;i<=5;i++){ const n=campo('i'+i+'n'); if(n) out.push({i,n,m:campo('i'+i+'m'),p:(state.part[i]===undefined?'':state.part[i])}); }
+  return out;
+}
+function partOk(){
+  const l=integrantes(); return l.length>0 && l.every(x=>x.m && x.p!=='' && x.p>0);
+}
+let _partSig='';
+function renderPart(){
+  const l=integrantes(), sig=l.map(x=>x.i+x.n).join('|');
+  if(sig===_partSig) return; _partSig=sig;
+  const box=$('#partRows');
+  if(!l.length){ box.innerHTML='<div class="hint">Escribe arriba los nombres de los integrantes y aquí aparecerán.</div>'; return; }
+  box.innerHTML=l.map(x=>'<div class="prow"><b>'+esc(x.n)+'</b><div class="pc"><input class="t" type="number" min="0" max="100" step="1" inputmode="numeric" data-pi="'+x.i+'" value="'+(x.p)+'" placeholder="0"><i>%</i></div></div>').join('');
+  $$('[data-pi]',box).forEach(inp=>inp.addEventListener('input',()=>{
+    let v=inp.value===''?'':Math.max(0,Math.min(100,Math.round(+inp.value)));
+    if(v!=='' && +inp.value!==v) inp.value=v;
+    state.part[inp.dataset.pi]=v; updateProgress();
+  }));
+}
+
+/* --- termómetros antes / después --- */
+$$('[data-thermo]').forEach(g=>{ const key=g.dataset.thermo;
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true'); state.thermo[key]=+b.dataset.v; ding(); updateProgress();
+  }));
+});
+
+/* --- selector de tipo de pitch --- */
+const tiposRow=$('#tiposRow'), tipoDesc=$('#tipoDesc');
+CONTENIDO.tipos.forEach(t=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='tipo-btn'; b.dataset.tipo=t.id; b.setAttribute('aria-pressed','false');
+  b.innerHTML='<span class="e">'+t.e+'</span>'+esc(t.n);
+  b.addEventListener('click',()=>{
+    const cur=state.tipo; state.tipo=(cur===t.id)?'':t.id;
+    $$('.tipo-btn',tiposRow).forEach(x=>x.setAttribute('aria-pressed', x.dataset.tipo===state.tipo?'true':'false'));
+    tipoDesc.innerHTML = state.tipo ? t.desc : 'Elige uno para ver a quién va dirigido.';
+    ding(720); updateProgress();
+  });
+  tiposRow.appendChild(b);
+});
+function tipoNombre(){ const t=CONTENIDO.tipos.find(x=>x.id===state.tipo); return t?t.n:''; }
+
+/* color CSS de un bloque */
+function lcvar(b){ return 'var('+b.lc+')'; }
+/* ============================================================
+   ESCENARIO · reflectores (SVG) + etiquetas clicables
+   ============================================================ */
+const SVGNS='http://www.w3.org/2000/svg';
+const rig=$('#rig'), lightsEl=$('#lights');
+const N=CONTENIDO.bloques.length;
+function fx(i){ return 90 + (540/(N-1))*i; }   /* x del reflector i sobre el truss */
+
+CONTENIDO.bloques.forEach((b,i)=>{
+  const x=fx(i), col=lcvar(b);
+  /* cono de luz */
+  const cone=document.createElementNS(SVGNS,'polygon');
+  cone.setAttribute('class','cone');
+  cone.setAttribute('points',(x-6)+',52 '+(x+6)+',52 '+(x+66)+',340 '+(x-66)+',340');
+  cone.style.fill=col;
+  rig.appendChild(cone);
+  /* charco en el piso */
+  const pool=document.createElementNS(SVGNS,'ellipse');
+  pool.setAttribute('class','pool');
+  pool.setAttribute('cx',x); pool.setAttribute('cy',354);
+  pool.setAttribute('rx',58); pool.setAttribute('ry',14);
+  pool.style.fill=col;
+  rig.appendChild(pool);
+  /* lámpara colgada del truss */
+  const lamp=document.createElementNS(SVGNS,'path');
+  lamp.setAttribute('class','lamp');
+  lamp.setAttribute('d','M'+(x-13)+' 44 L'+(x+13)+' 44 L'+(x+8)+' 58 L'+(x-8)+' 58 Z');
+  lamp.style.fill=col; lamp.style.color=col;
+  rig.appendChild(lamp);
+
+  /* etiqueta clicable (HTML overlay), alineada con el reflector */
+  const tag=document.createElement('button');
+  tag.type='button'; tag.className='light-tag'; tag.dataset.id=b.id;
+  tag.style.left=(x/720*100)+'%'; tag.style.top='15%';
+  tag.style.setProperty('--lc',col);
+  tag.setAttribute('aria-label','Reflector '+b.nombre+'. Ir a escribir esa parte.');
+  tag.innerHTML='<span class="st">'+b.emoji+'</span><span class="ln">'+esc(b.nombre)+'</span>';
+  tag.addEventListener('click',()=>{ const r=REF[b.id]; if(r&&r.first){ r.first.focus(); r.first.scrollIntoView({block:'center',behavior:reduceMotion?'auto':'smooth'}); } });
+  lightsEl.appendChild(tag);
+
+  REF[b.id]={cone,pool,lamp,tag};
+});
+/* ============================================================
+   CONSTRUCTOR DE BLOQUES (una tarjeta por parte del pitch)
+   ============================================================ */
+const bloquesEl=$('#bloques');
+CONTENIDO.bloques.forEach(b=>{
+  const col=lcvar(b);
+  const card=document.createElement('div');
+  card.className='bloque'; card.dataset.id=b.id; card.style.setProperty('--bc',col);
+  const opt = b.req ? '' : '<span class="opt-tag">opcional</span>';
+  const campos = b.campos.map(c=>
+    '<label class="f">'+esc(c.label)+'</label>'+
+    (c.area
+      ? '<textarea class="t" data-ck="'+c.k+'" placeholder="'+esc(c.ph)+'"></textarea>'
+      : '<input class="t" data-ck="'+c.k+'" placeholder="'+esc(c.ph)+'">')
+  ).join('');
+  card.innerHTML=
+    '<div class="bhead"><span class="dot">'+b.emoji+'</span>'+
+      '<div><div class="bt">'+esc(b.nombre)+opt+'</div><div class="bs">'+esc(b.sub)+'</div></div>'+
+      '<span class="block-lock" data-role="lock">◻︎ Falta</span></div>'+
+    '<div class="bbody">'+
+      '<p class="qhint">'+esc(b.hint)+'</p>'+ campos +
+      '<details class="casebox" style="--bc:'+col+'">'+
+        '<summary><span class="otro">otro proyecto · no lo copies</span> Ver la forma <span class="chev">▸</span></summary>'+
+        '<div class="inner"><p>'+b.ejemplo+'</p></div>'+
+      '</details>'+
+    '</div>';
+  bloquesEl.appendChild(card);
+
+  const r=REF[b.id]; r.card=card; r.lock=$('[data-role=lock]',card);
+  r.inputs = $$('[data-ck]',card);
+  r.first = r.inputs[0];
+  r.inputs.forEach(inp=>{
+    inp.addEventListener('input',()=>{ state.bloques[b.id][inp.dataset.ck]=inp.value; evalBloque(b.id); });
+  });
+});
+
+/* ¿el bloque está completo? (todos sus campos con algo de sustancia) */
+function bloqueListo(id){
+  const b=CONTENIDO.bloques.find(x=>x.id===id);
+  return b.campos.every(c=> (state.bloques[id][c.k]||'').trim().length>=8 );
+}
+
+/* enciende/apaga el reflector de un bloque y refresca todo */
+function evalBloque(id){
+  const b=CONTENIDO.bloques.find(x=>x.id===id), r=REF[id];
+  const listo=bloqueListo(id);
+  r.card.classList.toggle('ok',listo);
+  r.lock.textContent = listo ? '✅ Encendido' : '◻︎ Falta';
+  r.cone.classList.toggle('lit',listo);
+  r.pool.classList.toggle('lit',listo);
+  r.lamp.classList.toggle('lit',listo);
+  r.tag.classList.toggle('on',listo);
+  const st=$('.st',r.tag); if(st) st.textContent = listo ? '💡' : b.emoji;
+  updateIlum(); renderPrompter(); updateProgress();
+}
+
+/* ============================================================
+   MEDIDOR DE ILUMINACIÓN + orador que se ilumina
+   ============================================================ */
+function reflectoresOn(){ return CONTENIDO.bloques.filter(b=>bloqueListo(b.id)).length; }
+function updateIlum(){
+  const on=reflectoresOn(), tot=CONTENIDO.bloques.length;
+  $('#ilumN').textContent=on;
+  $('#ilumBar').style.width=(on/tot*100)+'%';
+  const msg=$('#ilumMsg');
+  if(on===0){ msg.className='imsg'; msg.textContent='El escenario está a oscuras. Completa tus bloques y míralo encenderse.'; }
+  else if(on<tot){ msg.className='imsg'; msg.textContent=on+' de '+tot+' reflectores encendidos. Te faltan '+(tot-on)+'.'; }
+  else { msg.className='imsg full'; msg.textContent='¡Escenario a plena luz! Tu pitch tiene todas sus partes. 🌟'; }
+  const sp=$('#speaker'), fg=$('#floorGlow');
+  if(sp) sp.classList.toggle('up', on>=3);
+  if(fg) fg.style.opacity = Math.min(1, on/tot).toFixed(2);
+}
+/* ============================================================
+   GUION · ensambla las partes del pitch a partir de lo escrito
+   Devuelve [{id,label,color,text,ghost}]. 'ghost' = placeholder guía
+   cuando aún no hay texto (muestra la FORMA, no da la respuesta).
+   ============================================================ */
+const GHOSTS={
+  gancho:'‹tu primera frase: un dato, una pregunta o el inicio de tu historia›',
+  problema:'‹el problema con contexto y un dato: a quién afecta y qué consecuencia trae›',
+  usuario:'‹quién lo vive: edad, dónde, qué hábito o necesidad clave›',
+  solucion:'‹qué hace tu propuesta y, sobre todo, el beneficio para el usuario›',
+  difer:'‹por qué ustedes: tu ventaja clara frente a lo que ya existe›',
+  accion:'‹tu petición: qué esperas que haga la audiencia (el siguiente paso)›'
+};
+function parteTexto(b){
+  if(b.id==='solucion'){
+    const q=(state.bloques.solucion.sol1||'').trim();
+    const ben=(state.bloques.solucion.sol2||'').trim();
+    if(!q && !ben) return '';
+    return q + (ben ? (q?'  ':'') + 'El beneficio: '+ben : '');
+  }
+  const k=b.campos[0].k;
+  return (state.bloques[b.id][k]||'').trim();
+}
+function guionPartes(){
+  return CONTENIDO.bloques.map(b=>{
+    const t=parteTexto(b);
+    return { id:b.id, label:b.nombre, color:lcvar(b), text:t, ghost:!t };
+  });
+}
+function renderPrompter(){
+  const partes=guionPartes();
+  const algo=partes.some(p=>!p.ghost);
+  const prompter=$('#prompter');
+  let html='';
+  if(!algo){
+    html='<div class="empty-note">Aquí verás tu guion armándose solo. Empieza a escribir tus bloques abajo y aparecerá en vivo, listo para ensayar en voz alta.</div>';
+  }
+  html += partes.map(p=>
+    '<p class="pl" style="--pc:'+p.color+'"><span class="lab">'+esc(p.label)+'</span>'+
+    '<span class="tx'+(p.ghost?' ghost':'')+'">'+(p.ghost?esc(GHOSTS[p.id]):esc(p.text))+'</span></p>'
+  ).join('');
+  prompter.innerHTML=html;
+}
+/* ============================================================
+   CRONÓMETRO DE ENSAYO · franja verde 3:00–5:00
+   ============================================================ */
+const clockEl=$('#clock'), tMsg=$('#tMsg'), tMarker=$('#tMarker'), prompterEl=$('#prompter');
+let tSecs=0, tInt=null, tRunning=false, avisoVerde=false, avisoRojo=false;
+const MAXBAND=360; /* la barra llega a 6:00 */
+
+function fmt(s){ const m=Math.floor(s/60), x=s%60; return m+':'+(x<10?'0':'')+x; }
+function paintTimer(){
+  clockEl.textContent=fmt(tSecs);
+  clockEl.classList.toggle('go', tSecs>=180 && tSecs<300);
+  clockEl.classList.toggle('warn', tSecs>=300);
+  tMarker.style.left = Math.min(tSecs/MAXBAND,1)*100 + '%';
+}
+function tick(){
+  tSecs++;
+  paintTimer();
+  if(tSecs===180 && !avisoVerde){ avisoVerde=true; tMsg.textContent='🟢 Entraste a la franja verde (3:00). De aquí a 5:00 es tu zona: ya puedes cerrar.'; ding(880); }
+  if(tSecs===300 && !avisoRojo){ avisoRojo=true; tMsg.textContent='🔴 Llegaste a 5:00. Un pitch se pasa aquí: mejor cierra ya.'; ding(300); }
+  /* autoscroll suave del teleprompter mientras ensayas */
+  if(!reduceMotion){
+    const max=prompterEl.scrollHeight-prompterEl.clientHeight;
+    if(max>0) prompterEl.scrollTop=Math.min(max, prompterEl.scrollTop + max/210);
+  }
+}
+function startTimer(){
+  if(tRunning) return; tRunning=true;
+  tInt=setInterval(tick,1000);
+  if(tSecs===0) tMsg.textContent='Ensayando… habla en voz alta y mira al frente, no al texto.';
+  ding(720);
+}
+function pauseTimer(){
+  if(!tRunning) return; tRunning=false; clearInterval(tInt); tInt=null;
+  state.ensayoSeg=tSecs;
+  if(tSecs>=180 && tSecs<=300){ state.dentroTiempo=true; tMsg.textContent='⏸ En pausa · '+fmt(tSecs)+'. ¡Cerraste dentro de la franja verde! ⏱️'; }
+  else if(tSecs<180){ tMsg.textContent='⏸ En pausa · '+fmt(tSecs)+'. Vas corto: aún no llegas a los 3:00.'; }
+  else { tMsg.textContent='⏸ En pausa · '+fmt(tSecs)+'. Te pasaste de 5:00, recorta un poco.'; }
+  updateProgress();
+}
+function resetTimer(){
+  tRunning=false; clearInterval(tInt); tInt=null; tSecs=0; avisoVerde=false; avisoRojo=false;
+  paintTimer(); prompterEl.scrollTop=0;
+  tMsg.textContent='Practica tu pitch en voz alta. La franja verde es de 3:00 a 5:00.';
+}
+$('#tStart').addEventListener('click',startTimer);
+$('#tPause').addEventListener('click',pauseTimer);
+$('#tReset').addEventListener('click',resetTimer);
+/* ============================================================
+   PROGRESO + INSIGNIAS
+   ============================================================ */
+function setBadge(k,on){ const b=$('.badge[data-badge='+k+']'); if(b){ const was=b.classList.contains('on'); b.classList.toggle('on',!!on); if(on&&!was) ding(900); } }
+function updateProgress(){
+  const total=CONTENIDO.bloques.length;
+  const todos = reflectoresOn()===total;
+  setBadge('problema', bloqueListo('problema'));
+  setBadge('valor',    bloqueListo('solucion'));
+  setBadge('peticion', bloqueListo('accion'));
+  setBadge('tiempo',   state.dentroTiempo);
+  setBadge('funcion',  todos);
+
+  const checks=[
+    campo('i1n') && campo('i1m'), campo('proyecto'), !!state.tipo,
+    bloqueListo('problema'), bloqueListo('usuario'), bloqueListo('solucion'),
+    bloqueListo('difer'), bloqueListo('accion'),
+    state.dentroTiempo,
+    campo('t1'), campo('t2'), campo('t3'), state.thermo.despues,
+    partOk()
+  ];
+  const done=checks.filter(Boolean).length;
+  const pct=Math.round(done/checks.length*100);
+  $('#progbar').style.width=pct+'%'; $('#progn').textContent=pct+'%';
+  const wr=$('#partWarn'); if(wr) wr.textContent = (integrantes().length && !partOk()) ? 'Falta la matrícula o el % de algún integrante.' : '';
+  const pb=$('#pdfbtn'); pb.disabled = pct<100; pb.title = pct<100 ? 'Se activa al llegar a 100 % de avance' : '';
+  if(pct===100 && !window._done100){ window._done100=true; ding(660); setTimeout(()=>ding(880),160); setTimeout(()=>ding(1100),320); }
+  if(pct<100) window._done100=false;
+}
+
+/* ============================================================
+   HOJA / PDF · ensambla el guion con lo capturado
+   ============================================================ */
+function setS(id,v){ const e=document.getElementById(id); if(e) e.textContent=(v && (''+v).trim())?v:'—'; }
+function fillSheet(){
+  ['carrera','equipo','proyecto','fecha','t1','t2','t3']
+    .forEach(k=> setS('s_'+k, campo(k)));
+  setS('s_ints', integrantes().map(x=>x.n+' · '+(x.m||'sin matrícula')+' · '+(x.p===''?'—':x.p+' %')).join('\n'));
+  setS('s_tipo', tipoNombre());
+  setS('s_seg', (state.thermo.antes||'—')+' → '+(state.thermo.despues||'—'));
+  const secs = state.ensayoSeg||tSecs;
+  const dentro = state.dentroTiempo ? ' (dentro de la franja 3–5 min ✓)' : (secs? ' (fuera de la franja)':'');
+  setS('s_tiempo', secs ? fmt(secs)+dentro : 'sin ensayar');
+
+  $('#s_guion').innerHTML = guionPartes().map((p,i)=>
+    '<div class="grow"><span class="n">'+(i+1)+'</span><div class="gg">'+
+    '<div class="glab">'+esc(p.label)+'</div>'+
+    '<div class="gtx">'+(p.ghost?'—':esc(p.text))+'</div></div></div>'
+  ).join('');
+
+  const earned=$$('#badges .badge.on').map(b=>b.textContent.trim());
+  setS('s_badges', earned.length?earned.join('   '):'—');
+}
+$('#pdfbtn').addEventListener('click',()=>{ if($('#pdfbtn').disabled) return; fillSheet(); window.print(); });
+window.addEventListener('beforeprint', fillSheet);
+
+/* --- arranque --- */
+CONTENIDO.bloques.forEach(b=>evalBloque(b.id));
+paintTimer(); updateIlum(); renderPrompter(); updateProgress();
+
+</script>
+</body>
+</html>
